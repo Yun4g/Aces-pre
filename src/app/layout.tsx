@@ -1,6 +1,7 @@
+import ReduxProvider from '@/components/ReduxProvider';
 import './globals.css';
 import type { Metadata } from 'next';
-import { ReduxProvider } from '@/components/ReduxProvider'; // Adjust path if needed
+// Adjust path if needed
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="overflow-x-hidden">
-        <ReduxProvider>
-          {children}
-        </ReduxProvider>
+          <ReduxProvider> 
+            {children}
+          </ReduxProvider>
+        
+        
       </body>
     </html>
   );
