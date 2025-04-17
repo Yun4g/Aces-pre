@@ -1,3 +1,4 @@
+ 'use Client';
 import { createSlice } from '@reduxjs/toolkit';
 
 const notificationSlice = createSlice({

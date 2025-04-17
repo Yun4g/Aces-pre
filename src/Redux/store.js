@@ -1,4 +1,5 @@
 // store.js
+'use Client';
 import { configureStore } from '@reduxjs/toolkit';
 import notificationReducer from './notification';
 
