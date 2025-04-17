@@ -133,8 +133,8 @@ const Signup = () => {
                   aria-describedby="role-error"
                 >
                   <option value="">Select your role</option>
-                  <option value="Teacher">Teacher</option>
                   <option value="Referral Manager">Referral Manager</option>
+                  <option value="District Admin">District Admin</option>
                   <option value="Program Staff">Program Staff</option>
                   <option value="System Administrator">System Administrator</option>
                 </select>
