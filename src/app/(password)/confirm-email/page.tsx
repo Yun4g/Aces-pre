@@ -1,0 +1,71 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+
+const ConfirmEmail = () => {
+  const handleOpenEmailApp = () => {
+    window.location.href = 'mailto:';
+  };
+
+  return (
+    <div className="flex flex-col lg:flex-row justify-center h-screen">
+      {/* Left side with image */}
+      <div className="w-full lg:w-1/2 h-64 lg:h-auto relative hidden lg:block">
+        <Image
+          src="/assest/confirmEmail.png"
+          alt="Confirm Email"
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+
+      {/* Right side with form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-8">
+        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px] p-6 sm:p-8">
+          {/* Logo */}
+          <div className="text-center mb-4">
+            <Image
+              src="/assest/logo.png"
+              alt="Logo"
+              width={112}
+              height={40}
+              className="mx-auto w-24 sm:w-28"
+              priority
+            />
+          </div>
+
+          {/* Title */}
+          <h2 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4">
+            Check your mail
+          </h2>
+
+          {/* Subtitle */}
+          <p className="text-gray-600 text-base mb-6">
+            We have sent password recovery instructions to your email.
+          </p>
+
+          {/* Open Email Button */}
+          <button
+            onClick={handleOpenEmailApp}
+            className="bg-[#005A9C] text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"
+            type="button"
+          >
+            Open Email
+          </button>
+
+          <Link
+            href="/create-password"
+            className="block text-center text-base font-medium mt-5 text-[#005A9C] hover:underline"
+          >
+            Skip, I will confirm later
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ConfirmEmail;
