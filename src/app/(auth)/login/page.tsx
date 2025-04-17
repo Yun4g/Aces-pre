@@ -18,10 +18,10 @@ const Login: React.FC = () => {
   const Route = useRouter();
 
   const onSubmit = (data: FormValues) => {
-    // You can POST to an API route here if needed
+    
     console.log(data);
     // Redirect to another page on successful login
-    Route.push("/RefeeralDashboard/mainDashBoard");
+    Route.push("Dashboard/RefeeralDashboard/mainDashBoard");
 
   };
 
