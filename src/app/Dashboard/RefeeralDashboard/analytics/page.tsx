@@ -409,17 +409,19 @@ export default function AnalyticsDashboard() {
                     </div>
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium ${
+                    <span className={`inline-flex items-center px-2.5 py-2  rounded-lg text-xs font-medium ${
                       referral.type === 'Behavioral' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'
                     }`}>
                       {referral.type}
                     </span>
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <div className="flex items-center">
+                  <td className="px-2 py-3 whitespace-nowrap">
+                    <div  className={`rounded-lg  overflow-hidden flex  justify-center ${
+                          referral.status === 'Success' ? 'bg-green-200 text-green-700' : 'bg-amber-400 text-amber-700 '
+                        }`} >
                       <span
-                        className={`h-2 w-2 rounded-full mr-2 ${
-                          referral.status === 'Success' ? 'bg-green-500' : 'bg-amber-500'
+                        className={`h-4 w-2 rounded-full  ${
+                          referral.status === 'Success' ? 'bg-green-200' : 'bg-amber-400'
                         }`}
                       ></span>
                       <span className="text-sm">{referral.status}</span>
