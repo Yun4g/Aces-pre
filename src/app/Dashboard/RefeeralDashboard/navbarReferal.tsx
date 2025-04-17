@@ -12,11 +12,24 @@ type NavbarReferalProps = {
 
 const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
     const pathname = usePathname();
+    
+    // Navigation items with correct path structure
+    const navItems = [
+        { to: '/Dashboard/RefeeralDashboard/mainDashBoard', icon: 'DashBoard.png', label: 'Dashboard' },
+        { to: '/Dashboard/RefeeralDashboard/referals', icon: 'ReferalIcon.png', label: 'Referrals' },
+        { to: '/Dashboard/RefeeralDashboard/analytics', icon: 'chart-2.png', label: 'Analytics' },
+        { to: '/Dashboard/RefeeralDashboard/settings', icon: 'settingsicon.png', label: 'Settings' },
+    ];
+    
+    // Function to check if a route is active (including nested routes)
+    const isRouteActive = (path: string) => {
+        return pathname === path || pathname.startsWith(`${path}/`);
+    };
 
     return (
         <div
             className={`fixed top-0 left-0 h-full w-[250px] bg-white z-50 transform transition-transform duration-300 shadow-md border-r 
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:relative md:block`}
+            ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:relative md:block`}
         >
             <nav className="flex flex-col justify-between h-full">
                 {/* Logo */}
@@ -34,16 +47,14 @@ const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
                     </div>
 
                     <div className="space-y-3 px-6 py-4 text-sm">
-                        {[
-                            { to: '/RefeeralDashboard/mainDashBoard', icon: 'DashBoard.png', label: 'Dashboard' },
-                            { to: '/RefeeralDashboard/referals', icon: 'ReferalIcon.png', label: 'Referals' },
-                            { to: '/RefeeralDashboard/analytics', icon: 'chart-2.png', label: 'Analytics' },
-                            { to: '/RefeeralDashboard/settings', icon: 'settingsicon.png', label: 'Settings' },
-                        ].map(({ to, icon, label }) => (
+                        {navItems.map(({ to, icon, label }) => (
                             <Link
                                 key={to}
                                 href={to}
-                                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all ${pathname === to ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-600 hover:bg-gray-100'
+                                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all 
+                                    ${isRouteActive(to) 
+                                        ? 'bg-blue-50 text-blue-600 font-medium' 
+                                        : 'text-gray-600 hover:bg-gray-100'
                                     }`}
                             >
                                 <Image src={`/assest/${icon}`} width={20} height={20} className="w-5 h-5" alt={label} />
