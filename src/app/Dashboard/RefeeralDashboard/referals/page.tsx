@@ -31,7 +31,7 @@ function AllTickets() {
         { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Special Features', assignee: 'Jerome Bell', dateCreated: '11/19/2025, 11:34pm' },
     ];
 
-    function priorityClass(priority) {
+    function priorityClass(priority: any) {
         switch (priority) {
             case 'High':
                 return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300';
@@ -274,7 +274,7 @@ const TABS = [
 export default function ReferralTabs() {
     const [selected, setSelected] = useState('task');
 
-    const getComponent = (key) => {
+    const getComponent = (key: any) => {
         const tab = TABS.find((t) => t.key === key);
         return tab ? tab.component : null;
     };
