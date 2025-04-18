@@ -8,12 +8,12 @@ import { DistrictStats } from "@/components/districtChart";
 import { RecentReferrals } from "@/components/RecentReferal";
 import DashboardHeader from "@/components/DashBoardHeader";
 
-interface MainDashBoardProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+// interface MainDashBoardProps {
+//   isOpen: boolean;
+//   onClose: () => void;
+// }
 
-function MainDashBoard({ isOpen, onClose }: MainDashBoardProps) {
+function MainDashBoard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
