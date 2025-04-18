@@ -12,33 +12,42 @@ interface RoleOption {
   src: string;
 }
 
+
+
+// Districts = District Admins
+// Referral Managers = Building Administrators (to be renamed)
+// Program Staff = Social workers, school staff (can view, not edit statuses)
+// System Administrators = Pupil Services Admins
+
+
 const JoinAs = () => {
   const router = useRouter();
+
   const [roleOptions, setRoleOptions] = useState<RoleOption[]>([
     {
       id: 'districts',
-      title: 'Districts',
+      title: 'Districts Admin',
       description: 'Personal account to manage all your activities.',
       selected: false,
       src: '/assest/JoinUs1.png',
     },
     {
       id: 'referral-managers',
-      title: 'Referral Managers',
+      title: 'Building Administrators',
       description: 'Own or belong to a company, this is for you.',
       selected: false,
       src: '/assest/JoinUs2.png',
     },
     {
       id: 'program-staff',
-      title: 'Program Staff',
+      title: 'Social workers, school staff',
       description: 'Own or belong to a company, this is for you.',
       selected: false,
       src: '/assest/joinUs3.png',
     },
     {
       id: 'system-administrators',
-      title: 'System Administrators',
+      title: 'Pupil Services Admins',
       description: 'Own or belong to a company, this is for you.',
       selected: false,
       src: '/assest/joinUs4.png',
@@ -57,8 +66,7 @@ const JoinAs = () => {
   const handleContinue = () => {
     const selectedRole = roleOptions.find((option) => option.selected);
     if (!selectedRole) return;
-    // Example: route based on role
-    // You can customize these routes as needed
+
     switch (selectedRole.id) {
       case 'districts':
         router.push('/register/districts');
@@ -72,15 +80,13 @@ const JoinAs = () => {
       case 'system-administrators':
         router.push('/register/system-administrators');
         break;
-      default:
-        break;
     }
   };
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
-      {/* Left Panel - Blue Section */}
-      <div className="bg-blue-600 text-white pt-8 md:w-1/2  justify-start relative hidden md:block">
+      {/* Left Panel */}
+      <div className="bg-blue-600 text-white pt-8 md:w-1/2 justify-start relative hidden md:block">
         <Image
           src="/assest/createNewPassimg.png"
           alt="Illustration"
@@ -90,7 +96,7 @@ const JoinAs = () => {
         />
       </div>
 
-      {/* Right Panel - White Section */}
+      {/* Right Panel */}
       <div className="bg-white p-6 md:p-10 md:w-1/2 flex flex-col overflow-auto">
         <div className="w-full max-w-md mx-auto">
           <div className="text-center mb-4">
@@ -121,7 +127,7 @@ const JoinAs = () => {
                 }`}
               >
                 <div
-                  className={`w-8 h-8 flex items-center justify-center rounded-full mr-4 ${
+                  className={`w-10 h-10 flex items-center justify-center rounded-full mr-4 ${
                     option.selected ? 'bg-blue-500 text-white' : 'bg-blue-100 text-blue-500'
                   }`}
                 >

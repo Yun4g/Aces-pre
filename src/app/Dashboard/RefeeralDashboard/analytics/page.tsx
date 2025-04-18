@@ -1,447 +1,304 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  PieChart,
-  Pie,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
-import NavbarReferal from '../navbarReferal';
-import DashboardHeader from '@/components/DashBoardHeader';
+import { Mail, MessageCircle, FileText, Layers } from 'lucide-react';
 import Image from 'next/image';
+import DashboardHeader from '@/components/DashBoardHeader';
+import NavbarReferal from '../navbarReferal';
 
-const monthlyData = [
-  { name: 'Jan', value: 35, total: 52 },
-  { name: 'Feb', value: 38, total: 55 },
-  { name: 'Mar', value: 40, total: 60 },
-  { name: 'Apr', value: 37, total: 58 },
-  { name: 'May', value: 42, total: 62 },
-  { name: 'Jun', value: 40, total: 60 },
-  { name: 'Jul', value: 38, total: 55 },
-];
-
-const enrollmentData = [
-  { name: 'Jan', '2023': 250, '2024': 300 },
-  { name: 'Feb', '2023': 270, '2024': 320 },
-  { name: 'Mar', '2023': 290, '2024': 340 },
-  { name: 'Apr', '2023': 310, '2024': 360 },
-  { name: 'May', '2023': 330, '2024': 380 },
-  { name: 'Jun', '2023': 350, '2024': 400 },
-  { name: 'Jul', '2023': 370, '2024': 420 },
-  { name: 'Aug', '2023': 390, '2024': 440 },
-  { name: 'Sep', '2023': 410, '2024': 460 },
-  { name: 'Oct', '2023': 430, '2024': 480 },
-  { name: 'Nov', '2023': 450, '2024': 490 },
-  { name: 'Dec', '2023': 470, '2024': 500 },
-];
-
-const pieData = [
-  { name: '0-1 h', value: 25, color: '#1e3a8a' },
-  { name: '1-8 h', value: 15, color: '#d1d5db' },
-  { name: '8-24 h', value: 35, color: '#93c5fd' },
-  { name: '24-48 h', value: 25, color: '#dbeafe' },
-];
-
-const districtData = [
-  { name: 'District A', value: 45, color: '#1e3a8a' },
-  { name: 'District B', value: 20, color: '#f59e0b' },
-  { name: 'District C', value: 15, color: '#d1d5db' },
-  { name: 'District D', value: 20, color: '#e5e7eb' },
-];
-
-const recentReferrals = [
-  { id: 1, student: 'Sarah Johnson', email: 'sarah.johnson@email.com', type: 'Behavioral', status: 'Inprogress', assignedBy: 'Mr. Adelaide', date: '12-January-2025' },
-  { id: 2, student: 'Sarah Johnson', email: 'sarah.johnson@email.com', type: 'Special Edu', status: 'Inprogress', assignedBy: 'Mr. Adelaide', date: '12-January-2025' },
-  { id: 3, student: 'Sarah Johnson', email: 'sarah.johnson@email.com', type: 'Behavioral', status: 'Success', assignedBy: 'Mr. Adelaide', date: '12-January-2025' },
-  { id: 4, student: 'Sarah Johnson', email: 'sarah.johnson@email.com', type: 'Behavioral', status: 'Success', assignedBy: 'Mr. Adelaide', date: '12-January-2025' },
-  { id: 5, student: 'Sarah Johnson', email: 'sarah.johnson@email.com', type: 'Special Edu', status: 'Inprogress', assignedBy: 'Mr. Adelaide', date: '12-January-2025' },
-  { id: 6, student: 'Sarah Johnson', email: 'sarah.johnson@email.com', type: 'Special Edu', status: 'Inprogress', assignedBy: 'Mr. Adelaide', date: '12-January-2025' },
-];
-
-interface CustomTooltipProps {
-  active?: boolean;
-  payload?: { name: string; value: number }[];
-  label?: string;
+// All Tickets Component
+function AllTickets() {
+    const allTicketsData = [
+        { referId: 'ARC-192', subjects: 'Academic Intervention Referral', priority: 'Low', type: 'Academics', assignee: 'Guy Hawkins', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Special Features', assignee: 'Courtney Henry', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Medium', type: 'Behavioural', assignee: 'Jenny Wilson', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Behavioural', assignee: 'Floyd Miles', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Sociate', assignee: 'Theresa Webb', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Medium', type: 'Special Features', assignee: 'Kristin Watson', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Behavioural', assignee: 'Savannah Nguyen', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Medium', type: 'Special Features', assignee: 'Dianne Russell', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Low', type: 'Sociate', assignee: 'Eleanor Pena', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Sociate', assignee: 'Dianne Russell', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Medium', type: 'Special Features', assignee: 'Jenny Wilson', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Low', type: 'Sociate', assignee: 'Marin McKinney', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Behavioural', assignee: 'Brooklyn Simmons', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Medium', type: 'Behavioural', assignee: 'Ralph Edwards', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Low', type: 'Special Features', assignee: 'Arlene McCoy', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Behavioural', assignee: 'Annette Black', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Medium', type: 'Special Features', assignee: 'Dianne Russell', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'Low', type: 'Behavioural', assignee: 'Cody Fisher', dateCreated: '11/19/2025, 11:34pm' },
+        { referId: 'ARC-192', subjects: 'My subject for this Projects', priority: 'High', type: 'Special Features', assignee: 'Jerome Bell', dateCreated: '11/19/2025, 11:34pm' },
+    ];
+    return (
+        <div className="p-4">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" className="p-4">
+                            <div className="flex items-center">
+                                <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
+                            </div>
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Refer ID
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Subjects
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Priority
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Type
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Assignee
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Date Created
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {allTicketsData.map((ticket) => (
+                        <tr key={ticket.referId} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td className="w-4 p-4">
+                                <div className="flex items-center">
+                                    <input id="checkbox-table-search-1" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4">{ticket.referId}</td>
+                            <td className="px-6 py-4">{ticket.subjects}</td>
+                            <td className="px-6 py-4">
+                                <span className={`bg-${ticket.priority === 'High' ? 'red' : ticket.priority === 'Medium' ? 'yellow' : 'green'}-100 text-${ticket.priority === 'High' ? 'red' : ticket.priority === 'Medium' ? 'yellow' : 'green'}-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-${ticket.priority === 'High' ? 'red' : ticket.priority === 'Medium' ? 'yellow' : 'green'}-300`}>
+                                    {ticket.priority}
+                                </span>
+                            </td>
+                            <td className="px-6 py-4">{ticket.type}</td>
+                            <td className="px-6 py-4">{ticket.assignee}</td>
+                            <td className="px-6 py-4">{ticket.dateCreated}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <nav className="flex items-center justify-between pt-4" aria-label="Table navigation">
+                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                    Showing <span className="font-semibold text-gray-900 dark:text-white">1-10</span> of <span className="font-semibold text-gray-900 dark:text-white">1000</span>
+                </span>
+                <ul className="inline-flex items-stretch -space-x-px">
+                    <li>
+                        <a href="#" className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <span className="sr-only">Previous</span>
+                            <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                    </li>
+                    <li>
+                        <a href="#" className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                    </li>
+                    <li>
+                        <a href="#" aria-current="page" className="flex items-center justify-center px-3 py-2 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                    </li>
+                    <li>
+                        <a href="#" className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                    </li>
+                    <li>
+                        <a href="#" className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                    </li>
+                    <li>
+                        <a href="#" className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <span className="sr-only">Next</span>
+                            <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    );
 }
 
-const CustomLineTooltip: React.FC<CustomTooltipProps> = ({ active, payload = [], label }) => {
-  if (active && payload.length) {
+// Conversation Component
+function Conversation() {
+    const conversationData = [
+        { createdby: 'Courtney Henry', comment: 'workflow step assigned to pupil services Referral Group' },
+        { createdby: 'System', comment: 'Workflow step assigned to pupil services Referral Group' },
+        { createdby: 'System.', comment: "Hi Issac, thanks for your referral. To better assist Samuel Johnson, can you share specific incidents or patterns you've noticed? Any feedback from parents?", },
+        { createdby: 'PSS', comment: "Hi Issac, thanks for your referral. To better assist Samuel Johnson, can you share specific incidents or patterns you've noticed? Any feedback from parents?", },
+        { createdby: 'System.', comment: "Hi Issac, thanks for your referral. To better assist Samuel Johnson, can you share specific incidents or patterns you've noticed? Any feedback from parents?", },
+        { createdby: 'System', comment: "Just took my kids to keep an eye on their progress and update you'll needed", },
+        { createdby: 'PSS', comment: "hi Adam", },
+    ];
+
     return (
-      <div className="bg-white p-3 shadow-md border border-gray-200 rounded-md">
-        <p className="font-medium">{label}</p>
-        {payload.map((entry, index) => (
-          <div key={index} className="flex items-center mt-1">
-            <div
-              className={`w-3 h-3 rounded-full ${entry.name === '2024' ? 'bg-amber-500' : 'bg-blue-500'} mr-2`}
-            ></div>
-            <p>
-              {entry.name}: {entry.value}
-            </p>
-          </div>
-        ))}
-      </div>
+        <div className="p-4">
+            <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+                {conversationData.map((comment) => (
+                    <li key={comment.createdby} className="py-3 sm:py-4">
+                        <div className="flex items-center space-x-4">
+                            <div className="flex-shrink-0">
+                                <Image className="w-8 h-8 rounded-full" src="/assest/landGirl.png" alt="Neil image" width={50} height={50} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-gray-900 truncate dark:text-white">
+                                    {comment.createdby}
+                                </p>
+                                <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                    {comment.comment}
+                                </p>
+                            </div>
+                            <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                11:45am
+                            </div>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+            <div>
+                <div className="mt-2 rounded-lg shadow-sm">
+                    <label htmlFor="comment" className="sr-only">Your comment</label>
+                    <div className="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
+                        <label htmlFor="comment" className="sr-only">Your comment</label>
+                        <textarea id="comment" rows={4} className="px-0 w-full text-sm text-gray-900 bg-white border-0 focus:ring-0 dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" placeholder="Write a comment..." required></textarea>
+                    </div>
+                    <div className="flex items-center justify-between py-2 px-3 border-t dark:border-gray-600">
+                        <div className="flex pl-0 space-x-1 sm:pl-2">
+                            <button type="button" className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 0H2a2 2 0 00-2 2v14a2 2 0 002 2h16a2 2 0 002-2V2a2 2 0 00-2-2zM6 6.318V10a1 1 0 01-1 1H3a1 1 0 01-1-1V7.318a1 1 0 01.682-.948l3-2a1 1 0 011.318.948zM10 9.253V14h3.768a.958.958 0 00-.278-.461l-3-2a1 1 0 00-1.19 0l-3 2a.958.958 0 00-.278.461H6V6.747l3-2 3 2v2.506l-3 2z" /></svg>
+                                <span className="sr-only">Attach file</span>
+                            </button>
+                        </div>
+                        <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                            Post comment
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                details assigned: Sarah johnson
+                deparment:Sarah johnson
+                Category:Behavioural
+                requester Assigned: Sarah johnson
+                Districts:Design studio
+                phone:(655)122-5557
+            </div>
+            related Referrals
+            ARC 192
+            ARC 192
+        </div>
     );
-  }
-  return null;
-};
+}
 
-  
+// Task Component
+function Task() {
+    const taskData = [
+        { referralInformation: 'High', lastupdated: '2 hours ago', submitted: 'Submitted', UnderReview: 'Under Review', Processing: 'Processing', Completed: 'Completed' },
+    ];
 
-
-export default function AnalyticsDashboard() {
-  const [timeRange, setTimeRange] = useState('Month');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  
-
-  return (
-    <div className="w-full bg-gray-50 p-4 md:ml-[250px]">
-      <nav className='fixed z-[1000]  top-0 left-0 h-full w-[15%]'>
-      <div className={`
-                         fixed top-0 left-0 h-full w-[250px] z-[1000] bg-white  shadow-md border-r
-                          transform transition-transform duration-300 ease-in-out
-                          md:translate-x-0
-                        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-                             `}
-              >         
-                     <NavbarReferal isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-     </div>
-
-      </nav>
-
-        <section className=' z-50 md:w-[83%]'>
-          <header className=' rounded- mb-3 bg-white'>
-          <DashboardHeader/>
-
-          </header>
-
-          <button className="md:hidden mb-4 bg-white px-3 py-2 rounded-md shadow-sm border text-sm"
-                onClick={() => setSidebarOpen(true)}   >
-                    ☰ Menu
-                </button>
-
-       
-      <div className="flex   flex-wrap gap-2 mb-4">
-        <button 
-          className={`px-4 py-1.5 rounded-md text-sm ${timeRange === 'Month' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300'}`}
-          onClick={() => setTimeRange('Month')}
-        >
-          Month
-        </button>
-        <button 
-          className={`px-4 py-1.5 rounded-md text-sm ${timeRange === 'School year' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300'}`}
-          onClick={() => setTimeRange('School year')}
-        >
-          School year
-        </button>
-        <button 
-          className={`px-4 py-1.5 rounded-md text-sm ${timeRange === 'Custom Range' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300'}`}
-          onClick={() => setTimeRange('Custom Range')}
-        >
-          Custom Range
-        </button>
-      </div>
-
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-        {/* Completion Rate */}
-        <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-          <div className="flex flex-col">
-            <div className="flex items-baseline">
-              <h2 className="text-3xl font-bold">92%</h2>
-            </div>
-            <span className="text-sm text-gray-500">Completion Rates</span>
-            <div className="flex items-center mt-2 text-xs">
-              <span className="text-green-500 flex items-center">
-                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                </svg>
-                10.2%
-              </span>
-              <span className="text-gray-500 ml-1">vs. Last month</span>
-            </div>
-          </div>
+    return (
+        <div className="p-4">
+            referral Information
+            high
+            integrety
+            Submitted:
+            Under Review:
+            Processings:
+            Completed:
+            Student Details:
+            Students Name
+            Grade Level
+            Type
+            Priority
+            Program Assistants
+            Manage program assignments for students referrals
+            Current assignments
+            Special Education Program
+            Current Assignments:
+            Special Education Program
+            assign program
+            reassign
         </div>
+    );
+}
 
-        {/* First Time Replies */}
-        <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100 relative">
-          <div className="absolute -top-0 -left-0 h-full w-1 bg-blue-500"></div>
-          <div className="flex flex-col">
-            <div className="flex items-baseline">
-              <h2 className="text-3xl font-bold text-blue-600">248</h2>
-            </div>
-            <span className="text-sm text-gray-500">Average first time Replies</span>
-            <div className="flex items-center mt-2 text-xs">
-              <span className="text-green-500 flex items-center">
-                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                </svg>
-                10.2%
-              </span>
-              <span className="text-gray-500 ml-1">vs. Last month</span>
-            </div>
-          </div>
+// Activity Logs Component
+function ActiveLogs() {
+    const ActiveLogsData = [
+        { name: 'workflow step assigned to pupil services Referral Group' },
+        { name: 'Workflow step assigned to pupil services Referral Group' },
+    ];
+
+    return (
+        <div className="p-4">
+            activities
+            Activities logs
+            workflow step assigned to pupil services Referral Group
+            Workflow step assigned to pupil services Referral Group
         </div>
+    );
+}
 
-        {/* Processing Time */}
-        <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-          <div className="flex flex-col">
-            <div className="flex items-baseline">
-              <h2 className="text-3xl font-bold">7.2 days</h2>
+const TABS = [
+    { key: 'all', label: 'All tickets', component: <AllTickets /> },
+    { key: 'conversation', label: 'Conversation', component: <Conversation /> },
+    { key: 'task', label: 'Task', component: <Task /> },
+    { key: 'logs', label: 'Activity Logs', component: <ActiveLogs /> },
+];
+
+export default function ReferralTabs() {
+    const [selected, setSelected] = useState('task');
+
+    const getComponent = (key: string) => {
+        const tab = TABS.find((t) => t.key === key);
+        return tab ? tab.component : null;
+    };
+
+    return (
+        <div className="bg-[#F1F1F1] min-h-screen flex">
+            <div className={`fixed top-0 left-0 h-full w-[250px] bg-white z-50 shadow-md border-r transform transition-transform duration-300 ease-in-out md:translate-x-0`}>
+                <NavbarReferal isOpen={false} onClose={() => { }} />
             </div>
-            <span className="text-sm text-gray-500">Average Processing time</span>
-            <div className="flex items-center mt-2 text-xs">
-              <span className="text-green-500 flex items-center">
-                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                </svg>
-                10.2%
-              </span>
-              <span className="text-gray-500 ml-1">vs. Last month</span>
-            </div>
-          </div>
-        </div>
 
-        {/* Total Schools */}
-        <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-          <div className="flex flex-col">
-            <div className="flex items-baseline">
-              <h2 className="text-3xl font-bold">18</h2>
-            </div>
-            <span className="text-sm text-gray-500">Total Schools</span>
-            <div className="flex items-center mt-2 text-xs">
-              <span className="text-green-500 flex items-center">
-                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                </svg>
-                10.2%
-              </span>
-              <span className="text-gray-500 ml-1">vs. Last month</span>
-            </div>
-          </div>
-        </div>
-      </div>
+            <section className="flex-1 ml-0 md:ml-[250px] p-4 overflow-y-auto w-">
+                <DashboardHeader />
 
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        {/* Bar Chart */}
-        <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium text-gray-700">Average Referals created</h3>
-            <div className="flex items-center text-sm text-gray-500">
-              <span>Dec 1-7</span>
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </div>
-          </div>
-          
-          <div className="flex items-center mb-2">
-            <span className="w-3 h-3 bg-blue-600 rounded-sm mr-2"></span>
-            <span className="text-sm text-gray-600">Average referals created</span>
-          </div>
-          <h2 className="text-2xl font-bold mb-4">4,568</h2>
-          
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={monthlyData}
-                margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip />
-                <Bar dataKey="value" fill="#1d4ed8" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="total" fill="#dbeafe" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-          
-          <div className="flex items-center mt-2 mb-4">
-            <span className="w-3 h-3 bg-blue-500 rounded-sm mr-2"></span>
-            <span className="text-sm text-gray-600">Average referals Solved</span>
-          </div>
-          <h2 className="text-2xl font-bold">4,568</h2>
-        </div>
-
-        {/* Pie Chart */}
-        <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-          <h3 className="font-medium text-gray-700 mb-4">Average Referals created</h3>
-          
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-                       <Pie
-                            data={pieData}
-                             cx="50%"
-                              cy="50%"
-                               labelLine={false}
-                               outerRadius={80}
-                               innerRadius={0}  
-                              fill="#8884d8"
-                             dataKey="value"
-                                >
-    {pieData.map((entry, index) => (
-      <Cell key={`cell-${index}`} fill={entry.color} />
-    ))}
-  </Pie>
-  <Tooltip />
-</PieChart>
-
-            </ResponsiveContainer>
-          </div>
-          
-          <div className="grid grid-cols-2 gap-2 mt-4">
-            {pieData.map((entry, index) => (
-              <div key={index} className="flex items-center">
-                <div className="w-3 h-3 mr-2" style={{ backgroundColor: entry.color }}></div>
-                <span className="text-xs text-gray-600">{entry.name} Hours</span>
-              </div>
-            ))}
-          </div>
-          
-          <div className="flex flex-wrap gap-2 mt-4">
-            <div className="flex items-center px-3 py-1 bg-green-100 rounded-full">
-              <span className="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
-              <span className="text-xs text-green-700">High</span>
-            </div>
-            <div className="flex items-center px-3 py-1 bg-amber-100 rounded-full">
-              <span className="h-2 w-2 bg-amber-500 rounded-full mr-2"></span>
-              <span className="text-xs text-amber-700">Inprogress</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Districts and Enrollment */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        {/* Districts Distribution */}
-        <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium text-gray-700">Districts Distribution</h3>
-            <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">750 × 519</div>
-          </div>
-          
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={districtData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={80}
-                  innerRadius={60}
-                  fill="#8884d8"
-                  dataKey="value"
-                  label={({ name }) => name}
-                >
-                  {districtData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Enrollment Trends */}
-        <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100">
-          <h3 className="font-medium text-gray-700 mb-2">Enrollment Trends</h3>
-          <p className="text-sm text-gray-500 mb-4">Total Trends</p>
-          
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={enrollmentData}
-                margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip content={<CustomLineTooltip />} />
-                <Line type="monotone" dataKey="2024" stroke="#f59e0b" strokeWidth={2} dot={false} activeDot={{ r: 6 }} />
-                <Line type="monotone" dataKey="2023" stroke="#1d4ed8" strokeWidth={2} dot={false} activeDot={{ r: 6 }} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-
-      {/* Recent Referrals */}
-      <div className="bg-white p-4 rounded-md shadow-sm border border-gray-100 mb-4">
-        <h3 className="font-medium text-gray-700 mb-4">Recent Referals</h3>
-        
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Students</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Type</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Assigned By</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Date</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {recentReferrals.map((referral) => (
-                <tr key={referral.id}>
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 h-8 w-8">
-                        <Image width={32} height={32} className="h-8 w-8 rounded-full" src="/public/assest/landGirl.png" alt="" />
-                      </div>
-                      <div className="ml-3">
-                        <div className="text-sm font-medium text-gray-900">{referral.student}</div>
-                        <div className="text-xs text-gray-500">{referral.email}</div>
-                      </div>
+                <div className="container bg-white p-3 mx-auto">
+                    <div className="w-full">
+                        <div className="flex items-center justify-between border-b pb-2">
+                            {/* Tabs */}
+                            <div className="flex items-center space-x-2">
+                                {TABS.map((tab) => (
+                                    <button
+                                        key={tab.key}
+                                        onClick={() => setSelected(tab.key)}
+                                        className={`flex items-center px-2 py-1.5 text-sm font-medium transition
+                ${selected === tab.key
+                                                ? 'text-blue-600 border-b-2 border-blue-600'
+                                                : 'text-gray-500 hover:text-blue-600'}
+              `}
+                                    >
+                                        <span>{tab.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                            {/* New Referral Button */}
+                            <button className="bg-blue-600 text-white rounded px-4 py-1.5 text-sm font-medium hover:bg-blue-700 transition">
+                                New Referral
+                            </button>
+                        </div>
+                        {/* Tab Content */}
+                        <div>{getComponent(selected)}</div>
                     </div>
-                  </td>
-                  <td className="px-4 py-3 rounded-lg  whitespace-nowrap">
-                    <span className={`inline-flex items-center px-2.5 py-2  rounded-lg text-xs font-medium ${
-                      referral.type === 'Behavioral' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'
-                    }`}>
-                      {referral.type}
-                    </span>
-                  </td>
-                  <td className="px-2 py-3 whitespace-nowrap">
-                    <div  className={`rounded-lg  overflow-hidden flex  justify-center ${
-                          referral.status === 'Success' ? 'bg-green-200 text-green-700' : 'bg-amber-400 text-amber-700 '
-                        }`} >
-                      <span
-                        className={`h-4 w-2 rounded-full  ${
-                          referral.status === 'Success' ? 'bg-green-200' : 'bg-amber-400'
-                        }`}
-                      ></span>
-                      <span className="text-sm">{referral.status}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{referral.assignedBy}</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{referral.date}</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                    <div className="flex space-x-2">
-                      <button className="text-blue-600 hover:text-blue-800">View</button>
-                      <button className="text-gray-600 hover:text-gray-800">Edit</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                </div>
+            </section>
         </div>
-      </div>
-      </section>
-    </div>
-  );
+    );
 }

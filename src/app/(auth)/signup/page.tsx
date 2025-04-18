@@ -38,13 +38,8 @@ const Signup = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) return;
-
-    // TODO: handle form submission (e.g., API call)
     console.log('Form submitted:', formData);
-
-    // Navigate to role page after signup
     router.push('/role');
   };
 
@@ -133,11 +128,12 @@ const Signup = () => {
                   aria-describedby="role-error"
                 >
                   <option value="">Select your role</option>
-                  <option value="Referral Manager">Referral Manager</option>
+                  <option value="Referral Manager">Building Administrators</option>
                   <option value="District Admin">District Admin</option>
-                  <option value="Program Staff">Program Staff</option>
-                  <option value="System Administrator">System Administrator</option>
+                  <option value="Program Staff">Social workers, school staff</option>
+                  <option value="System Administrator">Pupil Services Admins</option>
                 </select>
+    
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <FaChevronDown size={18} className="text-gray-400" />
                 </div>
