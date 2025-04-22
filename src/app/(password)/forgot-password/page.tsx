@@ -3,58 +3,43 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { z } from 'zod';
+
+// Zod schema for validation
+const forgotPasswordSchema = z.object({
+  email: z.string().min(1, 'Email is required').email('Please enter a valid email address'),
+});
 
 const ForgotPassword = () => {
   const router = useRouter();
-   const [email, setEmail] = useState('');
-   const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-//   // Optionally, you can add a loading state
-   const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-     e.preventDefault();
+    // Validate with Zod
+    const result = forgotPasswordSchema.safeParse({ email });
 
-     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!result.success) {
+      const fieldError = result.error.flatten().fieldErrors.email?.[0] || 'Invalid input';
+      setError(fieldError);
+      return;
+    }
 
-     if (!email) {
-       setError('Email is required');
-       return;
-     } else if (!emailRegex.test(email)) {
-       setError('Please enter a valid email address');
-       return;
-     }
-
-//     setError('');
+    setError('');
     setLoading(true);
-    router.push('/confirm-email');
 
-    // Example: Call your API route to trigger reset email
-    // try {
-    //   // Replace with your actual API endpoint
-    //   const res = await fetch('/api/auth/forgot-password', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ email }),
-    //   });
-
-    //   if (!res.ok) {
-    //     const data = await res.json();
-    //     setError(data.error || 'Something went wrong');
-    //     setLoading(false);
-    //     return;
-    //   }
-
-    //   // Success: Navigate to confirmation page
-    //   router.push('/confirm-email');
-    // } catch (error) {
-    //   setError( error);
-    //   setLoading(false);
-    // }
-     }
+    // Simulate API call then redirect
+    setTimeout(() => {
+      setLoading(false);
+      router.push('/confirm-email');
+    }, 1000);
+  };
 
   return (
-    <div className="flex flex-col lg:flex-row  justify-center h-screen">
+    <div className="flex flex-col lg:flex-row justify-center h-screen">
       {/* Left side with image */}
       <div className="w-full lg:w-1/2 h-64 hidden md:block lg:h-auto relative">
         <Image
@@ -69,7 +54,6 @@ const ForgotPassword = () => {
       {/* Right side with form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-8">
         <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px] p-6 sm:p-8">
-          {/* Logo */}
           <div className="text-center mb-4">
             <Image
               src="/assest/logo.png"
@@ -81,17 +65,14 @@ const ForgotPassword = () => {
             />
           </div>
 
-          {/* Title */}
           <h2 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4">
             Forgot password
           </h2>
 
-          {/* Subtitle */}
           <p className="text-gray-600 text-base mb-6">
             We will send password reset instructions to your email.
           </p>
 
-          {/* Form */}
           <form onSubmit={handleSubmit}>
             <div className="mb-4 mt-6">
               <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
@@ -101,7 +82,7 @@ const ForgotPassword = () => {
                 type="email"
                 id="email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="comey@gmail.com"
                 disabled={loading}

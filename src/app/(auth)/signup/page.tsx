@@ -1,50 +1,69 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FaEnvelope, FaLock, FaUser, FaChevronDown, FaMicrosoft, FaEye, FaEyeSlash } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaLock,
+  FaUser,
+  FaChevronDown,
+  FaMicrosoft,
+  FaEye,
+  FaEyeSlash,
+} from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { z } from 'zod';
+
+// Zod Schema
+const SignupSchema = z.object({
+  email: z.string().nonempty('Email is required').email('Email is invalid'),
+  role: z.string().nonempty('Please select a role'),
+  password: z
+    .string()
+    .nonempty('Password is required')
+    .min(6, 'Password must be at least 6 characters'),
+});
+
+type SignupFormData = z.infer<typeof SignupSchema>;
 
 const Signup = () => {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignupFormData>({
     email: '',
     role: '',
     password: '',
   });
-  const [errors, setErrors] = useState<{ email?: string; role?: string; password?: string }>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof SignupFormData, string>>>({});
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const validateForm = () => {
-    const newErrors: typeof errors = {};
-    if (!formData.email) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
-
-    if (!formData.role) newErrors.role = 'Please select a role';
-
-    if (!formData.password) newErrors.password = 'Password is required';
-    else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) return;
+
+    const result = SignupSchema.safeParse(formData);
+
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof SignupFormData, string>> = {};
+      result.error.errors.forEach((err) => {
+        const field = err.path[0] as keyof SignupFormData;
+        fieldErrors[field] = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setErrors({});
     console.log('Form submitted:', formData);
     router.push('/role');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
@@ -81,6 +100,7 @@ const Signup = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} noValidate>
+            {/* Email */}
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
                 Email
@@ -109,6 +129,7 @@ const Signup = () => {
               )}
             </div>
 
+            {/* Role */}
             <div className="mb-4">
               <label htmlFor="role" className="block text-gray-700 text-sm font-bold mb-2">
                 Select Role
@@ -133,7 +154,6 @@ const Signup = () => {
                   <option value="Program Staff">Social workers, school staff</option>
                   <option value="System Administrator">Pupil Services Admins</option>
                 </select>
-    
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <FaChevronDown size={18} className="text-gray-400" />
                 </div>
@@ -145,6 +165,7 @@ const Signup = () => {
               )}
             </div>
 
+            {/* Password */}
             <div className="mb-4">
               <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
                 Password

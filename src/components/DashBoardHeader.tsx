@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openNotification } from '@/Redux/notificationSlice';
 import { RootState } from '@/Redux';
 import NotificationOverlay from './overlayNotification';
+import Link from 'next/link';
 
 const DashboardHeader = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -25,7 +26,7 @@ const DashboardHeader = () => {
   };
 
   return (
-    <header className="w-full bg-white border-b border-gray-200 shadow-sm py-3 px-4">
+    <header className="w-full bg-white border-b border-gray-200 shadow-sm py-3 px-4  z-[1000]">
       <div className="flex items-center justify-between w-full">
         {/* Page title */}
         <h1 className="text-lg font-medium text-gray-800 flex-1 md:flex-none">
@@ -62,7 +63,7 @@ const DashboardHeader = () => {
           </div>
 
           {/* User Profile Dropdown */}
-          <div className="relative">
+          <div className="">
             <button
               className="flex items-center gap-2 focus:outline-none"
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -72,7 +73,7 @@ const DashboardHeader = () => {
                 alt="Profile"
                 width={32}
                 height={32}
-                className="rounded-full object-cover border border-gray-200"
+                className="rounded-full w-12 h-12 object-cover border border-gray-200"
               />
               <span className="hidden md:flex items-center gap-1">
                 <span className="text-sm font-medium text-gray-700">Angela L.</span>
@@ -83,10 +84,9 @@ const DashboardHeader = () => {
             </button>
 
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
-                <a href="#profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
-                <a href="#settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                <a href="#logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+              <div className="absolute right-0 mt-2  z-[1000] w-48 bg-white rounded-md shadow-lg py-1  border border-gray-200">
+                <Link href="/Dashboard/RefeeralDashboard/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
+                <Link href="#logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</Link>
               </div>
             )}
           </div>

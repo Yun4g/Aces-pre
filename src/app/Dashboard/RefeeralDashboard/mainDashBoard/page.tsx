@@ -31,7 +31,7 @@ function MainDashBoard({}: MainDashBoardProps) {
               >
                 <NavbarReferal isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
             </div>
-            <section className="flex-1 ml-0 md:ml-[250px] p-4 overflow-y-auto w-">
+            <section className="flex-1 ml-0 md:ml-[250px] p-4 overflow-y-auto w-full">
 
                 <button
                     className="md:hidden mb-4 bg-white px-3 py-2 rounded-md shadow-sm border text-sm"
@@ -41,10 +41,10 @@ function MainDashBoard({}: MainDashBoardProps) {
                 </button>
 
                 <div className="container bg-white p-3 mx-auto">
-                    <header className=' mb-2 rounded-md overflow-hidden bg-white '>
+                    <header className=' mb-2 rounded-md overflow-hidden  z-[1000] bg-white '>
                         <DashboardHeader />
                     </header>
-                    <div className="grid grid-cols-1 gap-4 md:gap-6 xl:gap-8">
+                    <div className="grid grid-cols-1  z-[999] gap-4 md:gap-6 xl:gap-8">
                         <StatCards />
                         <div className="w-full flex flex-col lg:flex-row gap-4">
                             <div className='w-full md:basis-[55%] flex-1'>

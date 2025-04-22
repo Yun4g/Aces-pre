@@ -4,44 +4,69 @@ import React, { useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { z } from 'zod';
+
+const passwordSchema = z
+  .object({
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match',
+  });
+
+type PasswordFormData = z.infer<typeof passwordSchema>;
 
 const CreateNewPassword = () => {
   const router = useRouter();
+
+  const [formData, setFormData] = useState<PasswordFormData>({
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [errors, setErrors] = useState<Partial<Record<keyof PasswordFormData, string>>>({});
+  const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [submitting, setSubmitting] = useState(false);
 
-  const passwordsMatch = password === confirmPassword;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+    const result = passwordSchema.safeParse(formData);
+
+    if (!result.success) {
+      const newErrors: Partial<Record<keyof PasswordFormData, string>> = {};
+      result.error.errors.forEach((err) => {
+        const field = err.path[0] as keyof PasswordFormData;
+        newErrors[field] = err.message;
+      });
+      setErrors(newErrors);
       return;
     }
 
-    if (!passwordsMatch) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    setError('');
+    setErrors({});
     setSubmitting(true);
 
-    // Example: POST to your API route for password reset
     try {
-     
+      // Simulate API call
       setTimeout(() => {
         setSubmitting(false);
-        router.push('/login'); // Redirect to login after success
+        router.push('/login');
       }, 1200);
     } catch (err) {
-      setError('Failed to reset password. Please try again.');
+      setErrors({ password: 'Failed to reset password. Please try again.' });
       setSubmitting(false);
+      console.log(err);
     }
   };
 
@@ -74,13 +99,13 @@ const CreateNewPassword = () => {
 
           <h2 className="text-4xl font-bold text-start mb-6">Create New Password</h2>
 
-          {error && (
+          {errors.password && (
             <div className="text-red-600 text-sm mb-4 text-center">
-              {error}
+              {errors.password}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             {/* Password */}
             <div className="space-y-2">
               <label htmlFor="password" className="block text-sm text-gray-600">New Password</label>
@@ -88,9 +113,11 @@ const CreateNewPassword = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className={`w-full p-2 border rounded focus:outline-none focus:ring-2 pr-10 ${
+                    errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                   autoComplete="new-password"
                   disabled={submitting}
                 />
@@ -115,13 +142,11 @@ const CreateNewPassword = () => {
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={`w-full p-2 border ${
-                    confirmPassword && !passwordsMatch ? 'border-red-500' : 'border-gray-300'
-                  } rounded focus:outline-none focus:ring-2 ${
-                    confirmPassword && !passwordsMatch ? 'focus:ring-red-500' : 'focus:ring-blue-500'
-                  } pr-10`}
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className={`w-full p-2 border rounded focus:outline-none focus:ring-2 pr-10 ${
+                    errors.confirmPassword ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                  }`}
                   autoComplete="new-password"
                   disabled={submitting}
                 />
@@ -137,8 +162,8 @@ const CreateNewPassword = () => {
                   {showConfirmPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
                 </button>
               </div>
-              {confirmPassword && !passwordsMatch && (
-                <p className="text-red-500 text-xs mt-1">Passwords do not match</p>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
               )}
             </div>
 
