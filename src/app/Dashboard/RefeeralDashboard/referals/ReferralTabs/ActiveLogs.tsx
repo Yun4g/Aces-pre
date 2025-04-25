@@ -96,7 +96,7 @@ export default function ActivityLogs() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row w-full bg-white border-2 rounded-lg overflow-hidden">
+    <div className="flex flex-col lg:flex-row w-full bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 border-2 rounded-lg overflow-hidden">
       {/* Activity Logs Panel */}
       <div className="w-full lg:w-2/3 border-b lg:border-b-0 lg:border-r border-gray-200">
         <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center px-4 py-3 border-b border-gray-200 gap-y-2">
@@ -109,8 +109,8 @@ export default function ActivityLogs() {
           {activityLogs.map((log) => (
             <div
               key={log.id}
-              className={`flex items-start p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${
-                selectedActivity === log.id ? 'bg-gray-50' : ''
+              className={`flex items-start p-4 border-b border-gray-100 hover:bg-gray-50 dark:bg-gray-900 dark:text-white transition-colors duration-300 cursor-pointer ${
+                selectedActivity === log.id ? 'bg-gray-50 dark:bg-gray-900 dark:text-white transition-colors duration-300' : ''
               }`}
               onClick={() => setSelectedActivity(log.id)}
             >

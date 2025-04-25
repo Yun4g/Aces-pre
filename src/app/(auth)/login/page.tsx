@@ -8,14 +8,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-// 1. Define Zod schema
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   rememberMe: z.boolean().optional(),
 });
 
-// 2. Infer TypeScript type from schema
+
 type FormValues = z.infer<typeof loginSchema>;
 
 const Login: React.FC = () => {
@@ -81,7 +80,7 @@ const Login: React.FC = () => {
                 id="email"
                 type="email"
                 placeholder="user@example.com"
-                className="w-full p-2.5 border border-gray-300  outline-none rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-2.5 border border-gray-300  bg-white outline-none rounded-md focus:ring-blue-500 focus:border-blue-500"
                 {...register("email")}
               />
               {errors.email && (
@@ -99,7 +98,7 @@ const Login: React.FC = () => {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full p-2.5 border  outline-none border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 pr-10"
+                  className="w-full p-2.5 border  bg-white outline-none border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 pr-10"
                   {...register("password")}
                 />
                 <button

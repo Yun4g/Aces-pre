@@ -92,8 +92,8 @@ export function ProcessingTimeChart() {
             </CardHeader>
 
             <p className='font-bold my-3'>Hours</p>
-            <CardContent className='border border-gray-200 py-3 rounded-lg'>
-                <ChartContainer config={chartConfig} className="h-[300px]  w-[300px] lg:w-[700px]">
+            <CardContent className='border dark:text-white border-gray-200 py-3 rounded-lg'>
+                <ChartContainer config={chartConfig} className="h-[300px]   w-[300px] lg:w-[700px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                             data={chartData}

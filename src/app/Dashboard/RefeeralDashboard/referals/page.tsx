@@ -50,7 +50,7 @@ const ReferralDetailsPage = ({ }: MainDashBoardProps) => {
 
   return (
 
-    <main className="bg-[#F1F1F1] min-h-screen flex">
+    <main className="bg-[#F1F1F1] min-h-screen flex flex-col text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
 
       <div className={`
                  fixed top-0 left-0 h-full w-[250px] bg-white z-50 shadow-md border-r
@@ -61,29 +61,29 @@ const ReferralDetailsPage = ({ }: MainDashBoardProps) => {
       >
         <NavbarReferal isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       </div>
-      <section className="flex-1 ml-0 md:ml-[250px] p-4 overflow-y-auto w-full">
+      <section className="flex-1 md:ml-[250px]  p-3  md:w-[83%]">
 
         <button
-          className="md:hidden mb-4 bg-white px-3 py-2 rounded-md shadow-sm   text-sm"
+          className="md:hidden mb-4 bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 px-3 py-2 rounded-md shadow-sm   text-sm"
           onClick={() => setSidebarOpen(true)}
         >
           ☰ Menu
         </button>
-        <div className=" ">
-          <header className=' mb-1 rounded-md overflow-hidden bg-white '>
+        <div className="flex flex-col  gap-10 md:gap-0">
+          <header className=' mb-1 rounded-md overflow-hidden bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 '>
             <DashboardHeader />
           </header>
 
-          <div className="flex flex-wrap bg-white justify-center relative items-center mb-1   p-3  w-full">
-            <div className='flex  px-2 justify-center  text-center  '>
+          <div className="flex flex-wrap gap-3 bg-white py-3 md:py-0 dark:bg-gray-900 dark:text-white transition-colors duration-300 justify-center relative items-center mb-1   md:p-3  w-full">
+            <div className='flex flex-wrap w-full  px-2 bg-transparent dark:shadow-2xl shadow-slate-800  md:px-80 md:justify-center    '>
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as Tab)}
-                  className={`px-4 py-2 rounded-md font-medium transition flex items-center gap-2 ${activeTab === tab.id ? 'text-[#005A9C]' : 'text-gray-800'
+                  className={`px-4 py-2 my-5 rounded-md font-medium transition flex items-center gap-1 ${activeTab === tab.id ? 'text-[#005A9C]' : ' text-gray-900 dark:text-white transition-colors duration-300 '
                     }`}
                 >
-                  <span className="flex items-center gap-1">
+                  <span className="flex  items-center gap-1">
                     {tab.icon}
                     {tab.label}
                   </span>
@@ -95,12 +95,12 @@ const ReferralDetailsPage = ({ }: MainDashBoardProps) => {
             </div>
 
             <div className=' md:absolute right-4'>
-              <button className=' w-40 h-12 md:w-40 md:h-14 rounded-md text-white bg-[#005A9C]'>New Referal</button>
+              <button className=' w-40 h-12 md:w-40 md:h-14 my-6 rounded-md text-white bg-[#005A9C]'>New Referal</button>
             </div>
 
           </div>
 
-          <div className="border p-4 rounded-lg shadow-sm bg-white">
+          <div className=" dark:shadow md:p-4 rounded-lg shadow-sm bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300">
             {renderTab()}
           </div>
         </div>

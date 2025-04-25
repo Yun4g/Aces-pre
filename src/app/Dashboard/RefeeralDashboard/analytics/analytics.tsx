@@ -114,8 +114,8 @@ export default function Analytics() {
     <div className="p-6 max-w-7xl mx-auto  space-y-6">
       <div className="flex gap-4">
         <Button className="bg-blue-600 text-white hover:bg-blue-700">Month</Button>
-        <Button variant="outline" className="bg-white">School year</Button>
-        <Button variant="outline" className="bg-white">Custom Range</Button>
+        <Button variant="outline" className="bg-white  dark:bg-gray-900 dark:text-white transition-colors duration-300">School year</Button>
+        <Button variant="outline" className="bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 ">Custom Range</Button>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

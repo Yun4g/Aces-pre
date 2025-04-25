@@ -37,7 +37,7 @@ const CreateNewPassword = () => {
       ...prev,
       [id]: value,
     }));
-  };
+  }; 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ const CreateNewPassword = () => {
     setSubmitting(true);
 
     try {
-      // Simulate API call
+
       setTimeout(() => {
         setSubmitting(false);
         router.push('/login');

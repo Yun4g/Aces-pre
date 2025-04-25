@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 
 interface StudentDetailsProps {
-  updateFormData: (data: any) => void;
-  formData: any;
+  updateFormData: (data: object) => void;
+  formData: string;
+
 }
 
 const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formData }) => {
@@ -44,10 +45,10 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-4">Student's Information</h2>
+        <h2 className="text-lg font-semibold mb-4">Students Information</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Student's Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Students Name</label>
             <input
               type="text"
               value={studentName}
@@ -56,7 +57,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Date of Birth</label>
             <input
               type="date"
               value={dateOfBirth}
@@ -65,7 +66,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Grade Level</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Grade Level</label>
             <select
               value={gradeLevel}
               onChange={(e) => setGradeLevel(e.target.value)}
@@ -88,7 +89,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Classroom</label>
+            <label className="block text-sm font-medium text-gray-700  dark:text-white mb-1">Classroom</label>
             <input
               type="text"
               value={classroom}
@@ -97,7 +98,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">City</label>
             <input
               type="text"
               value={city}
@@ -106,7 +107,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <label className="block text-sm font-medium text-gray-700  dark:text-white mb-1">Status</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
@@ -119,7 +120,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Street Address</label>
             <input
               type="text"
               value={address}
@@ -128,7 +129,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Zip Code</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Zip Code</label>
             <input
               type="text"
               value={zipCode}
@@ -143,7 +144,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
         <h2 className="text-lg font-semibold mb-4">Parents/Guardians Information</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Parent Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Parent Name</label>
             <input
               type="text"
               value={parentName}
@@ -152,7 +153,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Relationship to student</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Relationship to student</label>
             <select
               value={relationship}
               onChange={(e) => setRelationship(e.target.value)}
@@ -166,7 +167,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Phone Number</label>
             <input
               type="tel"
               value={parentPhone}
@@ -175,7 +176,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Email Address</label>
             <input
               type="email"
               value={parentEmail}
