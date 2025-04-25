@@ -1,9 +1,26 @@
 import { useState, useEffect } from 'react';
 
-interface StudentDetailsProps {
-  updateFormData: (data: object) => void;
-  formData: string;
 
+
+interface FormData {
+  studentName?: string;
+  dateOfBirth?: string;
+  gradeLevel?: string;
+  classroom?: string;
+  city?: string;
+  status?: string;
+  address?: string;
+  zipCode?: string;
+  parentName?: string;
+  relationship?: string;
+  parentPhone?: string;
+  parentEmail?: string;
+  sameAddress?: boolean;
+}
+
+interface StudentDetailsProps {
+  updateFormData: (data: FormData) => void;
+  formData: FormData;
 }
 
 const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formData }) => {
@@ -41,6 +58,10 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
     studentName, dateOfBirth, gradeLevel, classroom, city, status, address, zipCode,
     parentName, relationship, parentPhone, parentEmail, sameAddress, updateFormData
   ]);
+
+
+
+  
 
   return (
     <div>
@@ -200,5 +221,6 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
     </div>
   );
 };
+
 
 export default StudentDetails;

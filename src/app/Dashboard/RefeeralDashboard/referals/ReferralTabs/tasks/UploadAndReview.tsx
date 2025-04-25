@@ -11,7 +11,7 @@ type DocumentField = {
   file: File | null;
 };
 
-export default function StudentReferral() {
+export default function i StudentReferral() {
   
 
 

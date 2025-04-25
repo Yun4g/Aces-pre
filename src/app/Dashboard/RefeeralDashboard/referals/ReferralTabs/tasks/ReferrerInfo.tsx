@@ -17,6 +17,7 @@ interface ReferrerInfoProps {
   formData: Partial<ReferrerInfoData>;
 }
 
+
 const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData }) => {
   const [referrerName, setReferrerName] = useState(formData.referrerName || '');
   const [districts, setDistricts] = useState(formData.districts || '');
