@@ -35,6 +35,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData })
     };
 
     const result = ReferrerInfoSchema.safeParse(data);
+    console.log(result)
     if (result.success) {
       updateFormData(result.data);
     } else {

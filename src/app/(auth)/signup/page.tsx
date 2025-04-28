@@ -56,6 +56,7 @@ const Signup = () => {
       setErrors(fieldErrors);
       return;
     }
+    
 
     setErrors({});
     console.log('Form submitted:', formData);

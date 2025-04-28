@@ -99,12 +99,13 @@ export function ProcessingTimeChart() {
                             data={chartData}
                             margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
                         >
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <CartesianGrid strokeDasharray="3 3"  vertical={false} />
                             <XAxis
                                 dataKey="month"
                                 axisLine={false}
                                 tickLine={false}
-                                tick={{ fill: '#666', fontSize: 12 }}
+                                tick={{ fill: '#ffffff', fontSize: 12 }}
+                                
                             />
                             <YAxis
                                 axisLine={false}

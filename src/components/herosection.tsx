@@ -6,20 +6,11 @@ import Image from 'next/image';
 const HeroSection = () => {
   const router = useRouter();
 
-  const Images = [
-    { src: '/assest/company1.png' },
-    { src: '/assest/company2.png' },
-    { src: '/assest/company3.png' },
-    { src: '/assest/company4.png' },
-    { src: '/assest/companyfive.png' },
-    { src: '/assest/companysix.png' },
-    { src: '/assest/company7.png' },
-  ];
 
   return (
-    <>
+    <div className=" overflow-hidden h-[90vh] ">
       {/* Hero Section */}
-      <section className="flex flex-col lg:flex-row h-fit w-full px-6 md:ps-12 lg:ps-24 py-12">
+      <section className="flex flex-col lg:flex-row   h-full w-full px-6 md:ps-12 lg:ps-24 py-12">
         {/* Left Content */}
         <div className="w-full lg:w-1/2 h-full lg:pt-24">
           <h1 className="text-lg md:text-xl font-bold mt-10">
@@ -84,36 +75,18 @@ const HeroSection = () => {
         </div>
 
   
-        <div className="w-full lg:w-1/2 mt-10 lg:mt-0">
+        <div className="w-full lg:w-1/2 hidden  md:block mt-10 lg:mt-0 absolute top-9 right-0">
           <Image
             src="/assest/HeroAnalytics.png"
             width={800}
             height={600}
-            className="w-full h-auto object-contain"
+            className="w-full h-full object-contain"
             alt="Analytics"
           />
         </div>
       </section>
 
-      <div className="py-12 px-4 md:px-12 w-full flex flex-col justify-center items-center border-t-2 border-b-2">
-        <p className="text-lg md:text-xl lg:text-2xl font-medium text-center">
-          Over 32k+ software businesses growing with AR Shakir
-        </p>
-
-        <div className="mt-8 flex flex-wrap justify-center gap-6 md:gap-10">
-          {Images.map((image, index) => (
-            <Image
-              key={index}
-              src={image.src}
-              width={100}
-              height={24}
-              className="h-6 object-contain"
-              alt={`company-${index + 1}`}
-            />
-          ))}
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 

@@ -2,8 +2,8 @@
  
 import React, { useState } from 'react';
 import NavbarReferal from '../navbarReferal';
-import { StatCards } from '@/components/statComponent';
-import { ProcessingTimeChart } from '@/components/processingTimeChart';
+import { StatCards } from '@/components/(statsComponent)/statComponent';
+import { ProcessingTimeChart } from '@/components/(statsComponent)/processingTimeChart';
 import { DistrictStats } from '@/components/districtChart';
 import { RecentReferrals } from '@/components/RecentReferal';
 import DashboardHeader from '@/components/DashBoardHeader' 

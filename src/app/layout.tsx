@@ -1,8 +1,8 @@
 import ReduxProvider from '@/components/ReduxProvider';
 import './globals.css';
 import type { Metadata } from 'next';
-import { ThemeProvider } from '@/components/themePerovider';
-// Adjust path if needed
+
+
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,10 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="overflow-x-hidden bg-white text-black ">
-          <ReduxProvider> 
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ReduxProvider>  
             {children}
-            </ThemeProvider>
           </ReduxProvider>
         
         

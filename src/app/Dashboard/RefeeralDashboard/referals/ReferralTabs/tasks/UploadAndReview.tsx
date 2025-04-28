@@ -11,11 +11,8 @@ type DocumentField = {
   file: File | null;
 };
 
-export default function i StudentReferral() {
-  
-
-
-  
+export default function iStudentReferral() {
+    
 
   // Document fields state
   const [documentFields, setDocumentFields] = useState<DocumentField[]>([

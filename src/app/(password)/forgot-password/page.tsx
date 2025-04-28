@@ -43,7 +43,7 @@ const ForgotPassword = () => {
           src="/assest/forgetPassword.png"
           alt="Forgot Password"
           fill
-          className="object-cover"
+          className="h-full w-full"
           priority
         />
       </div>
