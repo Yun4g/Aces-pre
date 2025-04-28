@@ -8,7 +8,7 @@ const HeroSection = () => {
 
 
   return (
-    <div className=" overflow-hidden h-[90vh] ">
+    <div className=" md:overflow-hidden lg:h-[90vh] ">
       {/* Hero Section */}
       <section className="flex flex-col lg:flex-row   h-full w-full px-6 md:ps-12 lg:ps-24 py-12">
         {/* Left Content */}
@@ -75,7 +75,7 @@ const HeroSection = () => {
         </div>
 
   
-        <div className="w-full lg:w-1/2 hidden  md:block mt-10 lg:mt-0 absolute top-9 right-0">
+        <div className="w-full lg:w-1/2 hidden  lg:block mt-10 lg:mt-0 absolute top-9 right-0">
           <Image
             src="/assest/HeroAnalytics.png"
             width={800}

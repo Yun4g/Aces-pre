@@ -17,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="overflow-x-hidden bg-white text-black ">
+    
           <ReduxProvider>  
             {children}
           </ReduxProvider>
+ 
         
         
       </body>

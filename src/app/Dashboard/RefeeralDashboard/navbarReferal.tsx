@@ -69,7 +69,7 @@ const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
 
                 {/* Logout */}
                 <div className="pt-4 px-8 py-4 md:border-t-2">
-                   <div className=' flex flex-wrap w-full  items-center gap-3 justify-center  shadow-xl  border-2 dark:border-gray-700 transition-colors duration-300 py-3   rounded-xl text-sm transition-all'>
+                   <div className=' flex flex-wrap w-full  items-center gap-3 justify-center  shadow-xl  border-2 dark:border-gray-700  duration-300 py-3   rounded-xl text-sm transition-all'>
                         <ThemeToggle /> 
                     </div>
                     <button className="w-full flex items-center gap-3 justify-center mt-3 border border-red-400 text-red-500 px-4 py-2 rounded-md text-sm hover:bg-red-50 transition-all">
