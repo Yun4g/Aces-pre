@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/themePerovider';
+import QueryProvider from '../(providers)/QueryProvider';
 
 
 export const metadata: Metadata = {
@@ -13,7 +14,9 @@ export default function DashboardRoot({children,} : {children : React.ReactNode}
     return (
         <>
         <ThemeProvider attribute="class"  enableSystem>
-              {children}
+          <QueryProvider>
+          {children}
+          </QueryProvider>   
         </ThemeProvider>
         </>
     )

@@ -7,7 +7,7 @@ const Section2: React.FC = () => {
   const router = useRouter();
 
   return (
-    <section className="relative py-16 px-4 sm:px-8 lg:px-20 text-center  lg::mt-[400px] overflow-hidden">
+    <section className="relative py-16 px-4 sm:px-8 lg:px-20 text-center  lg:mt-[400px] overflow-hidden">
       {/* HEADINGS */}
       <div className="mb-6">
         <p className="text-sm font-bold uppercase text-blue-500 tracking-widest">PROCESS</p>
