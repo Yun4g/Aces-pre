@@ -34,7 +34,7 @@ const HeroSection = () => {
                 Register using email address
               </p>
               <p className="mt-[3px] text-base md:text-xl font-medium">
-                shakir260@gmail.com
+                team@aces.org
               </p>
             </div>
             <div>
