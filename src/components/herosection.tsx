@@ -39,7 +39,7 @@ const HeroSection = () => {
             </div>
             <div>
               <button
-                onClick={() => router.push('/signUp')}
+                onClick={() => router.push('/signup')}
                 className="bg-[#005A9C] text-white w-full md:w-[200px] p-4 md:p-0 h-[50px] md:h-[65px] flex justify-center items-center rounded"
               >
                 Get Started
