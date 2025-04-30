@@ -28,7 +28,7 @@ const HeroSection = () => {
           </p>
 
           {/* Register Box */}
-          <div className="mt-6 shadow-2xl shadow-slate-400 bg-white w-full h-fit md:h-[110px] rounded-lg flex flex-col md:flex-row px-4 py-4 md:px-6 justify-between items-center gap-4">
+          <div className="mt-6 shadow-lg shadow-slate-400 bg-white w-full h-fit md:h-[110px] rounded-lg flex flex-col md:flex-row px-4 py-4 md:px-6 justify-between items-center gap-4">
             <div>
               <p className="text-sm md:text-lg font-normal text-[#898A8C]">
                 Register using email address
