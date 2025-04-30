@@ -8,7 +8,7 @@ export default function Home() {
     <>
        <Navbar/>
        <HeroSection/>
-       <div className="bg-white  mt-72">
+       <div className="bg-white  lg:mt-72">
         <Footer />
       </div>
       
