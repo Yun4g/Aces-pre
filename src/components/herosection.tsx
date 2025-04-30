@@ -14,7 +14,7 @@ const HeroSection = () => {
         {/* Left Content */}
         <div className="w-full lg:w-1/2 h-full lg:pt-24">
       
-          <p className="text-3xl sm:text-5xl lg:text-[68px] font-semibold mt-4 leading-tight">
+          <p className="text-3xl sm:text-5xl lg:text-[68px] font-semibold mt-10 md:mt-14 lg:mt-4 leading-tight">
              Student Referral
           </p>
           <p className="text-3xl sm:text-5xl lg:text-[68px] font-semibold mt-2 leading-tight">
