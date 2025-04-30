@@ -13,14 +13,12 @@ const HeroSection = () => {
       <section className="flex flex-col lg:flex-row   h-full w-full px-6 md:ps-12 lg:ps-24 py-12">
         {/* Left Content */}
         <div className="w-full lg:w-1/2 h-full lg:pt-24">
-          <h1 className="text-lg md:text-xl font-bold mt-10">
-            Product Growth Solution in Single Platform.
-          </h1>
+      
           <p className="text-3xl sm:text-5xl lg:text-[68px] font-semibold mt-4 leading-tight">
-            Streamline Student
+             Student Referral
           </p>
           <p className="text-3xl sm:text-5xl lg:text-[68px] font-semibold mt-2 leading-tight">
-            Referral Process
+             Process
           </p>
 
           <p className="text-[#898A8C] text-base md:text-lg font-normal mt-4">
@@ -49,29 +47,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Benefits */}
-          <div className="mt-5 flex flex-col sm:flex-row gap-4">
-            <p className="flex items-center text-sm md:text-base">
-              <Image
-                src="/assest/tick.png"
-                width={20}
-                height={20}
-                className="mr-2"
-                alt="tick"
-              />
-              Free Register
-            </p>
-            <p className="flex items-center text-sm md:text-base">
-              <Image
-                src="/assest/tick.png"
-                width={20}
-                height={20}
-                className="mr-2"
-                alt="tick"
-              />
-              Great Service
-            </p>
-          </div>
+       
         </div>
 
   
