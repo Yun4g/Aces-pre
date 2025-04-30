@@ -100,10 +100,10 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-full bg-slate-400 border mt-10 mb-12"></div>
+        <div className="w-full bg-slate-400 border mt-10 mb-7"></div>
 
         {/* Copyright Section */}
-        <div className="mt-8 text-center text-base font-semibold text-[#181433]">
+        <div className="pb-11 text-center text-base font-semibold text-[#181433]">
           Copyright © AR Shakir 2022. All Rights Reserved.
         </div>
       </div>
