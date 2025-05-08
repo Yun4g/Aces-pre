@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { z } from 'zod';
+import { useState, useEffect } from "react";
+import { z } from "zod";
 
 // Zod schema for validation and type inference
 const ReferrerInfoSchema = z.object({
@@ -7,7 +7,7 @@ const ReferrerInfoSchema = z.object({
   districts: z.string().min(1, "District is required"),
   emailAddress: z.string().email("Invalid email"),
   phoneNumber: z.string().min(1, "Phone number is required"),
-  referralType: z.enum(['new', 'update', 'transfer']),
+  referralType: z.enum(["new", "update", "transfer"]),
 });
 
 type ReferrerInfoData = z.infer<typeof ReferrerInfoSchema>;
@@ -17,13 +17,17 @@ interface ReferrerInfoProps {
   formData: Partial<ReferrerInfoData>;
 }
 
-
-const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData }) => {
-  const [referrerName, setReferrerName] = useState(formData.referrerName || '');
-  const [districts, setDistricts] = useState(formData.districts || '');
-  const [emailAddress, setEmailAddress] = useState(formData.emailAddress || '');
-  const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || '');
-  const [referralType, setReferralType] = useState<ReferrerInfoData['referralType']>(formData.referralType || 'new');
+const ReferrerInfo: React.FC<ReferrerInfoProps> = ({
+  updateFormData,
+  formData,
+}) => {
+  const [referrerName, setReferrerName] = useState(formData.referrerName || "");
+  const [districts, setDistricts] = useState(formData.districts || "");
+  const [emailAddress, setEmailAddress] = useState(formData.emailAddress || "");
+  const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || "");
+  const [referralType, setReferralType] = useState<
+    ReferrerInfoData["referralType"]
+  >(formData.referralType || "new");
 
   useEffect(() => {
     const data: ReferrerInfoData = {
@@ -31,17 +35,24 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData })
       districts,
       emailAddress,
       phoneNumber,
-      referralType
+      referralType,
     };
 
     const result = ReferrerInfoSchema.safeParse(data);
-    console.log(result)
+    console.log(result);
     if (result.success) {
       updateFormData(result.data);
     } else {
       console.error("Validation error", result.error.format());
     }
-  }, [referrerName, districts, emailAddress, phoneNumber, referralType, updateFormData]);
+  }, [
+    referrerName,
+    districts,
+    emailAddress,
+    phoneNumber,
+    referralType,
+    updateFormData,
+  ]);
 
   return (
     <div>
@@ -49,20 +60,24 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData })
         <div>
           <h2 className="text-lg font-semibold mb-4">Referrer Information</h2>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Student Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Student Name
+            </label>
             <input
               type="text"
               value={referrerName}
               onChange={(e) => setReferrerName(e.target.value)}
-              className="w-full p-2 border border-gray-300  rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Districts</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Districts
+            </label>
             <select
               value={districts}
               onChange={(e) => setDistricts(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             >
               <option value="">Select Districts</option>
               <option value="Districts 1">Districts 1</option>
@@ -71,21 +86,25 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData })
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Email Address</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Email Address
+            </label>
             <input
               type="email"
               value={emailAddress}
               onChange={(e) => setEmailAddress(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Phone Number</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Phone Number
+            </label>
             <input
               type="tel"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
         </div>
@@ -93,15 +112,19 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData })
         <div>
           <h2 className="text-lg font-semibold mb-4">Referral Details</h2>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Date</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Date
+            </label>
             <input
               type="date"
-              className="w-full p-2 border border-gray-300 rounded-md text-gray-700 dark:text-black"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Type</label>
-            {['new', 'update', 'transfer'].map((type) => (
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Type
+            </label>
+            {["new", "update", "transfer"].map((type) => (
               <div className="mt-2" key={type}>
                 <label className="inline-flex items-center ">
                   <input
@@ -110,9 +133,17 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData })
                     name="referralType"
                     value={type}
                     checked={referralType === type}
-                    onChange={() => setReferralType(type as ReferrerInfoData['referralType'])}
+                    onChange={() =>
+                      setReferralType(type as ReferrerInfoData["referralType"])
+                    }
                   />
-                  <span className="ml-2 capitalize">{type === 'new' ? 'New Student Referral' : type === 'update' ? 'Update to Existing Referral' : 'Transfer from Another Program'}</span>
+                  <span className="ml-2 capitalize">
+                    {type === "new"
+                      ? "New Student Referral"
+                      : type === "update"
+                      ? "Update to Existing Referral"
+                      : "Transfer from Another Program"}
+                  </span>
                 </label>
               </div>
             ))}

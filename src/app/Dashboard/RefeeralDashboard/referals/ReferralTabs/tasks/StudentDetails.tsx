@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
-
-
+import { useState, useEffect } from "react";
 
 interface FormData {
   studentName?: string;
@@ -23,19 +21,22 @@ interface StudentDetailsProps {
   formData: FormData;
 }
 
-const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formData }) => {
-  const [studentName, setStudentName] = useState(formData.studentName || '');
-  const [dateOfBirth, setDateOfBirth] = useState(formData.dateOfBirth || '');
-  const [gradeLevel, setGradeLevel] = useState(formData.gradeLevel || '');
-  const [classroom, setClassroom] = useState(formData.classroom || '');
-  const [city, setCity] = useState(formData.city || '');
-  const [status, setStatus] = useState(formData.status || '');
-  const [address, setAddress] = useState(formData.address || '');
-  const [zipCode, setZipCode] = useState(formData.zipCode || '');
-  const [parentName, setParentName] = useState(formData.parentName || '');
-  const [relationship, setRelationship] = useState(formData.relationship || '');
-  const [parentPhone, setParentPhone] = useState(formData.parentPhone || '');
-  const [parentEmail, setParentEmail] = useState(formData.parentEmail || '');
+const StudentDetails: React.FC<StudentDetailsProps> = ({
+  updateFormData,
+  formData,
+}) => {
+  const [studentName, setStudentName] = useState(formData.studentName || "");
+  const [dateOfBirth, setDateOfBirth] = useState(formData.dateOfBirth || "");
+  const [gradeLevel, setGradeLevel] = useState(formData.gradeLevel || "");
+  const [classroom, setClassroom] = useState(formData.classroom || "");
+  const [city, setCity] = useState(formData.city || "");
+  const [status, setStatus] = useState(formData.status || "");
+  const [address, setAddress] = useState(formData.address || "");
+  const [zipCode, setZipCode] = useState(formData.zipCode || "");
+  const [parentName, setParentName] = useState(formData.parentName || "");
+  const [relationship, setRelationship] = useState(formData.relationship || "");
+  const [parentPhone, setParentPhone] = useState(formData.parentPhone || "");
+  const [parentEmail, setParentEmail] = useState(formData.parentEmail || "");
   const [sameAddress, setSameAddress] = useState(formData.sameAddress || false);
 
   useEffect(() => {
@@ -52,16 +53,24 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
       relationship,
       parentPhone,
       parentEmail,
-      sameAddress
+      sameAddress,
     });
   }, [
-    studentName, dateOfBirth, gradeLevel, classroom, city, status, address, zipCode,
-    parentName, relationship, parentPhone, parentEmail, sameAddress, updateFormData
+    studentName,
+    dateOfBirth,
+    gradeLevel,
+    classroom,
+    city,
+    status,
+    address,
+    zipCode,
+    parentName,
+    relationship,
+    parentPhone,
+    parentEmail,
+    sameAddress,
+    updateFormData,
   ]);
-
-
-
-  
 
   return (
     <div>
@@ -69,29 +78,35 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
         <h2 className="text-lg font-semibold mb-4">Students Information</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Students Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Students Name
+            </label>
             <input
               type="text"
               value={studentName}
               onChange={(e) => setStudentName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full bg-white dark:bg-black dark:text-white p-2 border border-gray-300 rounded-md"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Date of Birth</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Date of Birth
+            </label>
             <input
               type="date"
               value={dateOfBirth}
               onChange={(e) => setDateOfBirth(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Grade Level</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Grade Level
+            </label>
             <select
               value={gradeLevel}
               onChange={(e) => setGradeLevel(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border bg-white dark:bg-black dark:text-white border-gray-300 rounded-md"
             >
               <option value="">Select grade</option>
               <option value="k">Kindergarten</option>
@@ -110,29 +125,35 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700  dark:text-white mb-1">Classroom</label>
+            <label className="block text-sm font-medium text-gray-700  dark:text-white mb-1">
+              Classroom
+            </label>
             <input
               type="text"
               value={classroom}
               onChange={(e) => setClassroom(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">City</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              City
+            </label>
             <input
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700  dark:text-white mb-1">Status</label>
+            <label className="block text-sm font-medium text-gray-700  dark:text-white mb-1">
+              Status
+            </label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             >
               <option value="">Select status</option>
               <option value="active">Active</option>
@@ -141,44 +162,54 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Street Address</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Street Address
+            </label>
             <input
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Zip Code</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Zip Code
+            </label>
             <input
               type="text"
               value={zipCode}
               onChange={(e) => setZipCode(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
         </div>
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold mb-4">Parents/Guardians Information</h2>
+        <h2 className="text-lg font-semibold mb-4">
+          Parents/Guardians Information
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Parent Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Parent Name
+            </label>
             <input
               type="text"
               value={parentName}
               onChange={(e) => setParentName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Relationship to student</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Relationship to student
+            </label>
             <select
               value={relationship}
               onChange={(e) => setRelationship(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             >
               <option value="">Select relationship</option>
               <option value="mother">Mother</option>
@@ -188,21 +219,25 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Phone Number</label>
+            <label className="block text-sm font-medium  text-gray-700 dark:text-white mb-1">
+              Phone Number
+            </label>
             <input
               type="tel"
               value={parentPhone}
               onChange={(e) => setParentPhone(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">Email Address</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+              Email Address
+            </label>
             <input
               type="email"
               value={parentEmail}
               onChange={(e) => setParentEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
             />
           </div>
         </div>
@@ -221,6 +256,5 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
     </div>
   );
 };
-
 
 export default StudentDetails;
