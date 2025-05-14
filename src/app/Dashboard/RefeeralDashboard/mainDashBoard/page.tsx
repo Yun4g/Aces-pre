@@ -34,7 +34,7 @@ function MainDashBoard({}: MainDashBoardProps) {
             <section className="flex-1 ml-0 md:ml-[250px] p-4 overflow-y-auto w-full">
 
                 <button
-                    className="md:hidden mb-4 bg-white px-3 py-2 rounded-md shadow-sm border text-sm"
+                    className="md:hidden mb-4  px-3 py-2 rounded-md shadow-sm  text-sm"
                     onClick={() => setSidebarOpen(true)}
                 >
                     ☰ Menu

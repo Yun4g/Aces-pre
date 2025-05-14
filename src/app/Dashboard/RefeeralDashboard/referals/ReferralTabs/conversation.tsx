@@ -143,7 +143,7 @@ const ConversationTab: React.FC = () => {
       {/* Textarea */}
       <textarea
         ref={textareaRef}
-        className="w-full h-28 px-3 py-2 text-sm border-t border-gray-200 dark:border-gray-800 rounded-b-lg resize-none dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:outline-none"
+        className="w-full h-28 px-3 py-2 text-sm border-t border-gray-200 dark:border-gray-800 rounded-b-lg resize-none bg-white  dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:outline-none"
         placeholder="Add your response"
       ></textarea>
 

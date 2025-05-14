@@ -43,7 +43,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({
     if (result.success) {
       updateFormData(result.data);
     } else {
-      console.error("Validation error", result.error.format());
+      console.error("Validation error", result.error);
     }
   }, [
     referrerName,

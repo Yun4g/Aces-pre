@@ -64,7 +64,7 @@ const ReferralDetailsPage = ({ }: MainDashBoardProps) => {
       <section className="flex-1 md:ml-[250px]  p-3  md:w-[83%]">
 
         <button
-          className="md:hidden mb-4 bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 px-3 py-2 rounded-md shadow-sm   text-sm"
+          className="md:hidden mb-4  dark:bg-gray-900 dark:text-white transition-colors duration-300 px-3 py-2 rounded-md shadow-sm   text-sm"
           onClick={() => setSidebarOpen(true)}
         >
           ☰ Menu

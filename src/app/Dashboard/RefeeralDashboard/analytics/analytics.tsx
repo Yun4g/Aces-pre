@@ -140,7 +140,7 @@ export default function Analytics() {
                 <div className="text-xs text-gray-500 mt-1">Average referrals Solved</div>
                 <div className="text-lg font-semibold text-blue-700">4,568</div>
               </div>
-              <select className="border text-sm p-1 rounded">
+              <select className="border bg-white dark:bg-gray-800 text-sm p-1 rounded">
                 <option>Dec 1-7</option>
               </select>
             </div>
