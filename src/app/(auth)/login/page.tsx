@@ -27,9 +27,13 @@ const Login: React.FC = () => {
   });
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const Route = useRouter();
 
   const onSubmit = (data: FormValues) => {
+    setLoading(true);
+   
+
     console.log(data);
     Route.push("Dashboard/RefeeralDashboard/mainDashBoard");
   };
@@ -155,7 +159,7 @@ const Login: React.FC = () => {
               type="submit"
               className="w-full bg-[#0a5596] hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-md"
             >
-              Sign in
+              {loading ? "signing in..." : "Sign In"}
             </button>
           </form>
         </div>
