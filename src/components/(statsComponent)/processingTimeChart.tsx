@@ -92,20 +92,19 @@ export function ProcessingTimeChart() {
             </CardHeader>
 
             <p className='font-bold my-3'>Hours</p>
-            <CardContent className='border dark:text-white border-gray-200 py-3 rounded-lg'>
-                <ChartContainer config={chartConfig} className="h-[300px]   w-[300px] lg:w-[700px]">
+            <CardContent className="border dark:text-white border-gray-200 py-3 rounded-lg">
+                <ChartContainer config={chartConfig} className="h-72 w-full max-w-full lg:max-w-[700px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                             data={chartData}
                             margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
                         >
-                            <CartesianGrid strokeDasharray="3 3"  vertical={false} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
                             <XAxis
                                 dataKey="month"
                                 axisLine={false}
                                 tickLine={false}
                                 tick={{ fill: '#ffffff', fontSize: 13 }}
-                                
                             />
                             <YAxis
                                 axisLine={false}
@@ -138,6 +137,7 @@ export function ProcessingTimeChart() {
                     </ResponsiveContainer>
                 </ChartContainer>
             </CardContent>
+
         </Card>
     );
 }
