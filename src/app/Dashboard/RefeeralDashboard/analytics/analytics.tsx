@@ -188,7 +188,7 @@ export default function Analytics() {
             layout="vertical"
             verticalAlign="middle"
             align="right"
-            wrapperStyle={{ fontSize: "0.75rem" }} // Optional for smaller screens
+            wrapperStyle={{ fontSize: "0.75rem" }} 
           />
           <Pie
             data={pieData}
