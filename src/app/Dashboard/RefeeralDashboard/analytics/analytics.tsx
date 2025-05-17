@@ -174,36 +174,48 @@ export default function Analytics() {
       </Card>
   
       {/* Pie Chart Card */}
-      <Card className="border-none shadow-sm">
-        <CardContent className="p-4">
-          <h2 className="text-sm sm:text-base text-gray-600 mb-2">Average Referrals created</h2>
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Tooltip />
-              <Legend layout="vertical" verticalAlign="middle" align="right" />
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-              >
-                {pieData.map((_, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={["#3b82f6", "#e2e8f0", "#1e40af"][index % 3]}
-                  />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="flex gap-4 text-xs sm:text-sm mt-2 flex-wrap">
-            <span className="text-green-600 flex items-center gap-1">● High</span>
-            <span className="text-yellow-500 flex items-center gap-1">● Inprogress</span>
-          </div>
-        </CardContent>
-      </Card>
+      <Card className="border-none shadow-sm w-full">
+  <CardContent className="p-4">
+    <h2 className="text-sm sm:text-base text-gray-600 mb-2">
+      Average Referrals created
+    </h2>
+    
+    <div className="w-full h-[200px] sm:h-[250px]">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Tooltip />
+          <Legend
+            layout="vertical"
+            verticalAlign="middle"
+            align="right"
+            wrapperStyle={{ fontSize: "0.75rem" }} // Optional for smaller screens
+          />
+          <Pie
+            data={pieData}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius="80%"
+          >
+            {pieData.map((_, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={["#3b82f6", "#e2e8f0", "#1e40af"][index % 3]}
+              />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+
+    <div className="flex gap-4 text-xs sm:text-sm mt-2 flex-wrap">
+      <span className="text-green-600 flex items-center gap-1">● High</span>
+      <span className="text-yellow-500 flex items-center gap-1">● Inprogress</span>
+    </div>
+  </CardContent>
+</Card>
+
     </div>
   
     {/* Another Charts Grid */}
