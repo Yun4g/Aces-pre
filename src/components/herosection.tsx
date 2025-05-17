@@ -22,11 +22,11 @@ const HeroSection = () => {
       <section className="flex flex-col lg:flex-row h-fit w-full px-6 md:ps-12 lg:ps-24 py-12">
         {/* Left Content */}
         <div className="w-full lg:w-1/2 h-full lg:pt-24">
-          <h1 className="text-lg md:text-xl font-bold mt-10">
+          {/* <h1 className="text-lg md:text-xl font-bold mt-10">
             Product Growth Solution in Single Platform.
-          </h1>
+          </h1> */}
           <p className="text-3xl sm:text-5xl lg:text-[68px] font-semibold mt-4 leading-tight">
-            Streamline Student
+            Student
           </p>
           <p className="text-3xl sm:text-5xl lg:text-[68px] font-semibold mt-2 leading-tight">
             Referral Process
@@ -45,12 +45,12 @@ const HeroSection = () => {
                 Register using email address
               </p>
               <p className="mt-[3px] text-base md:text-xl font-medium">
-                shakir260@gmail.com
+                team@aces.org
               </p>
             </div>
             <div>
               <button
-                onClick={() => router.push('/signUp')}
+                onClick={() => router.push('/signup')}
                 className="bg-[#005A9C] text-white w-full md:w-[200px] p-4 md:p-0 h-[50px] md:h-[65px] flex justify-center items-center rounded"
               >
                 Get Started
@@ -59,7 +59,7 @@ const HeroSection = () => {
           </div>
 
           {/* Benefits */}
-          <div className="mt-5 flex flex-col sm:flex-row gap-4">
+          {/* <div className="mt-5 flex flex-col sm:flex-row gap-4">
             <p className="flex items-center text-sm md:text-base">
               <Image
                 src="/assest/tick.png"
@@ -80,7 +80,7 @@ const HeroSection = () => {
               />
               Great Service
             </p>
-          </div>
+          </div> */}
         </div>
 
   
@@ -95,7 +95,7 @@ const HeroSection = () => {
         </div>
       </section>
 
-      <div className="py-12 px-4 md:px-12 w-full flex flex-col justify-center items-center border-t-2 border-b-2">
+      {/* <div className="py-12 px-4 md:px-12 w-full flex flex-col justify-center items-center border-t-2 border-b-2">
         <p className="text-lg md:text-xl lg:text-2xl font-medium text-center">
           Over 32k+ software businesses growing with AR Shakir
         </p>
@@ -112,7 +112,7 @@ const HeroSection = () => {
             />
           ))}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

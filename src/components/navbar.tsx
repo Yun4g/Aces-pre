@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
           Sign In
         </button>
         <button
-          onClick={() => handleNavigate('signUp')}
+          onClick={() => handleNavigate('signup')}
           className="font-normal bg-[#005A9C] text-white w-[172px] h-[54px] text-base rounded-xl"
         >
           Get Started

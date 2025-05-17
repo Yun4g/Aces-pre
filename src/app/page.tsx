@@ -11,10 +11,10 @@ export default function Home() {
     <>
        <Navbar/>
        <HeroSection/>
-       <Section2/>
+       {/* <Section2/>
        <Section3/>
        <SectionFive/>
-       <SectionSix/>
+       <SectionSix/> */}
        <Footer/>
     </>
   )

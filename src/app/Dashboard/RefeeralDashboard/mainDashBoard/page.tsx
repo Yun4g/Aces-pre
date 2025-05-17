@@ -16,8 +16,8 @@ import DashboardHeader from '@/components/DashBoardHeader'
 }
 
 
-function MainDashBoard({}: MainDashBoardProps) {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+function MainDashBoard() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
         <main className="bg-[#F1F1F1] min-h-screen flex">
@@ -55,12 +55,12 @@ function MainDashBoard({}: MainDashBoardProps) {
                             </div>
                         </div>
 
-                        <RecentReferrals />
-                    </div>
-                </div>
-            </section>
-        </main>
-    );
+            <RecentReferrals />
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }
 
 export default MainDashBoard;
