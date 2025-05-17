@@ -3,7 +3,7 @@ import React from 'react';
 
 function Details() {
   return (
-    <div className="w-full max-w-full">
+    <div className="w-full dark:bg-gray-900 dark:text-white transition-colors duration-300 max-w-full">
       <div className="border-b-2 py-3 px-4 sm:px-6 md:px-8">
         <h2 className="text-lg font-bold">Details</h2>
       </div>
@@ -22,13 +22,13 @@ function Details() {
 
         {/* Department */}
         <div>
-          <h4 className="text-base font-semibold text-gray-900 mb-2">Department</h4>
+          <h4 className="text-base font-semibold text-gray-900 mb-2 dark:text-white">Department</h4>
           <span className="text-sm sm:text-base">Service</span>
         </div>
 
         {/* Category */}
         <div>
-          <h4 className="text-base font-semibold text-gray-900 mb-2">Category</h4>
+          <h4 className="text-base font-semibold text-gray-900 dark:text-white mb-2">Category</h4>
           <span className="text-sm sm:text-base">Maintenance</span>
         </div>
 
@@ -47,13 +47,13 @@ function Details() {
 
         {/* District */}
         <div>
-          <h4 className="text-xs text-gray-500 mb-1">District</h4>
+          <h4 className="text-xs text-gray-500 dark:text-white mb-1">District</h4>
           <span className="text-sm sm:text-base">Valley / Admin</span>
         </div>
 
         {/* Phone */}
         <div>
-          <h4 className="text-xs text-gray-500 mb-1">Phone</h4>
+          <h4 className="text-xs text-gray-500 dark:text-white mb-1">Phone</h4>
           <span className="text-sm sm:text-base">555-123-4567</span>
         </div>
 

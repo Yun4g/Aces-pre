@@ -37,7 +37,7 @@ const CreateNewPassword = () => {
       ...prev,
       [id]: value,
     }));
-  };
+  }; 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ const CreateNewPassword = () => {
     setSubmitting(true);
 
     try {
-      // Simulate API call
+
       setTimeout(() => {
         setSubmitting(false);
         router.push('/login');
@@ -78,7 +78,7 @@ const CreateNewPassword = () => {
           src="/assest/createNewPassimg.png"
           alt="Illustration"
           fill
-          className="object-cover"
+          className="h-full w-full"
           priority
         />
       </div>
@@ -159,7 +159,7 @@ const CreateNewPassword = () => {
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
                   tabIndex={-1}
                 >
-                  {showConfirmPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                  {showConfirmPassword ?  <FiEyeOff size={20} /> : <FiEye size={20} />}  
                 </button>
               </div>
               {errors.confirmPassword && (

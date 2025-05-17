@@ -111,197 +111,225 @@ const referrals = [
 
 export default function Analytics() {
   return (
-    <div className="p-6 max-w-7xl mx-auto  space-y-6">
-      <div className="flex gap-4">
-        <Button className="bg-blue-600 text-white hover:bg-blue-700">Month</Button>
-        <Button variant="outline" className="bg-white">School year</Button>
-        <Button variant="outline" className="bg-white">Custom Range</Button>
-      </div>
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-6">
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {metrics.map((metric, i) => (
-          <Card key={i} className="border-none shadow-sm">
-            <CardContent className="p-4">
-              <div className="text-2xl font-bold text-blue-700">{metric.value}</div>
-              <div className="text-sm text-gray-600">{metric.label}</div>
-              <div className="text-xs text-green-600">↑ {metric.change}</div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-none shadow-sm">
+    {/* Buttons */}
+    <div className="flex flex-wrap gap-3 mb-4">
+      <Button className="bg-blue-600 text-white hover:bg-blue-700 min-w-[100px] flex-1 sm:flex-none text-center">
+        Month
+      </Button>
+      <Button
+        variant="outline"
+        className="bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 min-w-[120px] flex-1 sm:flex-none text-center"
+      >
+        School year
+      </Button>
+      <Button
+        variant="outline"
+        className="bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 min-w-[130px] flex-1 sm:flex-none text-center"
+      >
+        Custom Range
+      </Button>
+    </div>
+  
+    {/* Metrics Grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      {metrics.map((metric, i) => (
+        <Card key={i} className="border-none shadow-sm">
           <CardContent className="p-4">
-            <div className="flex justify-between items-center mb-2">
-              <div>
-                <h2 className="text-sm text-gray-600">Average Referrals created</h2>
-                <div className="text-2xl font-bold text-blue-700">4,568</div>
-                <div className="text-xs text-gray-500 mt-1">Average referrals Solved</div>
-                <div className="text-lg font-semibold text-blue-700">4,568</div>
-              </div>
-              <select className="border text-sm p-1 rounded">
-                <option>Dec 1-7</option>
-              </select>
-            </div>
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={barData}>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip />
-                <Bar dataKey="value" fill="#1e40af" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <div className="text-2xl sm:text-3xl font-bold text-blue-700">{metric.value}</div>
+            <div className="text-sm sm:text-base text-gray-600">{metric.label}</div>
+            <div className="text-xs sm:text-sm text-green-600">↑ {metric.change}</div>
           </CardContent>
         </Card>
-
-        <Card className="border-none shadow-sm">
-          <CardContent className="p-4">
-            <h2 className="text-sm text-gray-600 mb-2">Average Referrals created</h2>
-            <ResponsiveContainer width="100%" height={200}>
+      ))}
+    </div>
+  
+    {/* Charts Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  
+      {/* Bar Chart Card */}
+      <Card className="border-none shadow-sm">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-3">
+            <div>
+              <h2 className="text-sm sm:text-base text-gray-600">Average Referrals created</h2>
+              <div className="text-2xl font-bold text-blue-700">4,568</div>
+              <div className="text-xs sm:text-sm text-gray-500 mt-1">Average referrals Solved</div>
+              <div className="text-lg font-semibold text-blue-700">4,568</div>
+            </div>
+            <select className="border bg-white dark:bg-gray-800 text-sm p-1 rounded max-w-[150px]">
+              <option>Dec 1-7</option>
+            </select>
+          </div>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={barData}>
+              <XAxis dataKey="name" axisLine={false} tickLine={false} />
+              <YAxis axisLine={false} tickLine={false} />
+              <Tooltip />
+              <Bar dataKey="value" fill="#1e40af" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+  
+      {/* Pie Chart Card */}
+      <Card className="border-none shadow-sm">
+        <CardContent className="p-4">
+          <h2 className="text-sm sm:text-base text-gray-600 mb-2">Average Referrals created</h2>
+          <ResponsiveContainer width="100%" height={200}>
+            <PieChart>
+              <Tooltip />
+              <Legend layout="vertical" verticalAlign="middle" align="right" />
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+              >
+                {pieData.map((_, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={["#3b82f6", "#e2e8f0", "#1e40af"][index % 3]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="flex gap-4 text-xs sm:text-sm mt-2 flex-wrap">
+            <span className="text-green-600 flex items-center gap-1">● High</span>
+            <span className="text-yellow-500 flex items-center gap-1">● Inprogress</span>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  
+    {/* Another Charts Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  
+      {/* Districts Distribution Pie */}
+      <Card className="border-none shadow-sm">
+        <CardContent className="p-4">
+          <h2 className="text-sm sm:text-base text-gray-600 mb-2">Districts Distribution</h2>
+          <div className="relative w-full" style={{ height: 200 }}>
+            <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Tooltip />
-                <Legend layout="vertical" verticalAlign="middle" align="right" />
                 <Pie
-                  data={pieData}
+                  data={districtData}
                   dataKey="value"
                   nameKey="name"
                   cx="50%"
                   cy="50%"
+                  innerRadius={60}
                   outerRadius={80}
                 >
-                  {pieData.map((_, index) => (
+                  {districtData.map((_, index) => (
                     <Cell
-                      key={`cell-${index}`}
-                      fill={["#3b82f6", "#e2e8f0", "#1e40af"][index % 3]}
+                      key={`cell-district-${index}`}
+                      fill={["#1e40af", "#f59e0b", "#94a3b8", "#e2e8f0"][index % 4]}
                     />
                   ))}
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
-            <div className="flex gap-4 text-xs mt-2">
-              <span className="text-green-600">● High</span>
-              <span className="text-yellow-500">● Inprogress</span>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+              <div className="text-sm font-medium select-none">Districts A</div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-none shadow-sm">
-          <CardContent className="p-4">
-            <h2 className="text-sm text-gray-600 mb-2">Districts Distribution</h2>
-            <div className="relative">
-              <ResponsiveContainer width="100%" height={200}>
-                <PieChart>
-                  <Pie
-                    data={districtData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                  >
-                    {districtData.map((_, index) => (
-                      <Cell
-                        key={`cell-district-${index}`}
-                        fill={["#1e40af", "#f59e0b", "#94a3b8", "#e2e8f0"][index % 4]}
-                      />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                <div className="text-sm font-medium">Districts A</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-none shadow-sm">
-          <CardContent className="p-4">
-            <div>
-              <h2 className="text-sm text-gray-600 mb-1">Enrollment Trends</h2>
-              <div className="text-xs mb-2">Total Trends</div>
-            </div>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={enrollmentData}>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="y2023"
-                  stroke="#3b82f6"
-                  strokeWidth={2}
-                  dot={false}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="y2024"
-                  stroke="#f59e0b"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="border-none shadow-sm">
-        <CardContent className="p-4">
-          <h2 className="text-sm text-gray-600 mb-4">Recent Referrals</h2>
-          <div className="overflow-auto">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="border-b text-left">
-                  <th className="pb-2">Students</th>
-                  <th className="pb-2">Type</th>
-                  <th className="pb-2">Status</th>
-                  <th className="pb-2">Assigned By</th>
-                  <th className="pb-2">Date</th>
-                  <th className="pb-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {referrals.map((r) => (
-                  <tr key={r.id} className="border-b">
-                    <td className="py-3">
-                      <div>
-                        <div className="font-medium">{r.student}</div>
-                        <div className="text-xs text-gray-500">{r.email}</div>
-                      </div>
-                    </td>
-                    <td className="py-3">
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">
-                        {r.type}
-                      </span>
-                    </td>
-                    <td className="py-3">
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        r.status === "Success"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}>
-                        {r.status}
-                      </span>
-                    </td>
-                    <td className="py-3">{r.assignedBy}</td>
-                    <td className="py-3">{r.date}</td>
-                    <td className="py-3">
-                      <a href="#" className="text-blue-600 mr-2">View</a>
-                      <a href="#" className="text-gray-500">Edit</a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </CardContent>
       </Card>
+  
+      {/* Enrollment Trends Line Chart */}
+      <Card className="border-none shadow-sm">
+        <CardContent className="p-4">
+          <div>
+            <h2 className="text-sm sm:text-base text-gray-600 mb-1">Enrollment Trends</h2>
+            <div className="text-xs sm:text-sm mb-2">Total Trends</div>
+          </div>
+          <ResponsiveContainer width="100%" height={200}>
+            <LineChart data={enrollmentData}>
+              <XAxis dataKey="name" axisLine={false} tickLine={false} />
+              <YAxis axisLine={false} tickLine={false} />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="y2023"
+                stroke="#3b82f6"
+                strokeWidth={2}
+                dot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="y2024"
+                stroke="#f59e0b"
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
     </div>
+  
+    {/* Recent Referrals Table */}
+    <Card className="border-none shadow-sm">
+      <CardContent className="p-4">
+        <h2 className="text-sm sm:text-base text-gray-600 mb-4">Recent Referrals</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm sm:text-base border-collapse">
+            <thead>
+              <tr className="border-b text-left">
+                <th className="pb-2 px-2">Students</th>
+                <th className="pb-2 px-2">Type</th>
+                <th className="pb-2 px-2">Status</th>
+                <th className="pb-2 px-2">Assigned By</th>
+                <th className="pb-2 px-2">Date</th>
+                <th className="pb-2 px-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {referrals.map((r) => (
+                <tr key={r.id} className="border-b hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  <td className="py-3 px-2 max-w-[150px] whitespace-normal">
+                    <div>
+                      <div className="font-medium">{r.student}</div>
+                      <div className="text-xs text-gray-500 truncate">{r.email}</div>
+                    </div>
+                  </td>
+                  <td className="py-3 px-2">
+                    <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs whitespace-nowrap">
+                      {r.type}
+                    </span>
+                  </td>
+                  <td className="py-3 px-2">
+                    <span
+                      className={`px-2 py-1 rounded text-xs whitespace-nowrap ${
+                        r.status === "Success"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
+                      {r.status}
+                    </span>
+                  </td>
+                  <td className="py-3 px-2">{r.assignedBy}</td>
+                  <td className="py-3 px-2">{r.date}</td>
+                  <td className="py-3 px-2 whitespace-nowrap">
+                    <a href="#" className="text-blue-600 mr-2 hover:underline">View</a>
+                    <a href="#" className="text-gray-500 hover:underline">Edit</a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+  
+  </div>
+  
   );
 }

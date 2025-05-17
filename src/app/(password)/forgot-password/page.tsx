@@ -15,13 +15,10 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Validate with Zod
     const result = forgotPasswordSchema.safeParse({ email });
-
     if (!result.success) {
       const fieldError = result.error.flatten().fieldErrors.email?.[0] || 'Invalid input';
       setError(fieldError);
@@ -46,7 +43,7 @@ const ForgotPassword = () => {
           src="/assest/forgetPassword.png"
           alt="Forgot Password"
           fill
-          className="object-cover"
+          className="h-full w-full"
           priority
         />
       </div>

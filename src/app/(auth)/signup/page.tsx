@@ -44,7 +44,6 @@ const Signup = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     const result = SignupSchema.safeParse(formData);
 
     if (!result.success) {
@@ -56,10 +55,10 @@ const Signup = () => {
       setErrors(fieldErrors);
       return;
     }
-
     setErrors({});
     console.log('Form submitted:', formData);
     router.push('/role');
+    
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

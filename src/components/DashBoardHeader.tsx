@@ -26,10 +26,10 @@ const DashboardHeader = () => {
   };
 
   return (
-    <header className="w-full bg-white border-b border-gray-200 shadow-sm py-3 px-4  z-[1000]">
+    <header className="w-full bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 border-b border-gray-200 shadow-sm py-3 px-4  z-[1000]">
       <div className="flex items-center justify-between w-full">
         {/* Page title */}
-        <h1 className="text-lg font-medium text-gray-800 flex-1 md:flex-none">
+        <h1 className="text-lg font-medium dark:text-white text-gray-800 flex-1 md:flex-none">
           {getPageTitle()}
         </h1>
 

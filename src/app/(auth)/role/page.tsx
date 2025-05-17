@@ -86,12 +86,12 @@ const JoinAs = () => {
   return (
     <div className="flex flex-col md:flex-row h-screen">
       {/* Left Panel */}
-      <div className="bg-blue-600 text-white pt-8 md:w-1/2 justify-start relative hidden md:block">
+      <div className=" text-white pt-8 md:w-1/2 justify-start relative hidden md:block">
         <Image
           src="/assest/createNewPassimg.png"
           alt="Illustration"
           fill
-          className="object-cover"
+          className="h-full w-full"
           priority
         />
       </div>

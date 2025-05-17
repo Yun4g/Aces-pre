@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="lg:px-[98px] py-8">
+    <footer className="lg:px-[98px] bg-white   h-80  py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row flex-wrap justify-between items-start gap-y-10">
           {/* Logo Section */}
@@ -100,10 +100,10 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-full bg-slate-400 border mt-10 mb-12"></div>
+        <div className="w-full bg-slate-400 border mt-10 mb-7"></div>
 
         {/* Copyright Section */}
-        <div className="mt-8 text-center text-base font-semibold text-[#181433]">
+        <div className="pb-11 text-center text-base font-semibold text-[#181433]">
           Copyright © AR Shakir 2022. All Rights Reserved.
         </div>
       </div>

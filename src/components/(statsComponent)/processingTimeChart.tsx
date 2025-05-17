@@ -46,12 +46,12 @@ const chartConfig = {
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-white p-4 shadow-lg rounded-md border border-gray-200">
+            <div className="bg-white dark:text-black p-4 shadow-lg rounded-md border border-gray-200">
                 <p className="font-bold text-center mb-2">{label}</p>
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-amber-500"></div>
-                        <span>Average price</span>
+                        <span className="">Average price</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-blue-700"></div>
@@ -92,8 +92,8 @@ export function ProcessingTimeChart() {
             </CardHeader>
 
             <p className='font-bold my-3'>Hours</p>
-            <CardContent className='border border-gray-200 py-3 rounded-lg'>
-                <ChartContainer config={chartConfig} className="h-[300px]  w-[300px] lg:w-[700px]">
+            <CardContent className="border dark:text-white border-gray-200 py-3 rounded-lg">
+                <ChartContainer config={chartConfig} className="h-72 w-full max-w-full lg:max-w-[700px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                             data={chartData}
@@ -104,12 +104,12 @@ export function ProcessingTimeChart() {
                                 dataKey="month"
                                 axisLine={false}
                                 tickLine={false}
-                                tick={{ fill: '#666', fontSize: 12 }}
+                                tick={{ fill: '#ffffff', fontSize: 13 }}
                             />
                             <YAxis
                                 axisLine={false}
                                 tickLine={false}
-                                tick={{ fill: '#666', fontSize: 12 }}
+                                tick={{ fill: '#fff', fontSize: 12 }}
                                 tickFormatter={formatYAxisTick}
                                 domain={[0, 100]}
                                 ticks={[0, 20, 40, 60, 80, 100]}
@@ -137,6 +137,7 @@ export function ProcessingTimeChart() {
                     </ResponsiveContainer>
                 </ChartContainer>
             </CardContent>
+
         </Card>
     );
 }

@@ -11,11 +11,8 @@ type DocumentField = {
   file: File | null;
 };
 
-export default function StudentReferral() {
-  
-
-
-  
+export default function iStudentReferral() {
+    
 
   // Document fields state
   const [documentFields, setDocumentFields] = useState<DocumentField[]>([
@@ -38,17 +35,17 @@ export default function StudentReferral() {
   
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 md:p-8">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-white transition-colors duration-300  md:p-8">
+      <div className=" w-full md:max-w-4xl md:mx-auto bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 rounded-lg shadow-md overflow-hidden">
         {/* Header */}
        
         
         
         
         {/* Content Area */}
-        <div className="p-4 sm:p-6">
-          <h2 className="text-lg font-medium text-gray-700 mb-4">Document Upload</h2>
-          <p className="text-sm text-gray-500 mb-6">
+        <div className="p-4 sm:p-2">
+          <h2 className="text-lg font-medium text-gray-700 dark:text-white mb-4">Document Upload</h2>
+          <p className="text-sm text-gray-500 dark:text-white mb-6">
             Upload all required documentation to support this referral. Required documents are indicated with an asterisk (*).
           </p>
           
@@ -56,8 +53,8 @@ export default function StudentReferral() {
           <div className="space-y-6">
             {documentFields.map((field) => (
               <div key={field.id} className="border border-gray-200 rounded-lg p-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {field.name}{field.required && <span className="text-red-500">*</span>}
+                <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
+                  {field.name}{field.required && <span className="text-red-500 ">*</span>}
                 </label>
                 <div
                   className="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:border-gray-400 transition-colors"

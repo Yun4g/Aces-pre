@@ -28,12 +28,12 @@ const ReferralForm = () => {
   
   };
 
-  const updateFormData = (newData: any) => {
+  const updateFormData = (newData: object) => {
     setFormData(prevData => ({ ...prevData, ...newData }));
   };
 
   return (
-    <div className=" p-4 bg-white  rounded-md">
+    <div className=" p-4 bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300  rounded-md">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold">New ACES Student Referral</h1>
         <div className="flex space-x-1">
@@ -54,7 +54,7 @@ const ReferralForm = () => {
             </div>
             <span className="text-xs mt-1">Referrer Info</span>
           </div>
-          <div className="flex-1 h-1 mx-2 bg-gray-200">
+          <div className="flex-1 h-1 mx-2 bg-gray-200 dark:bg-gray-900 dark:text-white transition-colors duration-300">
             <div className={`h-full ${currentStep >= 2 ? 'bg-blue-500' : 'bg-gray-200'}`} style={{ width: currentStep >= 2 ? '100%' : '0%' }}></div>
           </div>
           <div className={`flex flex-col items-center ${currentStep >= 2 ? 'text-blue-500' : 'text-gray-400'}`}>
@@ -63,7 +63,7 @@ const ReferralForm = () => {
             </div>
             <span className="text-xs mt-1">Student Details</span>
           </div>
-          <div className="flex-1 h-1 mx-2 bg-gray-200">
+          <div className="flex-1 h-1 mx-2 bg-gray-200 dark:bg-gray-900 dark:text-white transition-colors duration-300">
             <div className={`h-full ${currentStep >= 3 ? 'bg-blue-500' : 'bg-gray-200'}`} style={{ width: currentStep >= 3 ? '100%' : '0%' }}></div>
           </div>
           <div className={`flex flex-col items-center ${currentStep >= 3 ? 'text-blue-500' : 'text-gray-400'}`}>
@@ -72,7 +72,7 @@ const ReferralForm = () => {
             </div>
             <span className="text-xs mt-1">Program Selection</span>
           </div>
-          <div className="flex-1 h-1 mx-2 bg-gray-200">
+          <div className="flex-1 h-1 mx-2 bg-gray-200 dark:bg-gray-900 dark:text-white transition-colors duration-300">
             <div className={`h-full ${currentStep >= 4 ? 'bg-blue-500' : 'bg-gray-200'}`} style={{ width: currentStep >= 4 ? '100%' : '0%' }}></div>
           </div>
           <div className={`flex flex-col items-center ${currentStep >= 4 ? 'text-blue-500' : 'text-gray-400'}`}>
@@ -93,7 +93,7 @@ const ReferralForm = () => {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between mt-6">
+      <div className="flex flex-wrap gap-2 justify-between mt-6">
         <div className="flex ">
           {currentStep > 1 && (
             <button onClick={goToPrevStep} className="px-4 py-2 border-2 rounded-md text-gray-600 hover:bg-gray-50">

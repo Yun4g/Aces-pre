@@ -2,8 +2,8 @@
  
 import React, { useState } from 'react';
 import NavbarReferal from '../navbarReferal';
-import { StatCards } from '@/components/statComponent';
-import { ProcessingTimeChart } from '@/components/processingTimeChart';
+import { StatCards } from '@/components/(statsComponent)/statComponent';
+import { ProcessingTimeChart } from '@/components/(statsComponent)/processingTimeChart';
 import { DistrictStats } from '@/components/districtChart';
 import { RecentReferrals } from '@/components/RecentReferal';
 import DashboardHeader from '@/components/DashBoardHeader' 
@@ -20,7 +20,7 @@ function MainDashBoard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <main className="bg-[#F1F1F1] min-h-screen flex">
+        <main className="bg-[#F1F1F1] min-h-screen flex  text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
 
             <div className={`
                          fixed top-0 left-0 h-full w-[250px] bg-white z-50 shadow-md border-r
@@ -34,13 +34,13 @@ function MainDashBoard() {
             <section className="flex-1 ml-0 md:ml-[250px] p-4 overflow-y-auto w-full">
 
                 <button
-                    className="md:hidden mb-4 bg-white px-3 py-2 rounded-md shadow-sm border text-sm"
+                    className="md:hidden mb-4  px-3 py-2 rounded-md shadow-sm  text-sm"
                     onClick={() => setSidebarOpen(true)}
                 >
                     ☰ Menu
                 </button>
 
-                <div className="container bg-white p-3 mx-auto">
+                <div className="container bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 p-3 mx-auto">
                     <header className=' mb-2 rounded-md overflow-hidden  z-[1000] bg-white '>
                         <DashboardHeader />
                     </header>
