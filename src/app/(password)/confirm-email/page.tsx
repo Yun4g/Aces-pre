@@ -5,13 +5,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const ConfirmEmail = () => {
-  const handleOpenEmailApp = () => {
-    window.location.href = 'mailto:';
-  };
+ const handleOpenEmailApp = () => {
+  const isAndroid = /android/i.test(navigator.userAgent);
+  const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  if (isAndroid) {
+    window.location.href = 'googlegmail://';
+    setTimeout(() => {
+      window.open('https://mail.google.com', '_blank');
+    }, 1000);
+  } else if (isiOS) {
+    window.open('https://mail.google.com', '_blank');
+  } else {
+    window.open('https://mail.google.com', '_blank');
+  }
+};
+
 
   return (
     <div className="flex flex-col lg:flex-row justify-center h-screen">
-      {/* Left side with image */}
+  
       <div className="w-full lg:w-1/2 h-64 lg:h-auto relative hidden lg:block">
         <Image
           src="/assest/confirmEmail.png"
@@ -22,7 +35,6 @@ const ConfirmEmail = () => {
         />
       </div>
 
-      {/* Right side with form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-8">
         <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px] p-6 sm:p-8">
           {/* Logo */}

@@ -39,15 +39,16 @@ const useRegister = () => {
   return useMutation({
     mutationFn: async (data: SignupFormData) => {
      const response = await axios.post('/api/auth/registration/', {
-  email: data.email,
-  username: data.username,
-  password1: data.password1,
-  password2: data.password2,
+      email: data.email,
+      username: data.username,
+      password1: data.password1,
+     password2: data.password2,
 });
       return response.data;
     },
   });
 };
+
 
 
   const [showPassword1, setShowPassword1] = useState(false);
@@ -93,7 +94,11 @@ const handleSubmit = async (e: React.FormEvent) => {
   setErrors({});
   const data = await registerMutation.mutateAsync(formData);
   setSuccessMessage(data.detail); 
-    router.push('/login');
+  
+
+    setTimeout(() => {
+       router.push('/login');
+    }, 2000);
 
 } catch (error: any) {
   console.error("Registration error:", error.response?.data || error);
@@ -159,6 +164,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
             {successMessage && (
                <p className="text-green-600 text-center mt-4 font-semibold">
+
            {successMessage}
            </p>
          )}
@@ -176,7 +182,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   id="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`shadow appearance-none border rounded w-full py-3 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  className={`shadow appearance-none border rounded-[6px]  w-full py-3 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                     errors.email ? 'border-red-500' : ''
                   }`}
                   placeholder="convey@gmail.com"
@@ -203,7 +209,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       id="username"
       value={formData.username}
       onChange={handleChange}
-      className={`shadow appearance-none border rounded w-full py-3 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+      className={`shadow appearance-none border rounded-[6px]  w-full py-3 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
         errors.username ? 'border-red-500' : ''
       }`}
       placeholder="Enter your username"
@@ -269,7 +275,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   id="password1"
                   value={formData.password1}
                   onChange={handleChange}
-                  className={`shadow appearance-none border rounded w-full py-3 pl-10 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  className={`shadow appearance-none border rounded-[6px]  w-full py-3 pl-10 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                     errors.password ? 'border-red-500' : ''
                   }`}
                   placeholder="Password"
@@ -311,7 +317,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   id="password2"
                   value={formData.password2}
                   onChange={handleChange}
-                  className={`shadow appearance-none border rounded w-full py-3 pl-10 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  className={`shadow appearance-none border rounded-[6px]  w-full py-3 pl-10 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                     errors.password ? 'border-red-500' : ''
                   }`}
                   placeholder="Password"
@@ -351,7 +357,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <div className="mb-4">
               <button
                 type="button"
-                className="w-full py-2.5 px-4 border border-[#FF6607] rounded-md font-semibold text-[#FF6607] transition-colors duration-300 hover:bg-red-800 hover:text-white flex items-center justify-center"
+                className="w-full py-2.5 px-4 border border-[#FF6607] rounded-[6px]  font-semibold text-[#FF6607] transition-colors duration-300 hover:bg-red-800 hover:text-white flex items-center justify-center"
                 onClick={() => alert('Office 365 auth not implemented')}
               >
                 <FaMicrosoft size={18} className="mr-2" />
@@ -370,7 +376,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <div className="flex items-center justify-center">
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-[6px]  focus:outline-none focus:shadow-outline w-full"
               >
                 Sign Up
               </button>

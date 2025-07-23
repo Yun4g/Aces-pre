@@ -1,39 +1,74 @@
 'use client';
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
-// Zod schema for validation
 const forgotPasswordSchema = z.object({
   email: z.string().min(1, 'Email is required').email('Please enter a valid email address'),
 });
 
-const ForgotPassword = () => {
+type SignupFormData = z.infer<typeof forgotPasswordSchema>;
+
+const ForgotPassword: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const result = forgotPasswordSchema.safeParse({ email });
-    if (!result.success) {
-      const fieldError = result.error.flatten().fieldErrors.email?.[0] || 'Invalid input';
-      setError(fieldError);
-      return;
-    }
+  const [successMessage, setSuccessMessage] = useState("");
 
-    setError('');
-    setLoading(true);
-
-    // Simulate API call then redirect
-    setTimeout(() => {
-      setLoading(false);
-      router.push('/confirm-email');
-    }, 1000);
+  const useResetPassword = () => {
+    return useMutation({
+      mutationFn: async (data: SignupFormData) => {
+        const response = await axios.post('/api/auth/password/reset/', {
+          email: data.email,
+        });
+        return response.data;
+      },
+    });
   };
+
+  const resetMutation = useResetPassword();
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const result = forgotPasswordSchema.safeParse({ email });
+  if (!result.success) {
+    const fieldError = result.error.flatten().fieldErrors.email?.[0] || 'Invalid input';
+    setError(fieldError);
+    return;
+  }
+
+  setError('');
+  setLoading(true);
+
+  try {
+  
+     const data =  await resetMutation.mutateAsync({ email });
+     console.log(data)
+     setSuccessMessage(data.detail)
+
+     if (data.detail) {
+      setTimeout(() => {
+         router.push('/confirm-email');
+      }, 2000);
+     }
+ 
+  } catch (error: any) {
+    if (error?.response?.data?.email) {
+      setError(error.response.data.email[0]);
+    } else if (error?.response?.data?.detail) {
+      setError(error.response.data.detail);
+    } else {
+      setError('Something went wrong. Please try again.');
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="flex flex-col lg:flex-row justify-center h-screen">
@@ -43,7 +78,7 @@ const ForgotPassword = () => {
           src="/assest/forgetPassword.png"
           alt="Forgot Password"
           fill
-          className="h-full w-full"
+          className="h-full w-full object-cover"
           priority
         />
       </div>
@@ -71,6 +106,13 @@ const ForgotPassword = () => {
           </p>
 
           <form onSubmit={handleSubmit}>
+
+        {successMessage && (
+               <p className="text-green-600 text-center mt-4 font-semibold">            
+                  {successMessage}
+                 </p>
+         )}
+
             <div className="mb-4 mt-6">
               <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
                 Email

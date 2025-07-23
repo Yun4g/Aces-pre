@@ -9,6 +9,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useMutation } from '@tanstack/react-query';
+import {
+  FaEye,
+  FaEyeSlash,
+} from 'react-icons/fa';
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -19,7 +23,6 @@ const loginSchema = z.object({
 
 type FormValues = z.infer<typeof loginSchema>;
 
-// ✅ Mutation hook moved outside the component
 const useLogin = () => {
   return useMutation({
     mutationFn: async (data: FormValues) => {
@@ -45,6 +48,8 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [generalError, setGeneralError] = React.useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
+
   const router = useRouter();
   const loginMutation = useLogin();
 
@@ -55,9 +60,8 @@ const Login: React.FC = () => {
     try {
       const result = await loginMutation.mutateAsync(data);
       console.log(result);
-
-      // Redirect to dashboard on success
-      router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
+      setSuccessMessage(result.detail)
+        // router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
     } catch (error: any) {
       console.error(error);
       const message =
@@ -105,6 +109,22 @@ const Login: React.FC = () => {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+
+
+                 {generalError && (
+              <p className="text-red-600 text-center mt-4 font-semibold">
+                 {generalError}
+              </p>
+            )}
+
+              {successMessage && (
+               <p className="text-green-600 text-center mt-4 font-semibold">
+                
+           {successMessage}
+           </p>
+         )}
+
+
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -114,7 +134,7 @@ const Login: React.FC = () => {
                 id="email"
                 type="email"
                 placeholder="user@example.com"
-                className="w-full p-2.5 border border-gray-300 bg-white outline-none rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-2.5 border border-gray-300 bg-white outline-none rounded-[6px]  focus:ring-blue-500 focus:border-blue-500"
                 {...register("email")}
               />
               {errors.email && (
@@ -131,7 +151,7 @@ const Login: React.FC = () => {
                 id="username"
                 type="text"
                 placeholder="yourusername"
-                className="w-full p-2.5 border border-gray-300 bg-white outline-none rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-2.5 border border-gray-300 bg-white outline-none rounded-[6px]  focus:ring-blue-500 focus:border-blue-500"
                 {...register("username")}
               />
               {errors.username && (
@@ -149,31 +169,20 @@ const Login: React.FC = () => {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full p-2.5 border bg-white outline-none border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 pr-10"
+                  className="w-full p-2.5 border bg-white outline-none border-gray-300 rounded-[6px]  focus:ring-blue-500 focus:border-blue-500 pr-10"
                   {...register("password")}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  className="absolute right-2.5 top-1/2 transform rounded- -translate-y-1/2 text-gray-400"
                   tabIndex={-1}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7
-                      -1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                  </svg>
+                    {showPassword ? (
+                     <FaEye size={18} className="text-gray-400" />
+                  ) : (
+                    <FaEyeSlash size={18} className="text-gray-400" />
+                  )}
                 </button>
               </div>
               {errors.password && (
@@ -206,7 +215,7 @@ const Login: React.FC = () => {
 
             <button
               type="button"
-              className="w-full py-2.5 px-4 border border-[#FF6607] rounded-md font-semibold text-[#FF6607] transition-colors duration-300 hover:bg-red-800 hover:text-white"
+              className="w-full py-2.5 px-4 border border-[#FF6607] rounded-[6px]  font-semibold text-[#FF6607] transition-colors duration-300 hover:bg-red-800 hover:text-white"
             >
               Office 365
             </button>
@@ -215,7 +224,7 @@ const Login: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full bg-[#0a5596] hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-md"
+              className="w-full bg-[#0a5596] hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-[6px]"
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
