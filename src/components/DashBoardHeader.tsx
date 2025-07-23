@@ -35,7 +35,7 @@ const DashboardHeader = () => {
 
         {/* Right side elements */}
         <div className="flex items-center gap-2 md:gap-4">
-          {/* Search Bar */}
+         
           <div className="hidden sm:block relative">
             <input
               type="search"
@@ -47,7 +47,7 @@ const DashboardHeader = () => {
             </svg>
           </div>
 
-          {/* Notification Bell */}
+         
           <div className="relative">
             <button
               className="p-1 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -62,7 +62,7 @@ const DashboardHeader = () => {
             </button>
           </div>
 
-          {/* User Profile Dropdown */}
+         
           <div className="">
             <button
               className="flex items-center gap-2 focus:outline-none"

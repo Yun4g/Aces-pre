@@ -83,10 +83,7 @@ const notificationSlice = createSlice({
         },
         markAllAsRead: (state) => {
             return {
-                ...state,
-                notifications: state.notifications.map(notification => ({
-                    ...notification,
-                })),
+                ...state, notifications: state.notifications.map(notification => ({...notification, })),
             };
         },
     },

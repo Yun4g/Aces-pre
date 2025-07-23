@@ -1,20 +1,8 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import {
-    ChartConfig,
-    ChartContainer,
-} from '@/components/ui/chart';
-import {
-    Line,
-    LineChart,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    ResponsiveContainer,
-    TooltipProps
-} from 'recharts';
+import {ChartConfig, ChartContainer,} from '@/components/ui/chart';
+import { Line, LineChart, XAxis,YAxis,CartesianGrid, Tooltip,ResponsiveContainer, TooltipProps} from 'recharts';
 
 const chartData = [
     { month: 'Jan', volume: 15, average: 20 },
@@ -137,7 +125,6 @@ export function ProcessingTimeChart() {
                     </ResponsiveContainer>
                 </ChartContainer>
             </CardContent>
-
         </Card>
     );
 }

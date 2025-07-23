@@ -37,17 +37,17 @@ const ConfirmEmail = () => {
             />
           </div>
 
-          {/* Title */}
+        
           <h2 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4">
             Check your mail
           </h2>
 
-          {/* Subtitle */}
+          
           <p className="text-gray-600 text-base mb-6">
             We have sent password recovery instructions to your email.
           </p>
 
-          {/* Open Email Button */}
+       
           <button
             onClick={handleOpenEmailApp}
             className="bg-[#005A9C] text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"

@@ -9,6 +9,7 @@ import UploadAndReview from './tasks/UploadAndReview';
 const ReferralForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({});
+  console.log(formData)
 
   const goToNextStep = () => {
     setCurrentStep(prevStep => Math.min(prevStep + 1, 4));
@@ -45,36 +46,42 @@ const ReferralForm = () => {
         </div>
       </div>
 
-      {/* Progress Steps */}
+     
       <div className="mb-8">
         <div className="flex justify-between items-center">
-          <div className={`flex flex-col items-center ${currentStep >= 1 ? 'text-blue-500' : 'text-gray-400'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+          <div className={`flex flex-col items-center ${currentStep >= 1 ? 'text-blue-500' : 'text-gray-400'}`} >
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}` }>
               <span>1</span>
             </div>
             <span className="text-xs mt-1">Referrer Info</span>
           </div>
+
           <div className="flex-1 h-1 mx-2 bg-gray-200 dark:bg-gray-900 dark:text-white transition-colors duration-300">
-            <div className={`h-full ${currentStep >= 2 ? 'bg-blue-500' : 'bg-gray-200'}`} style={{ width: currentStep >= 2 ? '100%' : '0%' }}></div>
+            <div className={`h-full transition-all duration-300 ${currentStep >= 2 ? 'bg-blue-500' : 'bg-gray-200'}`} ></div>
           </div>
+
           <div className={`flex flex-col items-center ${currentStep >= 2 ? 'text-blue-500' : 'text-gray-400'}`}>
             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 2 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
               <span>2</span>
             </div>
             <span className="text-xs mt-1">Student Details</span>
           </div>
+
           <div className="flex-1 h-1 mx-2 bg-gray-200 dark:bg-gray-900 dark:text-white transition-colors duration-300">
-            <div className={`h-full ${currentStep >= 3 ? 'bg-blue-500' : 'bg-gray-200'}`} style={{ width: currentStep >= 3 ? '100%' : '0%' }}></div>
+            <div className={`h-full transition-all duration-300  ${currentStep >= 3 ? 'bg-blue-500' : 'bg-gray-200'}`} ></div>
           </div>
-          <div className={`flex flex-col items-center ${currentStep >= 3 ? 'text-blue-500' : 'text-gray-400'}`}>
+
+          <div className={`flex flex-col items-center  ${currentStep >= 3 ? 'text-blue-500' : 'text-gray-400'}`}>
             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 3 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
               <span>3</span>
             </div>
             <span className="text-xs mt-1">Program Selection</span>
           </div>
+
           <div className="flex-1 h-1 mx-2 bg-gray-200 dark:bg-gray-900 dark:text-white transition-colors duration-300">
-            <div className={`h-full ${currentStep >= 4 ? 'bg-blue-500' : 'bg-gray-200'}`} style={{ width: currentStep >= 4 ? '100%' : '0%' }}></div>
+            <div className={`h-full transition-colors duration-300 ${currentStep >= 4 ? 'bg-blue-500' : 'bg-gray-200'}`} ></div>
           </div>
+
           <div className={`flex flex-col items-center ${currentStep >= 4 ? 'text-blue-500' : 'text-gray-400'}`}>
             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 4 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
               <span>4</span>
@@ -89,7 +96,7 @@ const ReferralForm = () => {
         {currentStep === 1 && <ReferrerInfo updateFormData={updateFormData} formData={formData} />}
         {currentStep === 2 && <StudentDetails updateFormData={updateFormData} formData={formData} />}
         {currentStep === 3 && <ProgramSelection updateFormData={updateFormData} formData={formData} />}
-        {currentStep === 4 && <UploadAndReview formData={formData}  />}
+        {currentStep === 4 && <UploadAndReview updateFormData={updateFormData} formData={formData} />}
       </div>
 
       {/* Navigation Buttons */}

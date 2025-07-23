@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { z } from "zod";
 
-// Step 1: Define Zod schema
+
 const programFormSchema = z.object({
   selectedPrograms: z.array(z.string()).default([]),
   classification: z.string().optional(),
@@ -12,10 +12,10 @@ const programFormSchema = z.object({
   urgentReason: z.string().optional(),
 });
 
-// Step 2: Define TypeScript types from schema
+
 type ProgramFormData = z.infer<typeof programFormSchema>;
 
-// Step 3: Props type
+
 interface ProgramSelectionProps {
   updateFormData: (data: ProgramFormData) => void;
   formData: Partial<ProgramFormData>;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { z } from "zod";
 
-// Zod schema for validation and type inference
+
 const ReferrerInfoSchema = z.object({
   referrerName: z.string().min(1, "Name is required"),
   districts: z.string().min(1, "District is required"),
@@ -17,10 +17,7 @@ interface ReferrerInfoProps {
   formData: Partial<ReferrerInfoData>;
 }
 
-const ReferrerInfo: React.FC<ReferrerInfoProps> = ({
-  updateFormData,
-  formData,
-}) => {
+const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) => {
   const [referrerName, setReferrerName] = useState(formData.referrerName || "");
   const [districts, setDistricts] = useState(formData.districts || "");
   const [emailAddress, setEmailAddress] = useState(formData.emailAddress || "");

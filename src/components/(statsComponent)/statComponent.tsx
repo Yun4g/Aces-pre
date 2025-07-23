@@ -8,7 +8,7 @@ export function StatCards() {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Total Referrals */}
       <Card className="overflow-hidden">
-        <CardContent className="p-4">
+        <CardContent className="p-4 ">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl font-bold">248</h2>

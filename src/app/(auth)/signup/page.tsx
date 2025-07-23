@@ -14,15 +14,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
-// Zod Schema
+
 const SignupSchema = z.object({
   email: z.string().nonempty('Email is required').email('Email is invalid'),
-  role: z.string().nonempty('Please select a role'),
-  password: z
-    .string()
-    .nonempty('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
+  username: z.string().nonempty('Please select a role'),
+  password1: z.string().min(6, 'Password must be at least 6 characters'),
+  password2: z.string().min(6, 'Password must be at least 6 characters'),
+}).refine(data => data.password1 === data.password2, {
+  path: ['password2'],
+  message: "Passwords do not match",
 });
 
 type SignupFormData = z.infer<typeof SignupSchema>;
@@ -30,36 +33,82 @@ type SignupFormData = z.infer<typeof SignupSchema>;
 const Signup = () => {
   const router = useRouter();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState<SignupFormData>({
-    email: '',
-    role: '',
-    password: '',
+
+const useRegister = () => {
+
+  return useMutation({
+    mutationFn: async (data: SignupFormData) => {
+     const response = await axios.post('/api/auth/registration/', {
+  email: data.email,
+  username: data.username,
+  password1: data.password1,
+  password2: data.password2,
+});
+      return response.data;
+    },
   });
+};
+
+
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [loading, setLoading] = React.useState(false)
+ const [formData, setFormData] = useState<SignupFormData>({
+  email: '',
+  username: '',
+  password1: '',
+  password2: '',
+});
+
   const [errors, setErrors] = useState<Partial<Record<keyof SignupFormData, string>>>({});
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [generalError, setGeneralError] = useState<string | null>(null);
+  
+  console.log('success', successMessage)
+
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setShowPassword1(!showPassword1);
+    setShowPassword2(!showPassword2);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const result = SignupSchema.safeParse(formData);
 
-    if (!result.success) {
-      const fieldErrors: Partial<Record<keyof SignupFormData, string>> = {};
-      result.error.errors.forEach((err) => {
-        const field = err.path[0] as keyof SignupFormData;
-        fieldErrors[field] = err.message;
-      });
-      setErrors(fieldErrors);
-      return;
-    }
-    setErrors({});
-    console.log('Form submitted:', formData);
-    router.push('/role');
-    
-  };
+   const registerMutation = useRegister();
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const result = SignupSchema.safeParse(formData);
+  if (!result.success) {
+    const fieldErrors: Partial<Record<keyof SignupFormData, string>> = {};
+    result.error.errors.forEach((err) => {
+      const field = err.path[0] as keyof SignupFormData;
+      fieldErrors[field] = err.message;
+    });
+    setErrors(fieldErrors);
+    return;
+  }
+
+  try {
+  setErrors({});
+  const data = await registerMutation.mutateAsync(formData);
+  setSuccessMessage(data.detail); 
+    router.push('/login');
+
+} catch (error: any) {
+  console.error("Registration error:", error.response?.data || error);
+  alert("Registration failed: " + (
+    error?.response?.data?.non_field_errors?.[0] ||
+    JSON.stringify(error?.response?.data) ||
+    "Unknown error"
+  ));
+  setGeneralError(
+  error?.response?.data?.non_field_errors?.[0] ||
+  "Registration failed. Please try again."
+);
+}
+};
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData((prev) => ({
@@ -81,7 +130,7 @@ const Signup = () => {
         />
       </div>
 
-      {/* Right side with the form */}
+    
       <div className="w-full md:w-1/2 flex items-center justify-center">
         <div className="bg-white p-8 w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px]">
           {/* Logo */}
@@ -99,6 +148,20 @@ const Signup = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} noValidate>
+
+
+             
+            {generalError && (
+              <p className="text-red-600 text-center mt-4 font-semibold">
+                 {generalError}
+              </p>
+            )}
+
+            {successMessage && (
+               <p className="text-green-600 text-center mt-4 font-semibold">
+           {successMessage}
+           </p>
+         )}
             {/* Email */}
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
@@ -127,9 +190,37 @@ const Signup = () => {
                 </p>
               )}
             </div>
+<div className="mb-4">
+  <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
+    Username
+  </label>
+  <div className="relative">
+    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <FaUser size={18} className="text-gray-400" />
+    </div>
+    <input
+      type="text"
+      id="username"
+      value={formData.username}
+      onChange={handleChange}
+      className={`shadow appearance-none border rounded w-full py-3 pl-10 pr-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+        errors.username ? 'border-red-500' : ''
+      }`}
+      placeholder="Enter your username"
+      aria-invalid={!!errors.username}
+      aria-describedby="username-error"
+    />
+  </div>
+  {errors.username && (
+    <p id="username-error" className="text-red-500 text-xs mt-1">
+      {errors.username}
+    </p>
+  )}
+</div>
 
-            {/* Role */}
-            <div className="mb-4">
+           
+
+            {/* <div className="mb-4">
               <label htmlFor="role" className="block text-gray-700 text-sm font-bold mb-2">
                 Select Role
               </label>
@@ -162,9 +253,9 @@ const Signup = () => {
                   {errors.role}
                 </p>
               )}
-            </div>
+            </div> */}
 
-            {/* Password */}
+            {/* Password1 */}
             <div className="mb-4">
               <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
                 Password
@@ -174,35 +265,78 @@ const Signup = () => {
                   <FaLock size={18} className="text-gray-400" />
                 </div>
                 <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={formData.password}
+                  type={showPassword1 ? 'text' : 'password'}
+                  id="password1"
+                  value={formData.password1}
                   onChange={handleChange}
                   className={`shadow appearance-none border rounded w-full py-3 pl-10 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                     errors.password ? 'border-red-500' : ''
                   }`}
                   placeholder="Password"
-                  aria-invalid={!!errors.password}
+                  aria-invalid={!!errors.password2}
                   aria-describedby="password-error"
                 />
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   onClick={togglePasswordVisibility}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={showPassword1 ? 'Hide password' : 'Show password'}
                 >
-                  {showPassword ? (
-                    <FaEyeSlash size={18} className="text-gray-400" />
-                  ) : (
+                  {showPassword1 ? (
                     <FaEye size={18} className="text-gray-400" />
+                  ) : (
+                    <FaEyeSlash size={18} className="text-gray-400" />
                   )}
                 </button>
               </div>
-              {errors.password && (
-                <p id="password-error" className="text-red-500 text-xs mt-1">
-                  {errors.password}
+              {errors.password1 && (
+                <p id="password1-error" className="text-red-500 text-xs mt-1">
+                     {errors.password1}
                 </p>
               )}
+
+            </div>
+
+               {/* Password2 */}
+            <div className="mb-4">
+              <label htmlFor="password2" className="block text-gray-700 text-sm font-bold mb-2">
+               Confirm Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaLock size={18} className="text-gray-400" />
+                </div>
+                <input
+                  type={showPassword2 ? 'text' : 'password'}
+                  id="password2"
+                  value={formData.password2}
+                  onChange={handleChange}
+                  className={`shadow appearance-none border rounded w-full py-3 pl-10 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.password ? 'border-red-500' : ''
+                  }`}
+                  placeholder="Password"
+                  aria-invalid={!errors.password}
+                  aria-describedby="password-error"
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={togglePasswordVisibility}
+                  aria-label={showPassword2 ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword2 ? (
+                     <FaEye size={18} className="text-gray-400" />
+                  ) : (
+                    <FaEyeSlash size={18} className="text-gray-400" />
+                  )}
+                </button>
+              </div>
+              {errors.password2 && (
+               <p id="password2-error" className="text-red-500 text-xs mt-1">
+                 {errors.password2}
+               </p>
+             )}
+
             </div>
 
             <div className="flex items-center justify-center mb-4">

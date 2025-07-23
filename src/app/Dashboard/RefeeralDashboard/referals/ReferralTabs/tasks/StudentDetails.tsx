@@ -21,10 +21,7 @@ interface StudentDetailsProps {
   formData: FormData;
 }
 
-const StudentDetails: React.FC<StudentDetailsProps> = ({
-  updateFormData,
-  formData,
-}) => {
+const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData,}) => {
   const [studentName, setStudentName] = useState(formData.studentName || "");
   const [dateOfBirth, setDateOfBirth] = useState(formData.dateOfBirth || "");
   const [gradeLevel, setGradeLevel] = useState(formData.gradeLevel || "");
