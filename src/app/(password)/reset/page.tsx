@@ -5,6 +5,8 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const passwordSchema = z
   .object({
@@ -27,9 +29,17 @@ const CreateNewPassword = () => {
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof PasswordFormData, string>>>({});
-  const [submitting, setSubmitting] = useState(false);
+  const [generalError, setGeneralError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const passwordChangeMutation = useMutation({
+    mutationFn: async (data: { new_password1: string; new_password2: string }) => {
+      const response = await axios.post('/api/auth/password/change/', data);
+      return response.data;
+    },
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -37,7 +47,7 @@ const CreateNewPassword = () => {
       ...prev,
       [id]: value,
     }));
-  }; 
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,35 +65,42 @@ const CreateNewPassword = () => {
     }
 
     setErrors({});
-    setSubmitting(true);
+    setGeneralError('');
+    setLoading(true);
 
     try {
+      const response = await passwordChangeMutation.mutateAsync({
+        new_password1: formData.password,
+        new_password2: formData.confirmPassword,
+      });
 
-      setTimeout(() => {
-        setSubmitting(false);
-        router.push('/login');
-      }, 1200);
-    } catch (err) {
-      setErrors({ password: 'Failed to reset password. Please try again.' });
-      setSubmitting(false);
-      console.log(err);
+      console.log(response); // Optional
+      router.push('/login');
+    } catch (error: any) {
+      console.error(error);
+      const message =
+        error?.response?.data?.new_password1?.[0] ||
+        error?.response?.data?.new_password2?.[0] ||
+        error?.response?.data?.detail ||
+        'Failed to reset password. Please try again.';
+      setGeneralError(message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
-      {/* Left Panel */}
-      <div className="md:w-1/2 flex flex-col justify-start relative">
+      <div className="md:w-1/2 relative hidden md:block">
         <Image
           src="/assest/createNewPassimg.png"
           alt="Illustration"
           fill
-          className="h-full w-full"
+          className="h-full w-full object-cover"
           priority
         />
       </div>
 
-      {/* Right Panel */}
       <div className="bg-white p-6 md:p-10 md:w-1/2 flex flex-col justify-center items-center">
         <div className="w-full max-w-md">
           <div className="text-center mb-4">
@@ -99,33 +116,33 @@ const CreateNewPassword = () => {
 
           <h2 className="text-4xl font-bold text-start mb-6">Create New Password</h2>
 
-          {errors.password && (
+          {generalError && (
             <div className="text-red-600 text-sm mb-4 text-center">
-              {errors.password}
+              {generalError}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-            {/* Password */}
+            {/* New Password */}
             <div className="space-y-2">
               <label htmlFor="password" className="block text-sm text-gray-600">New Password</label>
               <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`w-full p-2 border rounded focus:outline-none focus:ring-2 pr-10 ${
+                  className={`w-full  p-2 border rounded focus:outline-none focus:ring-2 pr-10 ${
                     errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
                   }`}
                   autoComplete="new-password"
-                  disabled={submitting}
+                  disabled={loading}
                 />
                 <button
                   type="button"
                   onClick={(e) => {
                     e.preventDefault();
-                    setShowPassword(prev => !prev);
+                    setShowPassword((prev) => !prev);
                   }}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
                   tabIndex={-1}
@@ -140,7 +157,7 @@ const CreateNewPassword = () => {
               <label htmlFor="confirmPassword" className="block text-sm text-gray-600">Confirm Password</label>
               <div className="relative">
                 <input
-                  type={showConfirmPassword ? "text" : "password"}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   id="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
@@ -148,31 +165,31 @@ const CreateNewPassword = () => {
                     errors.confirmPassword ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
                   }`}
                   autoComplete="new-password"
-                  disabled={submitting}
+                  disabled={loading}
                 />
                 <button
                   type="button"
                   onClick={(e) => {
                     e.preventDefault();
-                    setShowConfirmPassword(prev => !prev);
+                    setShowConfirmPassword((prev) => !prev);
                   }}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
                   tabIndex={-1}
                 >
-                  {showConfirmPassword ?  <FiEyeOff size={20} /> : <FiEye size={20} />}  
+                  {showConfirmPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
                 </button>
               </div>
               {errors.confirmPassword && (
                 <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
               )}
             </div>
-
+        
             <button
               type="submit"
               className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              disabled={submitting}
+              disabled={loading}
             >
-              {submitting ? "Resetting..." : "Reset Password"}
+              {loading ? 'Resetting...' : 'Reset Password'}
             </button>
           </form>
         </div>

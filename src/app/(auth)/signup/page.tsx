@@ -271,7 +271,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   <FaLock size={18} className="text-gray-400" />
                 </div>
                 <input
-                  type={showPassword1 ? 'text' : 'password'}
+                  type={showPassword1 ? 'text' : 'password'}a
                   id="password1"
                   value={formData.password1}
                   onChange={handleChange}
