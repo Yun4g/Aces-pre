@@ -38,13 +38,13 @@ const ConfirmEmail = () => {
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-8">
         <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px] p-6 sm:p-8">
           {/* Logo */}
-          <div className="text-center mb-4">
+          <div className="text-start w-full  mb-4">
             <Image
               src="/assest/logo.png"
               alt="Logo"
               width={112}
               height={40}
-              className="mx-auto w-24 sm:w-28"
+              className=" w-24 sm:w-28"
               priority
             />
           </div>
@@ -69,8 +69,8 @@ const ConfirmEmail = () => {
           </button>
 
           <Link
-            href="/create-password"
-            className="block text-center text-base font-medium mt-5 text-[#005A9C] hover:underline"
+            href="/login"
+            className="block text-start text-base font-medium mt-5  hover:underline"
           >
             Skip, I will confirm later
           </Link>

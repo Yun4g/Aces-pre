@@ -3,10 +3,19 @@
 @tailwind utilities;
 
 
+
+
+
 .dark{
     background-color: rgb(23, 21, 21) !important;
     color: white !important;
     
+}
+
+  html {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .filter-blue {

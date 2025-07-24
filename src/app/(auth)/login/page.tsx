@@ -59,8 +59,13 @@ const Login: React.FC = () => {
 
     try {
       const result = await loginMutation.mutateAsync(data);
-      console.log(result);
+      console.log('token', result.key);
       setSuccessMessage(result.detail)
+      sessionStorage.setItem("token", result.key);
+      sessionStorage.setItem("username", data.username);
+      sessionStorage.setItem("email", data.email);
+      sessionStorage.setItem("rememberMe", String(data.rememberMe));
+
         router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
     } catch (error: any) {
       console.error(error);
@@ -150,7 +155,7 @@ const Login: React.FC = () => {
               <input
                 id="username"
                 type="text"
-                placeholder="yourusername"
+                placeholder="your username"
                 className="w-full p-2.5 border border-gray-300 bg-white outline-none rounded-[6px]  focus:ring-blue-500 focus:border-blue-500"
                 {...register("username")}
               />

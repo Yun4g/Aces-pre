@@ -21,14 +21,14 @@ const DashboardHeader = () => {
   const getPageTitle = () => {
     const route = pathname;
     if ( route.includes('/RefeeralDashboard/mainDashBoard')) return 'Dashboard Overview';
-    if (route.includes('/RefeeralDashboard/referals')) return 'Dashboard Referrals';
-    if (route.includes('/RefeeralDashboard/analytics')) return 'Dashboard Analytics';
-    if (route.includes('/RefeeralDashboard/settings')) return 'Dashboard Settings';
+    if (route.includes('/RefeeralDashboard/referals')) return ' Referrals';
+    if (route.includes('/RefeeralDashboard/analytics')) return 'Analytics';
+    if (route.includes('/RefeeralDashboard/settings')) return ' Settings';
 
   };
 
   return (
-    <header className="w-full bg-white dark:bg-gray-900 dark:text-white transition-colors p-2 duration-300 border-b border-gray-200 shadow-sm   z-[1000]">
+    <header className="w-full bg-white p-3 dark:bg-gray-900 dark:text-white transition-colors  duration-300 border-b border-gray-200 shadow-sm   z-[1000]">
       <div className="flex items-center justify-between w-full">
 
         <h1 className="text-lg font-medium dark:text-white text-gray-800 flex-1 md:flex-none">

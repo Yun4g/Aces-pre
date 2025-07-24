@@ -74,7 +74,7 @@ const CreateNewPassword = () => {
         new_password2: formData.confirmPassword,
       });
 
-      console.log(response); // Optional
+      console.log(response); 
       router.push('/login');
     } catch (error: any) {
       console.error(error);
@@ -152,7 +152,6 @@ const CreateNewPassword = () => {
               </div>
             </div>
 
-            {/* Confirm Password */}
             <div className="space-y-2">
               <label htmlFor="confirmPassword" className="block text-sm text-gray-600">Confirm Password</label>
               <div className="relative">

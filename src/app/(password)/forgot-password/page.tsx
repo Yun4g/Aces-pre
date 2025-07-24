@@ -86,13 +86,13 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       {/* Right side with form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-8">
         <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px] p-6 sm:p-8">
-          <div className="text-center mb-4">
+          <div className="text-start mb-4">
             <Image
               src="/assest/logo.png"
               alt="Logo"
               width={112}
               height={40}
-              className="mx-auto w-24 sm:w-28"
+              className=" w-28 sm:w-28"
               priority
             />
           </div>
@@ -122,7 +122,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className=" appearance-none border rounded w-full h-[44px] px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="comey@gmail.com"
                 disabled={loading}
               />

@@ -59,31 +59,32 @@ export default function ReferralsPage() {
           ☰ Menu
         </button>
 
-        <div className="container bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 p-3 mx-auto">
+        <div className="container bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300  mx-auto">
           <header className="mb-2 rounded-md overflow-hidden z-[1000] bg-white">
             <DashboardHeader />
           </header>
 
-          <div className="p-4">
+          <div className="px-3 ">
                 <div className="flex flex-wrap items-center justify-between border-b pb-4">
-      {/* Left group: search, filter, sort */}
-      <div className="flex flex-wrap items-center gap-2 text-sm text-gray-700">
-        <input
-          type="text"
-          placeholder="Search by name or ticket"
-          className="border rounded px-3 py-1.5 text-sm focus:outline-none"
-        />
+      
+              <div className="flex flex-wrap items-center gap-2 text-sm text-gray-700">
 
-        <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
-          Filter <ChevronDown size={14} />
-        </button>
+               <input
+                  type="text"             
+                  placeholder="Search by name or ticket"
+                  className="border rounded px-3 py-1.5 text-sm focus:outline-none"
+                 />
+
+             <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
+              Filter <ChevronDown size={14} />
+            </button>
 
         <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
           Sort <ChevronDown size={14} />
         </button>
       </div>
 
-      {/* Right group: export buttons and new referral */}
+      
       <div className="flex items-center gap-2 mt-2 sm:mt-0">
         <button className="border px-3 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-gray-50">
           <FileText size={14} /> Export CSV
@@ -116,7 +117,7 @@ export default function ReferralsPage() {
                       key={i}
                       onClick={() => router.push(`/referrals/${r.id}`)}
                       className="cursor-pointer  hover:bg-gray-50 border-b"
-                    >
+                    > 
                       <td className="p-3"><input type="checkbox"  /></td>
                       <td className="p-3 font-medium text-gray-700 ">{r.referId}</td>
                       <td className="p-3 text-gray-600">{r.subject}</td>
