@@ -1,112 +1,159 @@
+// app/referrals/page.tsx
 'use client';
 
-//' pages/referral/[id].tsx
+import { useRouter } from 'next/navigation';
+
+import { Filter, Plus, Download, FileText, ChevronDown } from 'lucide-react';
+
+import Image from 'next/image';
+import clsx from 'clsx';
 import { useState } from 'react';
-import ConversationTab from './ReferralTabs/conversation';
-import ActivityLogs from './ReferralTabs/ActiveLogs';
 import NavbarReferal from '../navbarReferal';
 import DashboardHeader from '@/components/DashBoardHeader';
-import ReferralForm from './ReferralTabs/task';
-import { MessageSquareText, FileText, Layers } from 'lucide-react';
 
+const referrals = Array.from({ length: 2 }, (_, i) => ({
+  id: i + 1,
+  referId: '#RC-192',
+  subject:
+    i === 0 ? 'Academic Intervention Referrra' : 'My subject for this Projects',
+  priority: (['Low', 'Medium', 'High'] as const)[i % 3],
+  type: ['Academics', 'Special Features', 'Behavioural', 'Socials'][i % 4],
+  assignee: [
+    'Guy Hawkins',
+    'Courtney Henry',
+    
+    
+  ][i % 17],
+  avatar: `/avatars/${(i % 10) + 1}.jpg`,
+  date: '19/11/2025,11:34pm',
+}));
 
-type Tab = 'Conversation' | 'task' | 'ActivityLogs';
+const priorityColor: Record<string, string> = {
+  Low: 'text-red-500',
+  Medium: 'text-yellow-500',
+  High: 'text-green-500',
+};
 
-interface MainDashBoardProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-
-
-const ReferralDetailsPage = ({ }: MainDashBoardProps) => {
-  const [activeTab, setActiveTab] = useState<Tab>('Conversation');
-
-
-
-  const tabs = [
-    { id: 'Conversation', label: 'Conversation', icon: <MessageSquareText size={18} /> },
-    { id: 'task', label: 'Task', icon: <FileText size={18} /> },
-    { id: 'ActivityLogs', label: 'Activity Logs', icon: <Layers size={18} /> },
-  ];
-  const renderTab = () => {
-    switch (activeTab) {
-      case 'Conversation':
-        return <ConversationTab />;
-      case 'task':
-        return <ReferralForm />;
-      case 'ActivityLogs':
-        return <ActivityLogs />;
-      default:
-        return null;
-    }
-  };
-
-
+export default function ReferralsPage() {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-
-
-
   return (
-
-    <main className="bg-[#F1F1F1] min-h-screen flex flex-col text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
-
-      <div className={`
-                 fixed top-0 left-0 h-full w-[250px] bg-white z-50 shadow-md border-r
-                  transform transition-transform duration-300 ease-in-out
-                  md:translate-x-0
-                ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-                     `}
+    <main className="bg-[#F1F1F1] min-h-screen flex text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
+      <div
+        className={`
+          fixed top-0 left-0 h-full w-[250px] bg-white z-50 shadow-md border-r
+          transform transition-transform duration-300 ease-in-out
+          md:translate-x-0
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}
       >
         <NavbarReferal isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       </div>
-      <section className="flex-1 md:ml-[250px]  p-3  md:w-[83%]">
 
+      <section className="flex-1 ml-0 md:ml-[250px] p-4 overflow-y-auto w-full">
         <button
-          className="md:hidden mb-4  dark:bg-gray-900 dark:text-white transition-colors duration-300 px-3 py-2 rounded-md shadow-sm   text-sm"
+          className="md:hidden mb-4 px-3 py-2 rounded-md shadow-sm text-sm"
           onClick={() => setSidebarOpen(true)}
         >
           ☰ Menu
         </button>
-        <div className="flex flex-col  gap-10 md:gap-0">
-          <header className=' mb-1 rounded-md overflow-hidden bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 '>
+
+        <div className="container bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 p-3 mx-auto">
+          <header className="mb-2 rounded-md overflow-hidden z-[1000] bg-white">
             <DashboardHeader />
           </header>
 
-          <div className="flex flex-wrap gap-3 bg-white py-3 md:py-0 dark:bg-gray-900 dark:text-white transition-colors duration-300 justify-center relative items-center mb-1   md:p-3  w-full">
-            <div className='flex flex-wrap w-full  px-2 bg-transparent dark:shadow-2xl shadow-slate-800  md:px-80 md:justify-center    '>
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as Tab)}
-                  className={`px-4 py-2 my-5 rounded-md font-medium transition flex items-center gap-1 ${activeTab === tab.id ? 'text-[#005A9C]' : ' text-gray-900 dark:text-white transition-colors duration-300 '
-                    }`}
-                >
-                  <span className="flex  items-center gap-1">
-                    {tab.icon}
-                    {tab.label}
-                  </span>
+          <div className="p-4">
+                <div className="flex flex-wrap items-center justify-between border-b pb-4">
+      {/* Left group: search, filter, sort */}
+      <div className="flex flex-wrap items-center gap-2 text-sm text-gray-700">
+        <input
+          type="text"
+          placeholder="Search by name or ticket"
+          className="border rounded px-3 py-1.5 text-sm focus:outline-none"
+        />
 
-                </button>
+        <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
+          Filter <ChevronDown size={14} />
+        </button>
 
+        <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
+          Sort <ChevronDown size={14} />
+        </button>
+      </div>
 
-              ))}
+      {/* Right group: export buttons and new referral */}
+      <div className="flex items-center gap-2 mt-2 sm:mt-0">
+        <button className="border px-3 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-gray-50">
+          <FileText size={14} /> Export CSV
+        </button>
+        <button className="border px-3 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-gray-50">
+          <Download size={14} /> Export PDF
+        </button>
+        <button className="bg-blue-600 text-white px-4 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-blue-700">
+          <Plus size={14} /> New Referral
+        </button>
+      </div>
+    </div>
+
+            <div className="overflow-auto rounded border">
+              <table className="min-w-full text-sm">
+                <thead className="bg-gray-50 border-b text-center">
+                  <tr>
+                    <th className="p-3"><input type="checkbox" /></th>
+                    <th className="p-3">Refer ID</th>
+                    <th className="p-3">Subjects</th>
+                    <th className="p-3">Priority</th>
+                    <th className="p-3">Type</th>
+                    <th className="p-3">Assignee</th>
+                    <th className="p-3">Date Created</th>
+                  </tr>
+                </thead>
+                <tbody className='text-center '>
+                  {referrals.map((r, i) => (
+                    <tr
+                      key={i}
+                      onClick={() => router.push(`/referrals/${r.id}`)}
+                      className="cursor-pointer  hover:bg-gray-50 border-b"
+                    >
+                      <td className="p-3"><input type="checkbox"  /></td>
+                      <td className="p-3 font-medium text-gray-700 ">{r.referId}</td>
+                      <td className="p-3 text-gray-600">{r.subject}</td>
+                      <td className="p-3  flex justify-center items-center">
+                        <span className={clsx('flex items-center gap-2 ', priorityColor[r.priority])}>
+                          <span className="text-xs">●</span> {r.priority}
+                        </span>
+                      </td>
+                      <td className="p-3 text-gray-600">{r.type}</td>
+                      <td className="p-3 flex justify-center items-center gap-2">
+                        <Image
+                          src={`https://i.pravatar.cc/150?img=${i}`}
+                          alt={r.assignee}
+                          width={24}
+                          height={24}
+                          className="rounded-full"
+                        />
+                        <span className="text-gray-700 ">{r.assignee}</span>
+                      </td>
+                      <td className="p-3 text-gray-500 whitespace-nowrap">{r.date}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
-            <div className=' md:absolute right-4'>
-              <button className=' w-40 h-12 md:w-40 md:h-14 my-6 rounded-md text-white bg-[#005A9C]'>New Referal</button>
+            <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
+              <span>Previous</span>
+              <div className="flex gap-2">
+                <button className="px-2 py-1 bg-blue-600 text-white rounded">1</button>
+                <button className="px-2 py-1 bg-gray-200 rounded">2</button>
+              </div>
+              <span>Next</span>
             </div>
-
-          </div>
-
-          <div className=" dark:shadow md:p-4 rounded-lg shadow-sm bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300">
-            {renderTab()}
           </div>
         </div>
       </section>
     </main>
   );
-};
-
-export default ReferralDetailsPage;
+}

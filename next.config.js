@@ -7,13 +7,18 @@ const nextConfig = {
         hostname: 'ui-avatars.com',
         pathname: '/api/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'i.pravatar.cc',
+        pathname: '/**', 
+      },
     ],
   },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://api.aces-tdx.com/api/:path*/', 
+        destination: 'https://api.aces-tdx.com/api/:path*/',
       },
     ];
   },

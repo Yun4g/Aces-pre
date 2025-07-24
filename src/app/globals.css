@@ -8,3 +8,13 @@
     color: white !important;
     
 }
+
+.filter-blue {
+  filter: brightness(0) saturate(100%) invert(32%) sepia(94%) saturate(1025%) hue-rotate(197deg) brightness(99%) contrast(92%);
+}
+
+.filter-gray {
+  filter: brightness(0) saturate(100%) 
+          invert(34%) sepia(0%) saturate(0%) 
+          hue-rotate(0deg) brightness(90%) contrast(85%);
+}

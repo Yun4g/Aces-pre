@@ -61,7 +61,7 @@ const Login: React.FC = () => {
       const result = await loginMutation.mutateAsync(data);
       console.log(result);
       setSuccessMessage(result.detail)
-        // router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
+        router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
     } catch (error: any) {
       console.error(error);
       const message =

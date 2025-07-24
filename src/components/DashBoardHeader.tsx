@@ -1,4 +1,4 @@
-// components/DashboardHeader.tsx
+
 'use client';
 
 import React, { useState } from 'react';
@@ -13,22 +13,24 @@ import Link from 'next/link';
 const DashboardHeader = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
+  console.log(pathname, 'pathname in header');
+ 
   const dispatch = useDispatch();
   const notificationOpen = useSelector((state: RootState) => state.notification.open);
 
   const getPageTitle = () => {
-    const route = pathname.toLowerCase();
-    if (route === '/' || route.includes('/RefeeralDashboard/mainDashBoard')) return 'Dashboard Overview';
-    if (route.includes('/RefeeralDashboard/referals')) return 'Referrals';
-    if (route.includes('/RefeeralDashboard/analytics')) return 'Analytics';
-    if (route.includes('/RefeeralDashboard/settings')) return 'Settings';
-    return 'Dashboard';
+    const route = pathname;
+    if ( route.includes('/RefeeralDashboard/mainDashBoard')) return 'Dashboard Overview';
+    if (route.includes('/RefeeralDashboard/referals')) return 'Dashboard Referrals';
+    if (route.includes('/RefeeralDashboard/analytics')) return 'Dashboard Analytics';
+    if (route.includes('/RefeeralDashboard/settings')) return 'Dashboard Settings';
+
   };
 
   return (
-    <header className="w-full bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 border-b border-gray-200 shadow-sm py-3 px-4  z-[1000]">
+    <header className="w-full bg-white dark:bg-gray-900 dark:text-white transition-colors p-2 duration-300 border-b border-gray-200 shadow-sm   z-[1000]">
       <div className="flex items-center justify-between w-full">
-        {/* Page title */}
+
         <h1 className="text-lg font-medium dark:text-white text-gray-800 flex-1 md:flex-none">
           {getPageTitle()}
         </h1>
@@ -73,7 +75,7 @@ const DashboardHeader = () => {
                 alt="Profile"
                 width={32}
                 height={32}
-                className="rounded-full w-12 h-12 object-cover border border-gray-200"
+                className="rounded-full w-10 h-10 object-cover border border-gray-200"
               />
               <span className="hidden md:flex items-center gap-1">
                 <span className="text-sm font-medium text-gray-700">Angela L.</span>
@@ -82,7 +84,6 @@ const DashboardHeader = () => {
                 </svg>
               </span>
             </button>
-
             {dropdownOpen && (
               <div className="absolute right-0 mt-2  z-[1000] w-48 bg-white rounded-md shadow-lg py-1  border border-gray-200">
                 <Link href="/Dashboard/RefeeralDashboard/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>

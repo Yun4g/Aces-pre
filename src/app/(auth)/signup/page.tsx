@@ -42,7 +42,7 @@ const useRegister = () => {
       email: data.email,
       username: data.username,
       password1: data.password1,
-     password2: data.password2,
+      password2: data.password2,
 });
       return response.data;
     },
@@ -96,9 +96,9 @@ const handleSubmit = async (e: React.FormEvent) => {
   setSuccessMessage(data.detail); 
   
 
-    setTimeout(() => {
-       router.push('/login');
-    }, 2000);
+    // setTimeout(() => {
+    //    router.push('/login');
+    // }, 2000);
 
 } catch (error: any) {
   console.error("Registration error:", error.response?.data || error);
