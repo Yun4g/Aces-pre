@@ -92,7 +92,7 @@ const CreateNewPassword = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col justify-center  md:flex-row h-screen">
       <div className="md:w-1/2 relative hidden md:block">
         <Image
           src="/assest/createNewPassimg.png"
