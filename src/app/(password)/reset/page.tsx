@@ -30,6 +30,7 @@ const CreateNewPassword = () => {
 
   const [errors, setErrors] = useState<Partial<Record<keyof PasswordFormData, string>>>({});
   const [generalError, setGeneralError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('')
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -73,8 +74,9 @@ const CreateNewPassword = () => {
         new_password1: formData.password,
         new_password2: formData.confirmPassword,
       });
-
-      console.log(response); 
+          setSuccessMessage('Password successfully updated!');
+            setFormData({ password: '', confirmPassword: '' });
+      console.log(response);
       router.push('/login');
     } catch (error: any) {
       console.error(error);
@@ -103,18 +105,21 @@ const CreateNewPassword = () => {
 
       <div className="bg-white p-6 md:p-10 md:w-1/2 flex flex-col justify-center items-center">
         <div className="w-full max-w-md">
-          <div className="text-center mb-4">
+          <div className="text-start mb-4">
             <Image
               src="/assest/logo.png"
               alt="Logo"
               width={112}
               height={40}
-              className="mx-auto w-24 sm:w-28"
+              className=" w-24 sm:w-28"
               priority
             />
           </div>
 
-          <h2 className="text-4xl font-bold text-start mb-6">Create New Password</h2>
+           <div className='text-start mb-6'>
+            <h2 className="text-4xl font-bold text-start mb-6">Create New Password</h2>
+          <p className="text-gray-600 text-base ">We have sent a password recover instructions  to your email</p>
+           </div>
 
           {generalError && (
             <div className="text-red-600 text-sm mb-4 text-center">
@@ -123,66 +128,62 @@ const CreateNewPassword = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-            {/* New Password */}
+            {successMessage && (
+               <div className="text-green-600 text-sm mb-4 text-center">
+                {successMessage}
+              </div>
+            )}
+
             <div className="space-y-2">
               <label htmlFor="password" className="block text-sm text-gray-600">New Password</label>
               <div className="relative">
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type='password'
                   id="password"
                   value={formData.password}
+                  placeholder="*********"
                   onChange={handleChange}
-                  className={`w-full  p-2 border rounded focus:outline-none focus:ring-2 pr-10 ${
-                    errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                  }`}
+                  className={`w-full p-2 border rounded focus:outline-none focus:ring-2 pr-10 ${errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                    }`}
                   autoComplete="new-password"
                   disabled={loading}
                 />
                 <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowPassword((prev) => !prev);
-                  }}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
-                  tabIndex={-1}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
                 >
-                  {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                   <Image src={'/assest/LockPassword.png'} alt=' icon' height={40} width={20}/>
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              )}
             </div>
 
+            {/* Confirm Password */}
             <div className="space-y-2">
               <label htmlFor="confirmPassword" className="block text-sm text-gray-600">Confirm Password</label>
               <div className="relative">
                 <input
-                  type={showConfirmPassword ? 'text' : 'password'}
+                  type='password'
                   id="confirmPassword"
                   value={formData.confirmPassword}
+                   placeholder="*********"
                   onChange={handleChange}
-                  className={`w-full p-2 border rounded focus:outline-none focus:ring-2 pr-10 ${
-                    errors.confirmPassword ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                  }`}
+                  className={`w-full p-2 border rounded focus:outline-none focus:ring-2 pr-10 ${errors.confirmPassword ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                    }`}
                   autoComplete="new-password"
                   disabled={loading}
                 />
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowConfirmPassword((prev) => !prev);
-                  }}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
-                  tabIndex={-1}
-                >
-                  {showConfirmPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+                <button type="button"  
+                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600">
+                  <Image src={'/assest/LockPassword.png'} alt=' icon' height={40} width={20}/>
                 </button>
+                
               </div>
               {errors.confirmPassword && (
                 <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
               )}
             </div>
-        
             <button
               type="submit"
               className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
