@@ -59,9 +59,12 @@ const Login: React.FC = () => {
 
     try {
       const result = await loginMutation.mutateAsync(data);
+      console.log('Login successful:', result);
+      console.log('userid', result.userId);
       console.log('token', result.key);
       setSuccessMessage(result.detail)
       sessionStorage.setItem("token", result.key);
+      sessionStorage.setItem("userId", result.userId);
       sessionStorage.setItem("username", data.username);
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("rememberMe", String(data.rememberMe));

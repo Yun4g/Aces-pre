@@ -51,7 +51,7 @@ export default function ReferralsPage() {
     }, [])
 
   return (
-    <main className="bg-[#F1F1F1] min-h-screen flex text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
+    <main className="bg-white min-h-screen flex text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
       <div
         className={`
           fixed top-0 left-0 h-full w-[250px] bg-white z-50 shadow-md border-r
@@ -63,23 +63,23 @@ export default function ReferralsPage() {
         <NavbarReferal isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       </div>
 
-      <section className="flex-1 ml-0 md:ml-[250px] p-4 overflow-y-auto w-full">
+      <section className="flex-1 ml-0 md:ml-[250px] overflow-y-auto w-full">
         <button
           className="md:hidden mb-4 px-3 py-2 rounded-md shadow-sm text-sm"
           onClick={() => setSidebarOpen(true)}
         >
-          ☰ Menu
+          ☰ 
         </button>
 
-        <div className="container bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300  mx-auto">
-          <header className="mb-2 rounded-md overflow-hidden z-[1000] bg-white">
+        <div className="container  dark:bg-gray-900 dark:text-white transition-colors duration-300  mx-auto">
+          <header className="rounded-md overflow-hidden z-[1000] bg-white">
             <DashboardHeader />
           </header>
 
-          <div className="px-3 ">
-                <div className="flex flex-wrap items-center justify-between border-b pb-4">
+          <div className=" ">
+                <div className="flex flex-wrap bg-white py-4 border-2 px-3  items-center justify-between border-b pb-4">
       
-              <div className="flex flex-wrap items-center gap-2 text-sm text-gray-700">
+              <div className="flex flex-wrap items-center  gap-2 text-sm text-gray-700">
 
                <input
                   type="text"             
@@ -156,7 +156,7 @@ export default function ReferralsPage() {
               </table>
             </div>
 
-            <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
+            <div className="flex justify-between items-center mt-4 text-sm px-3 text-gray-600">
               <span>Previous</span>
               <div className="flex gap-2">
                 <button className="px-2 py-1 bg-blue-600 text-white rounded">1</button>

@@ -28,7 +28,7 @@ const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
 
     return (
         <div
-            className={`fixed top-0 left-0 h-full w-[250px] bg-white dark:bg-gray-900 dark:text-white  z-50 transform transition-transform duration-300 shadow-md border-r 
+            className={`fixed top-0 left-0 h-full w-[250px] bg-white dark:bg-gray-900 dark:text-white  z-50 transform transition-transform duration-300  
             ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:relative md:block`}
         >
             <nav className="flex flex-col justify-between h-full">

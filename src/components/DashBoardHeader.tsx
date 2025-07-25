@@ -10,45 +10,44 @@ import { RootState } from '@/Redux';
 import NotificationOverlay from './overlayNotification';
 import Link from 'next/link';
 import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 
 const DashboardHeader = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
   console.log(pathname, 'pathname in header');
 
-  const token =  sessionStorage.getItem('token');
-    if (!token) throw new Error('No token found in sessionStorage');
-     console.log('token', token);
+  // const token =  sessionStorage.getItem('token');
+
 
   const username = sessionStorage.getItem('username');   
 
 
-   const fetchUser = async () => {
+  //  const fetchUser = async () => {
    
 
-    const response = await axios.get('/api/auth/user/', {
-      headers: {
-        Authorization: `${token}`,
-      },
-    });
+  //   const response = await axios.get('/api/user/6', {
+  //     headers: {
+  //       Authorization: `${token}`,
+  //     },
+  //   });
 
-    return response.data;
-  };
+  //   return response.data;
+  // };
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['user'],
-    queryFn: fetchUser,
-    refetchOnWindowFocus: false,
+  // const { data, isLoading, isError, error } = useQuery({
+  //   queryKey: ['user'],
+  //   queryFn: fetchUser,
+  //   refetchOnWindowFocus: false,
     
-  });
+  // });
 
   // if (isLoading) return <div>Loading user...</div>;
   // if (isError) return <div>Error: {(error as Error).message}</div>;
   
   // if (!data) return <div>No user data found</div>;
 
-  console.log(data, 'user data in header');
+  // console.log(data, 'user data in header');
 
   const dispatch = useDispatch();
   const notificationOpen = useSelector((state: RootState) => state.notification.open);

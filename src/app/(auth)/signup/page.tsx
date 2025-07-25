@@ -106,6 +106,8 @@ const togglePassword2Visibility = () => {
 
     try {
       setErrors({});
+      setLoading(true);
+      setGeneralError(null);
       const data = await registerMutation.mutateAsync(formData);
       setSuccessMessage(data.detail);
 
@@ -396,7 +398,7 @@ const togglePassword2Visibility = () => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-[6px]  focus:outline-none focus:shadow-outline w-full"
               >
-                Sign Up
+               {loading ? 'Signing up...' : 'Sign Up'}
               </button>
             </div>
           </form>

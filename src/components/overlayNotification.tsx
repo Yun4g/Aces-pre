@@ -3,9 +3,12 @@
 
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { closeNotification, markAllAsRead } from '@/Redux/notificationSlice';
+import { closeNotification, } from '@/Redux/notificationSlice';
 import { RootState } from '@/Redux';
 import Image from 'next/image';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+
 
 interface Notification {
     id: string;
@@ -15,13 +18,55 @@ interface Notification {
     extra?: string;
     user?: string;
     subject?: string;
-    avatar?: string;  // Added avatar property
+    avatar?: string;  
 }
 
 const NotificationOverlay = () => {
     const dispatch = useDispatch();
-    const { open, notifications } = useSelector((state: RootState) => state.notification);
+    const { open,} = useSelector((state: RootState) => state.notification);
+    const [notifications, setNotifications] = React.useState<Notification[]>([]);
 
+   const token = sessionStorage.getItem('token');
+   console.log(token, 'token in notification overlay');
+   
+
+    const fetchNotifications = async () => {
+            try {
+                const response = await axios.get('/api/notifications/', {
+                    headers: {
+                        Authorization: `Bearer ${ token }`,
+                    },
+                })
+
+                if (response.status === 200) {
+                   console.log(response.data, 'notifications data');
+              
+                }
+
+                return response.data;   
+            } catch (error) {
+                console.error('Error fetching notifications:', error);
+                
+            }
+
+    }
+     
+   
+ const {data,  error} = useQuery({
+         queryKey: ['notifications'],
+         queryFn: fetchNotifications,
+         refetchOnWindowFocus: false,
+    })
+
+   React.useEffect(() => {
+       setNotifications(data || []);
+}, [data]);
+
+ if (!token) {
+    alert('No token found in sessionStorage. try login again.');
+    return []; 
+  }
+    
     if (!open) return null;
 
     return (
@@ -42,7 +87,7 @@ const NotificationOverlay = () => {
 
                 {/* Notification Items */}
                 <div className="max-h-[60vh] overflow-y-auto px-6 py-4">
-                    {notifications && notifications.map((n: Notification) => (
+                    {notifications.map((n: Notification) => (
                         <div key={n.id} className="mb-6 flex items-start gap-3">
 
                             {/* Avatar */}
@@ -103,7 +148,7 @@ const NotificationOverlay = () => {
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block mr-1 align-text-bottom">
                             <path d="M6.99991 12C3.92491 12 1.33325 9.40835 1.33325 6.33335C1.33325 3.25835 3.92491 0.666687 6.99991 0.666687C10.0749 0.666687 12.6666 3.25835 12.6666 6.33335C12.6666 9.40835 10.0749 12 6.99991 12ZM14.6666 15.3333L11.3333 12" stroke="#6B7280" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        <button onClick={() => dispatch(markAllAsRead())} className="text-xs text-blue-600 hover:underline">Mark all as read</button>
+                        <button  className="text-xs text-blue-600 hover:underline">Mark all as read</button>
                     </div>
                     <button className="bg-blue-600 text-white text-xs px-4 py-2 rounded">View all notification</button>
                 </div>
