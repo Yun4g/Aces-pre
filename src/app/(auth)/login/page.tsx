@@ -102,7 +102,7 @@ const Login: React.FC = () => {
       </div>
 
       {/* Right Section */}
-      <div className="w-full md:w-1/2 p-6 md:px-16 md:py-12 flex items-center justify-center">
+      <div className="w-full md:w-1/2 p-6 md:px-16 md:py-12  flex items-center justify-center">
         <div className="w-full max-w-md">
           <div className="mb-8">
             <Image src="/assest/logo.png" width={120} height={40} alt="ACES Logo" />

@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,12 +9,47 @@ import { openNotification } from '@/Redux/notificationSlice';
 import { RootState } from '@/Redux';
 import NotificationOverlay from './overlayNotification';
 import Link from 'next/link';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 const DashboardHeader = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
   console.log(pathname, 'pathname in header');
- 
+
+  const token =  sessionStorage.getItem('token');
+    if (!token) throw new Error('No token found in sessionStorage');
+     console.log('token', token);
+
+  const username = sessionStorage.getItem('username');   
+
+
+   const fetchUser = async () => {
+   
+
+    const response = await axios.get('/api/auth/user/', {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+
+    return response.data;
+  };
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['user'],
+    queryFn: fetchUser,
+    refetchOnWindowFocus: false,
+    
+  });
+
+  // if (isLoading) return <div>Loading user...</div>;
+  // if (isError) return <div>Error: {(error as Error).message}</div>;
+  
+  // if (!data) return <div>No user data found</div>;
+
+  console.log(data, 'user data in header');
+
   const dispatch = useDispatch();
   const notificationOpen = useSelector((state: RootState) => state.notification.open);
 
@@ -78,7 +113,7 @@ const DashboardHeader = () => {
                 className="rounded-full w-10 h-10 object-cover border border-gray-200"
               />
               <span className="hidden md:flex items-center gap-1">
-                <span className="text-sm font-medium text-gray-700">Angela L.</span>
+                <span className="text-sm font-medium text-gray-700">{username || null }</span>
                 <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                 </svg>

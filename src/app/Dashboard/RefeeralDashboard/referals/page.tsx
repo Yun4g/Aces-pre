@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import NavbarReferal from '../navbarReferal';
 import DashboardHeader from '@/components/DashBoardHeader';
+import { useEffect } from 'react';
 
 const referrals = Array.from({ length: 2 }, (_, i) => ({
   id: i + 1,
@@ -37,6 +38,17 @@ const priorityColor: Record<string, string> = {
 export default function ReferralsPage() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+
+
+  
+     useEffect(() => {
+    
+    const token = sessionStorage.getItem('token');
+      if (!token) {
+        router.push('/login')
+      }
+    }, [])
 
   return (
     <main className="bg-[#F1F1F1] min-h-screen flex text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">

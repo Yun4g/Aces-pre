@@ -42,8 +42,8 @@ const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
                         </button>
                     </div>
 
-                    <div className="px-6 py-4">
-                        <p className="text-[#898A8C] text-sm font-bold mb-3 uppercase tracking-wide">Main</p>
+                    <div className="px-6 ">
+                        <p className="text-[#898A8C] text-sm font-bold  uppercase tracking-wide">Main</p>
                     </div>
 
                     <div className="space-y-3 px-6 py-4 text-sm">
