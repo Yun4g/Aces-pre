@@ -30,26 +30,28 @@ const NotificationOverlay = () => {
    console.log(token, 'token in notification overlay');
    
 
-    const fetchNotifications = async () => {
-            try {
-                const response = await axios.get('/api/notifications/', {
-                    headers: {
-                        Authorization: `Bearer ${ token }`,
-                    },
-                })
-
-                if (response.status === 200) {
-                   console.log(response.data, 'notifications data');
-              
-                }
-
-                return response.data;   
-            } catch (error) {
-                console.error('Error fetching notifications:', error);
-                
-            }
-
+   const fetchNotifications = async () => {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+        alert('No token found in sessionStorage. Try logging in again.');
+        return [];
     }
+    try {
+        const response = await axios.get('/api/notifications/', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        if (response.status === 200) {
+            console.log(response.data, 'notifications data');
+        }
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching notifications:', error);
+        return [];
+    }
+};
+
      
    
  const {data,  error} = useQuery({

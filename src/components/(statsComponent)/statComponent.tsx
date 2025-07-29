@@ -6,7 +6,7 @@ export function StatCards() {
   return (
     <div className=" flex flex-wrap w-full  gap-2">
       {/* Total Referrals */}
-      <Card className="overflow-hidden flex-1  bg-white">
+      <Card className="overflow-hidden flex-1  bg-white dark:bg-gray-900">
         <CardContent className="px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
@@ -32,7 +32,7 @@ export function StatCards() {
       </Card>
 
       {/* Pending Referrals */}
-      <Card className="overflow-hidden flex-1 bg-white">
+      <Card className="overflow-hidden flex-1 bg-white dark:bg-gray-900">
         <CardContent className="px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
@@ -58,7 +58,7 @@ export function StatCards() {
       </Card>
 
       {/* Processed Referrals */}
-      <Card className="overflow-hidden flex-1 bg-white">
+      <Card className="overflow-hidden flex-1 bg-white dark:bg-gray-900">
         <CardContent className=" px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
@@ -83,8 +83,8 @@ export function StatCards() {
         </CardContent>
       </Card>
 
-      {/* Flagged Referrals */}
-      <Card className="overflow-hidden flex-1 bg-white">
+
+      <Card className="overflow-hidden flex-1 bg-white shadow-lg dark:bg-gray-900">
         <CardContent className="px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>

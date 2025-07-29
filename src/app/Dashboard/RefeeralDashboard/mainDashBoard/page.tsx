@@ -56,17 +56,17 @@ function MainDashBoard() {
                     <header className=' mb-2 rounded-md overflow-hidden  z-[1000] bg-white '>
                         <DashboardHeader />
                     </header>
-                    <div className="grid grid-cols-1  z-[999] gap-2 md:gap-6 p-3 bg-[#F1F1F1] px-2 py-3 xl:gap-8">
+                    <div className="grid grid-cols-1  z-[999] gap-2 md:gap-6 p-3 bg-[#F1F1F1] dark:bg-gray-900 px-2 py-3 xl:gap-8">
                         <StatCards />
                         <div className="w-full flex flex-col lg:flex-row gap-4">
-                            <div className='w-full md:basis-[55%] bg-white flex-1'>
+                            <div className='w-full md:basis-[55%] bg-white dark:bg-gray-900 flex-1'>
                                 <ProcessingTimeChart />
                             </div>
-                            <div className='w-full md:basis-[45%] bg-white flex-1'>
+                            <div className='w-full md:basis-[45%] bg-white dark:bg-gray-900 flex-1'>
                                 <DistrictStats />
                             </div>
                         </div>
-                     <div className='w-full bg-white flex-1'>
+                     <div className='w-full bg-white dark:bg-gray-900 flex-1'>
                          <RecentReferrals />
                      </div>
                

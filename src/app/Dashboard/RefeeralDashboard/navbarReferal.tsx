@@ -25,6 +25,13 @@ const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
     const isRouteActive = (path: string) => {
         return pathname === path || pathname.startsWith(`${path}/`);
     };
+   
+
+    const handleLogout = () => {
+       sessionStorage.clear();
+         window.location.href = '/login'; 
+    }
+
 
     return (
         <div
@@ -32,7 +39,7 @@ const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
             ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:relative md:block`}
         >
             <nav className="flex flex-col justify-between h-full">
-                {/* Logo */}
+              
                 <div>
                     <div className="mb-6 pb-5 md;border-b-2  px-6 py-4 flex justify-between items-center">
                         <Image src="/assest/logo.png" width={110} height={30} alt="Logo" />
@@ -71,13 +78,11 @@ const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
                     </div>
 
                 </div>
-
-                {/* Logout */}
                 <div className="pt-4 px-8 py-4 md:border-t-2">
                     <div className=' flex flex-wrap w-full  items-center gap-3 justify-center  shadow-xl  border-2 dark:border-gray-700  duration-300 py-3   rounded-xl text-sm transition-all'>
                         <ThemeToggle />
                     </div>
-                    <button className="w-full flex items-center gap-3 justify-center mt-3 border border-red-400 text-red-500 px-4 py-2 rounded-md text-sm hover:bg-red-50 transition-all">
+                    <button onClick={handleLogout} className="w-full flex items-center gap-3 justify-center mt-3 border border-red-400 text-red-500 px-4 py-2 rounded-md text-sm hover:bg-red-50 transition-all">
                         <Image src="/assest/logoutcon.png" width={16} height={16} className="w-4 h-4" alt="Logout" />
                         Logout
                     </button>

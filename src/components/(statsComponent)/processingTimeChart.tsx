@@ -61,7 +61,7 @@ export function ProcessingTimeChart() {
     const [activeTimeframe, setActiveTimeframe] = useState('1W');
 
     return (
-        <Card className=" w-full p-3">
+        <Card className=" w-full p-3 ">
             <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-2">
                 <CardTitle className="text-md font-medium mb-2 sm:mb-0">Referral Processing time</CardTitle>
                 <div className="flex space-x-2">

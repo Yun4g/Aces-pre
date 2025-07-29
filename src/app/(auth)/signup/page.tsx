@@ -110,8 +110,6 @@ const togglePassword2Visibility = () => {
       setGeneralError(null);
       const data = await registerMutation.mutateAsync(formData);
       setSuccessMessage(data.detail);
-
-
       setTimeout(() => {
          router.push('/login');
       }, 500);

@@ -1,16 +1,15 @@
-// app/referrals/page.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';
-
 import { Filter, Plus, Download, FileText, ChevronDown } from 'lucide-react';
-
 import Image from 'next/image';
 import clsx from 'clsx';
 import { useState } from 'react';
 import NavbarReferal from '../navbarReferal';
 import DashboardHeader from '@/components/DashBoardHeader';
 import { useEffect } from 'react';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 const referrals = Array.from({ length: 2 }, (_, i) => ({
   id: i + 1,
@@ -38,10 +37,47 @@ const priorityColor: Record<string, string> = {
 export default function ReferralsPage() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [referral, setReferral] = useState([])
 
 
   
+   const fetchReferrals = async () => {
+  const token = sessionStorage.getItem('token');
+  if (!token) {
+    console.warn('No token found in sessionStorage. Please log in.');
+    return [];
+  }
+
+  try {
+    const response = await axios.get('/api/referrals/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response); 
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching referrals:', error);
+    return [];
+  }
+};
+
+
+    const { data, error} = useQuery({
+        queryKey :  ['referrals'],
+         queryFn : fetchReferrals,
+      })
+
+    console.log(data)
+
+
+
+
+
+
+
+
+
      useEffect(() => {
     
     const token = sessionStorage.getItem('token');
@@ -77,7 +113,7 @@ export default function ReferralsPage() {
           </header>
 
           <div className=" ">
-                <div className="flex flex-wrap bg-white py-4 border-2 px-3  items-center justify-between border-b pb-4">
+                <div className="flex flex-wrap bg-white dark:bg-gray-900 py-4 border-2 px-3  items-center justify-between border-b pb-4">
       
               <div className="flex flex-wrap items-center  gap-2 text-sm text-gray-700">
 
@@ -112,7 +148,7 @@ export default function ReferralsPage() {
 
             <div className="overflow-auto rounded border">
               <table className="min-w-full text-sm">
-                <thead className="bg-gray-50 border-b text-center">
+                <thead className=" dark:bg-gray-900 border-b text-center">
                   <tr>
                     <th className="p-3"><input type="checkbox" /></th>
                     <th className="p-3">Refer ID</th>
