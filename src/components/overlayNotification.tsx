@@ -37,11 +37,7 @@ const NotificationOverlay = () => {
         return [];
     }
     try {
-        const response = await axios.get('/api/notifications/', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
+        const response = await axios.get('/api/notifications/')
         if (response.status === 200) {
             console.log(response.data, 'notifications data');
         }
@@ -60,7 +56,7 @@ const NotificationOverlay = () => {
          refetchOnWindowFocus: false,
     })
 
-   React.useEffect(() => {
+React.useEffect(() => {
        setNotifications(data || []);
 }, [data]);
 

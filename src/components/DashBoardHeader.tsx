@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openNotification } from '@/Redux/notificationSlice';
 import { RootState } from '@/Redux';
 import NotificationOverlay from './overlayNotification';
+import fetchUsers from '@/Redux/usersSlice';            
 import Link from 'next/link';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
@@ -15,6 +16,8 @@ import { useQuery } from '@tanstack/react-query';
 const DashboardHeader = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
+   const dispatch = useDispatch();
+  const notificationOpen = useSelector((state: RootState) => state.notification.open);
   console.log(pathname, 'pathname in header');
 
   const token =  sessionStorage.getItem('token');
@@ -26,10 +29,10 @@ const DashboardHeader = () => {
    const fetchUser = async () => {
      try {
          const response = await axios.get(`/api/users/`, {
-            headers: {
-               Authorization: `Bearer ${token}`,
-          },
-         });
+           headers: {
+             Authorization: `Bearer ${token}` 
+           }
+         } );
         return response.data;
      } catch (error) {
        console.log(error)
@@ -42,10 +45,14 @@ const DashboardHeader = () => {
     refetchOnWindowFocus: false, 
   });
 
-  console.log(data, 'user data in header');
-
-  const dispatch = useDispatch();
-  const notificationOpen = useSelector((state: RootState) => state.notification.open);
+  //  useEffect(() => {
+  //       if(data) {
+  //           dispatch(fetchUsers(data));
+  //       }
+  //  }, [data, dispatch])
+   
+console.log(data, 'data in header');
+ 
 
 
   

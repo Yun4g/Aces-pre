@@ -21,10 +21,9 @@ export interface UserState {
 const usersSlice = createSlice({
   name: "users",
   initialState,
-
    reducers: {
-    fetchUsers: (state, action : PayloadAction<User[]>) => {
-      state.users = action.payload;
+    fetchUsers: (state) => {
+      state.users = state.users;
     }
    }
 
