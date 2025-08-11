@@ -36,7 +36,7 @@ const ReferralForm = () => {
   return (
     <div className=" p-4 bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300  rounded-md">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">New ACES Student Referral</h1>
+        <h1 className="text-xl font-bold"> Referral information</h1>
         <div className="flex space-x-1">
           <button className="p-1">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

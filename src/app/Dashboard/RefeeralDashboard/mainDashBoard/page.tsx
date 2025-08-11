@@ -22,14 +22,13 @@ function MainDashBoard() {
   const router = useRouter();
 
   
-   useEffect(() => {
-  
-  const token = sessionStorage.getItem('token');
+  //  useEffect(() => { 
+  // const token = sessionStorage.getItem('token');
 
-    if (!token) {
-      router.push('/login')
-    }
-  }, []);
+  //   if (!token) {
+  //     router.push('/login')
+  //   }
+  // }, []);
 
     return (
         <main className=" min-h-screen flex  text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">

@@ -1,6 +1,4 @@
 'use client';
-
-//' pages/referral/[id].tsx
 import { useState } from 'react';
 import ConversationTab from '../ReferralTabs/conversation';
 import ActivityLogs from '../ReferralTabs/ActiveLogs';
@@ -10,18 +8,26 @@ import ReferralForm from '../ReferralTabs/task';
 import { MessageSquareText, FileText, Layers } from 'lucide-react';
 
 
+
 type Tab = 'Conversation' | 'task' | 'ActivityLogs';
 
 interface MainDashBoardProps {
   isOpen: boolean;
   onClose: () => void;
 }
+ 
+
+interface PageProps {
+  params: {
+     id : string
+   }
+}
 
 
-
-const ReferralDetailsPage = ({ }: MainDashBoardProps) => {
+const ReferralDetailsPage = ({ params } : PageProps ) => {
   const [activeTab, setActiveTab] = useState<Tab>('Conversation');
-
+    const { id } = params;
+  console.log(id)
 
 
   const tabs = [
@@ -34,7 +40,7 @@ const ReferralDetailsPage = ({ }: MainDashBoardProps) => {
       case 'Conversation':
         return <ConversationTab />;
       case 'task':
-        return <ReferralForm />;
+        return <ReferralForm />;    
       case 'ActivityLogs':
         return <ActivityLogs />;
       default:
@@ -44,10 +50,6 @@ const ReferralDetailsPage = ({ }: MainDashBoardProps) => {
 
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-
-
-
   return (
 
     <main className="bg-[#F1F1F1] min-h-screen flex flex-col text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">

@@ -11,6 +11,9 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
+
+
+
 const referrals = Array.from({ length: 2 }, (_, i) => ({
   id: i + 1,
   referId: '#RC-192',
@@ -21,8 +24,8 @@ const referrals = Array.from({ length: 2 }, (_, i) => ({
   assignee: [
     'Guy Hawkins',
     'Courtney Henry',
-    
-    
+
+
   ][i % 17],
   avatar: `/avatars/${(i % 10) + 1}.jpg`,
   date: '19/11/2025,11:34pm',
@@ -34,57 +37,80 @@ const priorityColor: Record<string, string> = {
   High: 'text-green-500',
 };
 
+const priorityBgColor: Record<string, string> = {
+  Low: ' bg-red-300',
+  Medium: 'bg-yellow-300',
+  High: 'bg-green-300',
+};
+
+interface Referral {
+  id: number;
+  priority: 'Low' | 'Medium' | 'High';
+  referral_info?: string | null;
+  referral_type?: string | null;
+  district?: string | null;
+  status?: string | null;
+  additional_notes?: string | null;
+  reason?: string | null;
+  special_education_label?: string | null;
+  created_at: string;
+  updated_at?: string;
+  draft?: boolean;
+  iep_document?: string | null;
+  consent_form?: string | null;
+  cognitive_assesments?: string | null;
+  avatar?: string | null;
+  subject?: number | string;
+  ref_manager?: number;
+  pro_staff?: number;
+  created_by?: number;
+  assignee?: string;  
+}
+
+
 export default function ReferralsPage() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [referral, setReferral] = useState([])
-
-
-  
-   const fetchReferrals = async () => {
-  const token = sessionStorage.getItem('token');
-  if (!token) {
-    console.warn('No token found in sessionStorage. Please log in.');
-    return [];
-  }
-
-  try {
-    const response = await axios.get('/api/referrals/', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(response); 
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching referrals:', error);
-    return [];
-  }
-};
-
-
-    const { data, error} = useQuery({
-        queryKey :  ['referrals'],
-         queryFn : fetchReferrals,
-      })
-
-    console.log(data)
+ 
 
 
 
-
-
-
-
-
-
-     useEffect(() => {
-    
+  const fetchReferrals = async () => {
     const token = sessionStorage.getItem('token');
-      if (!token) {
-        router.push('/login')
-      }
-    }, [])
+    if (!token) {
+      console.warn('No token found in sessionStorage. Please log in.');
+      return [];
+    }
+
+    try {
+      const response = await axios.get('/api/referrals/', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching referrals:', error);
+      return [];
+    }
+  };
+
+
+  const { data } = useQuery<Referral[]>({
+    queryKey: ['referrals'],
+    queryFn: fetchReferrals,
+  })
+
+  console.log(data)
+
+  useEffect(() => {
+
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      router.push('/login')
+    }
+  }, [])
 
   return (
     <main className="bg-white min-h-screen flex text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
@@ -104,7 +130,7 @@ export default function ReferralsPage() {
           className="md:hidden mb-4 px-3 py-2 rounded-md shadow-sm text-sm"
           onClick={() => setSidebarOpen(true)}
         >
-          ☰ 
+          ☰
         </button>
 
         <div className="container  dark:bg-gray-900 dark:text-white transition-colors duration-300  mx-auto">
@@ -113,38 +139,38 @@ export default function ReferralsPage() {
           </header>
 
           <div className=" ">
-                <div className="flex flex-wrap bg-white dark:bg-gray-900 py-4 border-2 px-3  items-center justify-between border-b pb-4">
-      
+            <div className="flex flex-wrap bg-white dark:bg-gray-900 py-4 border-2 px-3  items-center justify-between border-b pb-4">
+
               <div className="flex flex-wrap items-center  gap-2 text-sm text-gray-700">
 
-               <input
-                  type="text"             
+                <input
+                  type="text"
                   placeholder="Search by name or ticket"
                   className="border rounded px-3 py-1.5 text-sm focus:outline-none"
-                 />
+                />
 
-             <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
-              Filter <ChevronDown size={14} />
-            </button>
+                <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
+                  Filter <ChevronDown size={14} />
+                </button>
 
-        <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
-          Sort <ChevronDown size={14} />
-        </button>
-      </div>
+                <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm text-gray-700 hover:bg-gray-50">
+                  Sort <ChevronDown size={14} />
+                </button>
+              </div>
 
-      
-      <div className="flex items-center gap-2 mt-2 sm:mt-0">
-        <button className="border px-3 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-gray-50">
-          <FileText size={14} /> Export CSV
-        </button>
-        <button className="border px-3 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-gray-50">
-          <Download size={14} /> Export PDF
-        </button>
-        <button className="bg-blue-600 text-white px-4 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-blue-700">
-          <Plus size={14} /> New Referral
-        </button>
-      </div>
-    </div>
+
+              <div className="flex items-center gap-2 mt-2 sm:mt-0">
+                <button className="border px-3 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-gray-50">
+                  <FileText size={14} /> Export CSV
+                </button>
+                <button className="border px-3 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-gray-50">
+                  <Download size={14} /> Export PDF
+                </button>
+                <button className="bg-blue-600 text-white px-4 py-1.5 text-sm rounded flex items-center gap-1 hover:bg-blue-700">
+                  <Plus size={14} /> New Referral
+                </button>
+              </div>
+            </div>
 
             <div className="overflow-auto rounded border">
               <table className="min-w-full text-sm">
@@ -160,43 +186,42 @@ export default function ReferralsPage() {
                   </tr>
                 </thead>
                 <tbody className='text-center '>
-                  {referrals.map((r, i) => (
-                    <tr
-                      key={i}
-                      onClick={() => router.push(`/referrals/${r.id}`)}
-                      className="cursor-pointer  hover:bg-gray-50 border-b"
-                    > 
-                      <td className="p-3"><input type="checkbox"  /></td>
-                      <td className="p-3 font-medium text-gray-700 ">{r.referId}</td>
-                      <td className="p-3 text-gray-600">{r.subject}</td>
-                      <td className="p-3  flex justify-center items-center">
-                        <span className={clsx('flex items-center gap-2 ', priorityColor[r.priority])}>
+                  {data && data.length > 0 ? data.map((r, i) => (
+                    <tr key={r.id} onClick={() => router.push(`/Dashboard/RefeeralDashboard/referals/${r.id}`)} className="cursor-pointer hover:bg-gray-50 border-b">
+                      <td className="p-3"><input type="checkbox" /></td>
+                      <td className="p-3 font-medium text-gray-700 ">{`#RC-${r.id}`}</td>
+                      <td className="p-3 text-gray-600">{r.referral_type || r.subject || 'N/A'}</td>
+                      <td className="p-3 flex justify-center items-center">
+                        <span className={clsx('flex items-center gap-2 px-2 py-1 rounded-full ', priorityBgColor[r.priority] , priorityColor[r.priority])}>
                           <span className="text-xs">●</span> {r.priority}
                         </span>
                       </td>
-                      <td className="p-3 text-gray-600">{r.type}</td>
+                      <td className="p-3 text-gray-600">{r.referral_type || 'N/A'}</td>
                       <td className="p-3 flex justify-center items-center gap-2">
                         <Image
-                          src={`https://i.pravatar.cc/150?img=${i}`}
-                          alt={r.assignee}
+                          src={ r.avatar  ||   `https://i.pravatar.cc/150?img`}
+                          alt={r.assignee || 'Assignee'}
                           width={24}
                           height={24}
                           className="rounded-full"
                         />
-                        <span className="text-gray-700 ">{r.assignee}</span>
+                        <span className="text-gray-700">{r.assignee || 'Assignee name'}</span>
                       </td>
-                      <td className="p-3 text-gray-500 whitespace-nowrap">{r.date}</td>
+                      <td className="p-3 text-gray-500 whitespace-nowrap">{new Date(r.created_at).toLocaleString()}</td>
                     </tr>
-                  ))}
+                  )) : (
+                    <tr><td colSpan={7} className="p-3 text-center">No referrals found.</td></tr>
+                  )}
                 </tbody>
+
               </table>
             </div>
 
-            <div className="flex justify-between items-center mt-4 text-sm px-3 text-gray-600">
+            <div className="flex  justify-end  items-center mt-4 text-sm px-3 text-gray-600">
               <span>Previous</span>
               <div className="flex gap-2">
-                <button className="px-2 py-1 bg-blue-600 text-white rounded">1</button>
-                <button className="px-2 py-1 bg-gray-200 rounded">2</button>
+                <button className="px-3 py-1 bg-[#005A9C] ms-4 text-white rounded">1</button>
+                <button className="px-3 py-1 bg-gray-200 ms-2 me-4 rounded">2</button>
               </div>
               <span>Next</span>
             </div>

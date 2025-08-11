@@ -1,14 +1,14 @@
 'use client';
 
 import React from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   FaEye,
   FaEyeSlash,
@@ -49,38 +49,95 @@ const Login: React.FC = () => {
   const [loading, setLoading] = React.useState(false);
   const [generalError, setGeneralError] = React.useState<string | null>(null);
   const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
+  const [token, setToken] = React.useState<string | null>(null);
+  const [sessionToken, setSessionToken] = React.useState<string | null>(null);
+  const [email, setEmail] = React.useState<string | null>(null);
+  const [username, setUsername] = React.useState<string | null>(null);
+  const [password, setPassword] = React.useState<string | null>(null);
+
 
   const router = useRouter();
   const loginMutation = useLogin();
 
+
+
+   const name = sessionStorage.getItem("username");
+   const pass = sessionStorage.getItem("password")
+
+  const  tokenPayload = { 
+      username :  name ,
+      password : pass
+   } 
+
+   console.log(tokenPayload)
+
+ const fetchToken = async () => {
+  try {
+    const response = await axios.post('/api/token/', 
+      {
+        username: sessionStorage.getItem("username") || "",
+        password: sessionStorage.getItem("password") || ""
+      }, 
+      {
+        headers: { "Content-Type": "application/json" }
+      }
+    );
+    const accessToken = response.data.access;
+    console.log("Token fetched successfully:", accessToken);
+    setToken(accessToken);
+    sessionStorage.setItem('token', accessToken);
+    console.log('Token saved:', sessionStorage.getItem('token'));
+  } catch (error) {
+    console.error("Error fetching token detail:", error);
+  }
+};
+
+
   const onSubmit = async (data: FormValues) => {
-    setLoading(true);
-    setGeneralError(null);
+  setLoading(true);
+  setGeneralError(null);
 
-    try {
-      const result = await loginMutation.mutateAsync(data);
-      console.log('Login successful:', result);
-      console.log('userid', result.userId);
-      console.log('token', result.key);
-      setSuccessMessage(result.detail)
-      sessionStorage.setItem("token", result.key);
-      sessionStorage.setItem("userId", result.userId);
-      sessionStorage.setItem("username", data.username);
-      sessionStorage.setItem("email", data.email);
-      sessionStorage.setItem("rememberMe", String(data.rememberMe));
+  try {
+    const result = await loginMutation.mutateAsync(data);
+    console.log('Login successful:', result);
+    console.log('userid', result.userId);
+    console.log('key', result.key);
 
-        router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
-    } catch (error: any) {
-      console.error(error);
-      const message =
-        error?.response?.data?.detail ||
-        error?.response?.data?.non_field_errors?.[0] ||
-        "Login failed. Please try again.";
-      setGeneralError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setSuccessMessage(result.detail);
+    sessionStorage.setItem("key", result.key);
+    
+    setSessionToken(result.key); 
+
+    setEmail(data.email);
+    setUsername(data.username);
+    setPassword(data.password);
+
+    sessionStorage.setItem("username", data.username);
+    sessionStorage.setItem("email", data.email);
+    sessionStorage.setItem("password", data.password);
+    sessionStorage.setItem("rememberMe", String(data.rememberMe));
+      
+    fetchToken(); 
+    router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
+  } catch (error: any) {
+    console.error(error);
+    const message =
+      error?.response?.data?.detail ||
+      error?.response?.data?.non_field_errors?.[0] ||
+      "Login failed. Please try again.";
+    setGeneralError(message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+  
+  
+   
+
+
+
 
   return (
     <div className="flex flex-col md:flex-row justify-center h-screen">
@@ -119,18 +176,18 @@ const Login: React.FC = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 
 
-                 {generalError && (
+            {generalError && (
               <p className="text-red-600 text-center mt-4 font-semibold">
-                 {generalError}
+                {generalError}
               </p>
             )}
 
-              {successMessage && (
-               <p className="text-green-600 text-center mt-4 font-semibold">
-                
-           {successMessage}
-           </p>
-         )}
+            {successMessage && (
+              <p className="text-green-600 text-center mt-4 font-semibold">
+
+                {successMessage}
+              </p>
+            )}
 
 
             {/* Email Field */}
@@ -186,8 +243,8 @@ const Login: React.FC = () => {
                   className="absolute right-2.5 top-1/2 transform rounded- -translate-y-1/2 text-gray-400"
                   tabIndex={-1}
                 >
-                    {showPassword ? (
-                     <FaEye size={18} className="text-gray-400" />
+                  {showPassword ? (
+                    <FaEye size={18} className="text-gray-400" />
                   ) : (
                     <FaEyeSlash size={18} className="text-gray-400" />
                   )}

@@ -55,7 +55,7 @@ const ConversationTab: React.FC = () => {
             </div>
           </div>
 
-          {/* System Message */}
+        
           <div className="mb-4">
             <div className="flex items-start">
               <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center mr-2">
@@ -74,13 +74,10 @@ const ConversationTab: React.FC = () => {
             </div>
           </div>
 
-
-          {/* Today Label */}
           <div className="mb-2 mt-6">
             <span className="text-xs uppercase text-gray-400">Today</span>
           </div>
 
-          {/* Message From Image */}
           <div className="mb-4">
             <div className="flex items-start">
               <Image
@@ -121,13 +118,11 @@ const ConversationTab: React.FC = () => {
             </svg>
           </button>
 
-          {/* Bold */}
           <button onClick={() => Bold()} className="text-gray-600 hover:text-gray-800 p-1 font-bold text-sm leading-none">
             B
           </button>
         </div>
 
-        {/* Attach Button */}
         <button className="ml-auto text-xs text-gray-600 hover:underline flex items-center gap-1">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -140,25 +135,19 @@ const ConversationTab: React.FC = () => {
         </button>
       </div>
 
-      {/* Textarea */}
       <textarea
         ref={textareaRef}
         className="w-full h-28 px-3 py-2 text-sm border-t border-gray-200 dark:border-gray-800 rounded-b-lg resize-none bg-white  dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:outline-none"
         placeholder="Add your response"
       ></textarea>
 
-      {/* Post button */}
       <div className="flex justify-end px-4 py-2">
-        <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded">
+        <button className="bg-[#005A9C] hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded">
           Post Response
         </button>
       </div>
     </div>
-
-
       </div>
-
-      {/* Right side: Details Panel */}
       <div className="w-full md:w-[40%] border-t md:border-t-0 md:border-l">
         <Details />
       </div>
