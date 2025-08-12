@@ -40,7 +40,7 @@ const userId = "15";
   const { data } = useQuery({
     queryKey: ['user'],
     queryFn: fetchUser,
-    enabled: !!token
+   // enabledtoken
   });
 
   //  useEffect(() => {

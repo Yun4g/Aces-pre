@@ -186,10 +186,10 @@ export default function ReferralsPage() {
                   </tr>
                 </thead>
                 <tbody className='text-center '>
-                  {data && data.length > 0 ? data.map((r, i) => (
+                  {data && data.length > 0 ? data.map( (r, i) => (
                     <tr key={r.id} onClick={() => router.push(`/Dashboard/RefeeralDashboard/referals/${r.id}`)} className="cursor-pointer hover:bg-gray-50 border-b">
                       <td className="p-3"><input type="checkbox" /></td>
-                      <td className="p-3 font-medium text-gray-700 ">{`#RC-${r.id}`}</td>
+                      <td className="p-3 font-medium text-gray-700 ">{` #RC-${r.id}`}</td>
                       <td className="p-3 text-gray-600">{r.referral_type || r.subject || 'N/A'}</td>
                       <td className="p-3 flex justify-center items-center">
                         <span className={clsx('flex items-center gap-2 px-2 py-1 rounded-full ', priorityBgColor[r.priority] , priorityColor[r.priority])}>

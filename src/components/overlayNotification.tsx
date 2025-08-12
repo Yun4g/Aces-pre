@@ -37,7 +37,9 @@ const NotificationOverlay = () => {
         return [];
     }
     try {
-        const response = await axios.get('/api/notifications/')
+        const response = await axios.get('/api/notification/1', {
+           headers: { Authorization: `Bearer ${token}` }
+        })
         if (response.status === 200) {
             console.log(response.data, 'notifications data');
         }
