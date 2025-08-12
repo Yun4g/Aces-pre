@@ -18,13 +18,15 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import AnalyticsDashboard from './page';
+import { RecentReferrals } from "@/components/RecentReferal";
 
-const metrics = [
-  { label: "Completion Rates", value: "92%", change: "10.2% vs Last month" },
-  { label: "Average first time Replies", value: "248", change: "10.2% vs Last month" },
-  { label: "Average Processing time", value: "7.2 days", change: "10.2% vs Last month" },
-  { label: "Total Schools", value: "18", change: "10.2% vs Last month" },
-];
+// const metrics = [
+//   { label: "Completion Rates", value: "92%", change: "10.2% vs Last month" },
+//   { label: "Average first time Replies", value: "248", change: "10.2% vs Last month" },
+//   { label: "Average Processing time", value: "7.2 days", change: "10.2% vs Last month" },
+//   { label: "Total Schools", value: "18", change: "10.2% vs Last month" },
+// ];
 
 const barData = [
   { name: "Jan", value: 35 },
@@ -112,33 +114,62 @@ const referrals = [
   },
 ];
 
-export default function Analytics() {
 
+
+interface AnalyticsDashboard {
+    completion_percent: number | null ,
+    recent_completion_percent: number | null,
+    average_processing_time: string | null,
+    recent_average_processing_time: string | null,
+    total_schools: number | null,
+    average_replies_per_referral: number | null
+}
+
+export default function Analytics() {
+ 
+  const token = sessionStorage.getItem('token')
     
-  const fetchAnalytics = async() => {
+  const fetchAnalytics = async () : Promise<AnalyticsDashboard | null> => {
     try {
-      const res = await axios.get('/api/referral_dashboard/') 
+      const res = await axios.get('/api/referral_dashboard/', {
+        headers: { Authorization: `Bearer ${token}` }
+      }) 
        
       return res.data
     } catch (error) {
         console.log(error)
+        return null
     }
   }
 
 
+function formatProcessingTime(timeString: string | null | undefined): string {
+  if (!timeString) return "—";
 
+  const parts = timeString.split(':');
+  if (parts.length < 3) return timeString; 
+
+  const hours = parseInt(parts[0], 10);
+  const minutes = parseInt(parts[1], 10);
+  const seconds = parseFloat(parts[2]);
+  const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+  const totalDays = totalSeconds / 86400;
+  return `${ Math.round(totalDays)} days`;
+}
   const { data } = useQuery({
     queryKey: ['Analytics'],
     queryFn : fetchAnalytics
   })
-
   console.log('analytics', data)
-
-
+const metrics = [
+  { label: "Completion Rates", value: data?.completion_percent ?? "—",  change: "10.2% vs Last month" },
+  { label: "Average first time Replies", value: data?.average_replies_per_referral ?? "—", change: "10.2% vs Last month" },
+  { label: "Average Processing time", value: formatProcessingTime(data?.average_processing_time)  , change: "10.2% vs Last month" },
+  { label: "Total Schools", value: data?.total_schools,  change: "10.2% vs Last month" },
+];
 
   return (
     <div className="w-full  space-y-1">
-
       {/* Buttons */}
       <div className="flex flex-wrap gap-3 p-3 bg-white">
         <Button className="bg-blue-700 text-white hover:bg-blue-700 min-w-[100px] flex-1 sm:flex-none text-center">
@@ -326,67 +357,7 @@ export default function Analytics() {
         </Card>
       </div>
 
-      <Card className="border-none bg-white dark:bg-gray-800 mx-3 ">
-        <CardContent className="p-4">
-          <h2 className="text-sm sm:text-base text-gray-600 mb-4">Recent Referrals</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm sm:text-base border-collapse">
-              <thead className="bg-[#F5F5F5] h-[60px]   dark:bg-gray-700">
-                <tr className="border-b  text-center">
-                  <th className="pb-2 px-2">Students</th>
-                  <th className="pb-2 px-2">Type</th>
-                  <th className="pb-2 px-2">Status</th>
-                  <th className="pb-2 px-2">Assigned By</th>
-                  <th className="pb-2 px-2">Date</th>
-                  <th className="pb-2 px-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {referrals.map((r) => (
-                  <tr key={r.id} className="border-b hover:bg-gray-50 text-center dark:hover:bg-gray-800 transition-colors">
-                    <td className="py-3 px-2 max-w-[150px] whitespace-normal">
-                      <div>
-                        <div className="font-medium">
-                          <span>
-                            <Image
-                              width={200}
-                              height={200}
-                                 src=""
-                              alt="Student Avatar"
-                              className="inline-block w-8 h-8 rounded-full mr-2" />
-                              </span>
-                          {r.student}</div>
-                        <div className="text-xs text-gray-500 truncate">{r.email}</div>
-                      </div>
-                    </td>
-                    <td className="py-3 px-2">
-                      <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs whitespace-nowrap">
-                        {r.type}
-                      </span>
-                    </td>
-                    <td className="py-3 px-2">
-                      <span
-                        className={`px-2 py-1 rounded text-xs whitespace-nowrap ${r.status === "Success"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                          }`}
-                      >
-                        {r.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-2">{r.assignedBy}</td>
-                    <td className="py-3 px-2">{r.date}</td>
-                    <td className="py-3 px-2 whitespace-nowrap">
-                      <a href="#" className="text-blue-600 mr-2 hover:underline">View</a>
-                      <a href="#" className="text-gray-500 hover:underline">Edit</a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+      <RecentReferrals/>
     </div >
 
   );

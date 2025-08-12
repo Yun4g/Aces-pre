@@ -12,15 +12,14 @@ export default function AnalyticsDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
 
-  
-     useEffect(() => {
-    
+   
     const token = sessionStorage.getItem('token');
+     useEffect(() => {
   
       if (!token) {
         router.push('/login')
       }
-    }, [])
+    }, [token, router])
 
   return (
     <section className=" dark:bg-gray-900 dark:text-white transition-colors duration-300 min-h-screen flex">
