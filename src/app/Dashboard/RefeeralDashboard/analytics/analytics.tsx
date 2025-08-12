@@ -16,6 +16,8 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const metrics = [
   { label: "Completion Rates", value: "92%", change: "10.2% vs Last month" },
@@ -111,6 +113,29 @@ const referrals = [
 ];
 
 export default function Analytics() {
+
+    
+  const fetchAnalytics = async() => {
+    try {
+      const res = await axios.get('/api/referral_dashboard/') 
+       
+      return res.data
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+
+
+  const { data } = useQuery({
+    queryKey: ['Analytics'],
+    queryFn : fetchAnalytics
+  })
+
+  console.log('analytics', data)
+
+
+
   return (
     <div className="w-full  space-y-1">
 

@@ -13,15 +13,11 @@ type NavbarReferalProps = {
 
 const NavbarReferal: React.FC<NavbarReferalProps> = ({ isOpen, onClose }) => {
     const pathname = usePathname();
-
     const navItems = [
         { to: '/Dashboard/RefeeralDashboard/mainDashBoard', icon: 'DashBoard.png', label: 'Dashboard' },
         { to: '/Dashboard/RefeeralDashboard/referals', icon: 'ReferalIcon.png', label: 'Referrals' },
         { to: '/Dashboard/RefeeralDashboard/analytics', icon: 'chart-2.png', label: 'Analytics' },
-        { to: '/Dashboard/RefeeralDashboard/settings', icon: 'settingsicon.png', label: 'Settings' },
     ];
-
-
     const isRouteActive = (path: string) => {
         return pathname === path || pathname.startsWith(`${path}/`);
     };
