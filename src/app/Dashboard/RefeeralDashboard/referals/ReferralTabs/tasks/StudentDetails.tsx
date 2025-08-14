@@ -82,7 +82,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="text"
               value={studentName}
               onChange={(e) => setStudentName(e.target.value)}
-              className="w-full bg-white dark:bg-black dark:text-white p-2 border border-gray-300 rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div>
@@ -93,7 +93,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="date"
               value={dateOfBirth}
               onChange={(e) => setDateOfBirth(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div>
@@ -103,7 +103,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
             <select
               value={gradeLevel}
               onChange={(e) => setGradeLevel(e.target.value)}
-              className="w-full p-2 border bg-white dark:bg-black dark:text-white border-gray-300 rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
             >
               <option value="">Select grade</option>
               <option value="k">Kindergarten</option>
@@ -129,7 +129,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="text"
               value={classroom}
               onChange={(e) => setClassroom(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div>
@@ -140,7 +140,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div>
@@ -150,7 +150,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             >
               <option value="">Select status</option>
               <option value="active">Active</option>
@@ -166,7 +166,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div>
@@ -177,7 +177,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="text"
               value={zipCode}
               onChange={(e) => setZipCode(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
         </div>
@@ -196,7 +196,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="text"
               value={parentName}
               onChange={(e) => setParentName(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div>
@@ -206,7 +206,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
             <select
               value={relationship}
               onChange={(e) => setRelationship(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             >
               <option value="">Select relationship</option>
               <option value="mother">Mother</option>
@@ -223,7 +223,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="tel"
               value={parentPhone}
               onChange={(e) => setParentPhone(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div>
@@ -234,7 +234,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               type="email"
               value={parentEmail}
               onChange={(e) => setParentEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
         </div>

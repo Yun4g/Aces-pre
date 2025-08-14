@@ -1,8 +1,11 @@
-// pages/student-referral.tsx
+
 import React, { useState } from 'react';
 import { FileText as DocumentIcon ,  Upload } from 'lucide-react';
 
-
+interface UploadAndReviewProps {
+  updateFormData: (newData: object) => void;
+  formData: object;
+}
 
 type DocumentField = {
   id: string;
@@ -11,48 +14,47 @@ type DocumentField = {
   file: File | null;
 };
 
-export default function iStudentReferral() {
+export default function  IStudentReferral({ updateFormData, formData }: UploadAndReviewProps) {
     
 
-  // Document fields state
   const [documentFields, setDocumentFields] = useState<DocumentField[]>([
     { id: 'iep', name: 'IEP Document', required: true, file: null },
     { id: 'consent', name: 'Consent Form', required: true, file: null },
     { id: 'cognitive', name: 'Cognitive Assessment', required: true, file: null },
   ]);
-
-  // Handle file selection
-  const handleFileSelect = (id: string, files: FileList | null) => {
-    if (!files || files.length === 0) return;
-    
-    setDocumentFields(prev => 
-      prev.map(field => 
-        field.id === id ? { ...field, file: files[0] } : field
-      )
-    );
-  };
+ 
+ 
 
   
+  const handleFileSelect = (id: string, files: FileList | null) => {
+  if (!files || files.length === 0) return;
+
+  setDocumentFields(prev =>
+    prev.map(field =>
+      field.id === id ? { ...field, file: files[0] } : field
+    )
+  );
+
+  updateFormData({ [id]: files[0] });
+};
+    
+
+ 
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-white transition-colors duration-300  md:p-8">
-      <div className=" w-full md:max-w-4xl md:mx-auto bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 rounded-lg shadow-md overflow-hidden">
-        {/* Header */}
-       
-        
-        
-        
-        {/* Content Area */}
-        <div className="p-4 sm:p-2">
+    <div className="h-fit  dark:bg-gray-900 dark:text-white transition-colors duration-300  ">
+      <div className=" w-full md:max-w-4xl md:mx-auto bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 rounded-lg  overflow-hidden">
+   
+        <div className="sm:p-2">
           <h2 className="text-lg font-medium text-gray-700 dark:text-white mb-4">Document Upload</h2>
           <p className="text-sm text-gray-500 dark:text-white mb-6">
-            Upload all required documentation to support this referral. Required documents are indicated with an asterisk (*).
+            Upload all required documentation to support this referral. Required documents <br/> are indicated with an asterisk (*).
           </p>
           
-          {/* Document Upload Fields */}
+        
           <div className="space-y-6">
             {documentFields.map((field) => (
-              <div key={field.id} className="border border-gray-200 rounded-lg p-4">
+              <div key={field.id} className="rounded-lg ">
                 <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">
                   {field.name}{field.required && <span className="text-red-500 ">*</span>}
                 </label>
@@ -85,8 +87,7 @@ export default function iStudentReferral() {
             ))}
           </div>
         </div>
-        
-        {/* Footer */}
+       
  
       </div>
     </div>

@@ -64,7 +64,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
               type="text"
               value={referrerName}
               onChange={(e) => setReferrerName(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div className="mb-4">
@@ -74,7 +74,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
             <select
               value={districts}
               onChange={(e) => setDistricts(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
             >
               <option value="">Select Districts</option>
               <option value="Districts 1">Districts 1</option>
@@ -90,7 +90,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
               type="email"
               value={emailAddress}
               onChange={(e) => setEmailAddress(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
           <div className="mb-4">
@@ -101,7 +101,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
               type="tel"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
             />
           </div>
         </div>
@@ -114,7 +114,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
             </label>
             <input
               type="date"
-              className="w-full p-2 border border-gray-300 bg-white dark:bg-black dark:text-white rounded-md"
+              className="w-full p-[10px] outline-none border-2 border-[#D0D0D0] bg-white dark:bg-black dark:text-white rounded-[10px]"
             />
           </div>
           <div className="mb-4">
