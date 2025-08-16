@@ -87,8 +87,6 @@ export default function  IStudentReferral({ updateFormData, formData }: UploadAn
             ))}
           </div>
         </div>
-       
- 
       </div>
     </div>
   );

@@ -73,7 +73,7 @@ const userId = "15";
         </h1>
 
         {/* Right side elements */}
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-2 md:gap-4 mb-2">
 
           <div className="hidden sm:block relative">
             <input

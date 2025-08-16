@@ -171,7 +171,7 @@ const metrics = [
   return (
     <div className="w-full  space-y-1">
       {/* Buttons */}
-      <div className="flex flex-wrap gap-3 p-3 bg-white">
+      <div className="flex flex-wrap gap-3 p-3 bg-white dark:bg-gray-800">
         <Button className="bg-blue-700 text-white hover:bg-blue-700 min-w-[100px] flex-1 sm:flex-none text-center">
           Month
         </Button>
@@ -192,7 +192,7 @@ const metrics = [
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-3  gap-2">
         {metrics.map((metric, i) => (
-          <Card key={i} className="border-none bg-white px-[40px] py-[10px] shadow-sm">
+          <Card key={i} className="border-none bg-white dark:bg-gray-800 px-[40px] py-[10px] shadow-sm">
             <CardContent className="p-4">
               <div className="text-2xl sm:text-3xl font-bold text-blue-700">{metric.value}</div>
               <div className="text-sm sm:text-base text-gray-600">{metric.label}</div>
@@ -204,7 +204,7 @@ const metrics = [
 
 
       <div className=" flex px-3 gap-2 m-0">
-        <Card className="border-none w-[57%]  bg-white ">
+        <Card className="border-none w-[57%]  bg-white dark:bg-gray-800">
           <CardContent className="p-4 w-full">
             <h2 className="text-sm sm:text-base text-gray-600">Average Referrals created</h2>
 
@@ -245,7 +245,7 @@ const metrics = [
         </Card>
 
         {/* Pie Chart Card */}
-        <Card className="border-none shadow-sm w-[43%] bg-white ">
+        <Card className="border-none shadow-sm w-[43%] bg-white dark:bg-gray-800">
           <CardContent className="p-4">
             <h2 className="text-sm sm:text-base text-gray-600 mb-2">
               Average Referrals created

@@ -6,6 +6,8 @@ import NavbarReferal from '../../navbarReferal';
 import DashboardHeader from '@/components/DashBoardHeader';
 import ReferralForm from '../referralForm/page';
 import { MessageSquareText, FileText, Layers } from 'lucide-react';
+import Tasks from '../ReferralTabs/RefTask';
+import Link from 'next/link';
 
 
 
@@ -15,18 +17,18 @@ interface MainDashBoardProps {
   isOpen: boolean;
   onClose: () => void;
 }
- 
+
 
 interface PageProps {
   params: {
-     id : string
-   }
+    id: string
+  }
 }
 
 
-const ReferralDetailsPage = ({ params } : PageProps ) => {
+const ReferralDetailsPage = ({ params }: PageProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('Conversation');
-    const { id } = params;
+  const { id } = params;
   console.log(id)
 
 
@@ -40,7 +42,7 @@ const ReferralDetailsPage = ({ params } : PageProps ) => {
       case 'Conversation':
         return <ConversationTab />;
       case 'task':
-        return <ReferralForm />;    
+        return <Tasks />;
       case 'ActivityLogs':
         return <ActivityLogs />;
       default:
@@ -97,7 +99,13 @@ const ReferralDetailsPage = ({ params } : PageProps ) => {
             </div>
 
             <div className=' md:absolute right-4'>
-              <button className=' w-40 h-12 md:w-40 md:h-14 my-6 rounded-md text-white bg-[#005A9C]'>New Referal</button>
+              <Link
+                href="/Dashboard/RefeeralDashboard/referals/referralForm"
+                className="bg-[#005A9C] text-white px-6 py-4 text-sm rounded flex items-center gap-1 00 transition"
+                aria-label="Create new referral"
+              >
+                New Referral
+              </Link>
             </div>
 
           </div>

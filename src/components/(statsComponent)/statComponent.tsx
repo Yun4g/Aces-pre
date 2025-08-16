@@ -6,26 +6,27 @@ import { useQuery } from '@tanstack/react-query';
 
 export function StatCards() {
 
-  //  const token = sessionStorage.getItem('token')
-  // const fetchUserReferal = async () => {
-  //   try {
-  //     const res = await axios.get('/api/recent_referrals/', {
-  //           headers: { Authorization: `Bearer ${token}` }
-  //     })
+  const token = sessionStorage.getItem('token')
+  
+  const fetchUserReferal = async () => {
+    try {
+      const res = await axios.get('/api/by-user/15', {
+            headers: { Authorization: `Bearer ${token}` }
+      })
       
-  //     return res.data
-  //   } catch (error) {
-  //      console.log(error)
-  //     }
-  // }
+      return res.data
+    } catch (error) {
+       console.log(error)
+      }
+  }
 
 
   
-  //   const { data } = useQuery({
-  //     queryKey:  ['recentReferrals'],
-  //     queryFn:  fetchUserReferal,
-  //    // enabledtoken
-  //   });
+    const { data } = useQuery({
+      queryKey:  ['recentReferrals'],
+      queryFn:  fetchUserReferal,
+     // enabledtoken
+    });
 
   return (
     <div className=" flex flex-wrap w-full  gap-2">

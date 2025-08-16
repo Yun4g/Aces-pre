@@ -26,11 +26,76 @@ const ReferralForm = () => {
     console.log('Saving draft:', formData);
 
   };
+ const mapFormDataToPayload = (data : any) => ({
+  
+  priority: data.priority || "Low", 
+  referral_info: data.referralType || "",  
+  referral_type: data.referralType || "",
 
-  const handleSubmitReferral = () => {
-    localStorage.setItem('formData', JSON.stringify(formData))
-    
-  };
+  district: data.districts || "",
+  status: data.status || "pending",
+  additional_notes: data.additional_notes || data.additionalNotes || null,
+  reason: data.reasonForReferral || null,
+  special_education_label: data.classification || null,
+  draft: false, 
+  iep_document: null,
+  consent_form: null,
+  cognitive_assesments: null,
+  avatar: null,
+
+  subject: data.subject || 1,
+  ref_manager: data.referrerName || 1,
+  pro_staff: 1,    
+  created_by: 1,   
+  studentName: data.studentName,
+  emailAddress: data.emailAddress,
+  parentName: data.parentName,
+  parentEmail: data.parentEmail,
+  parentPhone: data.parentPhone,
+  phoneNumber: data.phoneNumber,
+  classroom: data.classroom,
+  zipCode: data.zipCode,
+  city: data.city,
+  address: data.address,
+  urgentReferral: data.urgentReferral,
+  urgentReason: data.urgentReason,
+  relationship: data.relationship,
+  selectedPrograms: data.selectedPrograms,
+  sameAddress: data.sameAddress,
+  gradeLevel: data.gradeLevel,
+  dateOfBirth: data.dateOfBirth,
+});
+
+mapFormDataToPayload(formData)
+const handleSubmitReferral = async () => {
+  try {
+    const payload = mapFormDataToPayload(formData);
+    const response = await fetch('/api/referrals/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorRes = await response.json();
+      console.error('Server error:', errorRes);
+      alert('Submission failed: ' + (errorRes.message || response.statusText));
+      return;
+    }
+
+    const data = await response.json();
+    console.log('Submission success:', data);
+    localStorage.setItem('formData', JSON.stringify(formData));  
+
+  } catch (error) {
+    console.error('Request error:', error);
+    alert('An error occurred during submission.');
+  }
+};
+
+ 
 
   const updateFormData = (newData: object) => {
     setFormData(prevData => ({ ...prevData, ...newData }));

@@ -90,7 +90,7 @@ export default function ReferralsPage() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        responseType: "blob", // important to get blob for download
+        responseType: "blob", 
       });
       const csvBlob = new Blob([response.data], { type: "text/csv" });
       const url = window.URL.createObjectURL(csvBlob);
@@ -106,7 +106,6 @@ export default function ReferralsPage() {
     queryFn: fetchReferrals,
   });
 
-  // CSV download triggered by button click
   const handleDownloadCsv = async () => {
     const blobURL = await fetchCsvFile();
     if (blobURL) {
@@ -124,7 +123,7 @@ export default function ReferralsPage() {
     }
   };
 
-  // PDF download of the table
+
   const handleDownloadPdf = async () => {
     if (!tableRef.current) return;
     try {
@@ -184,7 +183,7 @@ export default function ReferralsPage() {
               <input
                 type="text"
                 placeholder="Search by name or ticket"
-                className="border rounded px-3 py-1.5 text-sm focus:outline-none w-full max-w-xs dark:bg-gray-700 dark:text-white"
+                className="border rounded px-3 py-1.5 text-sm focus:outline-none w-full max-w-xs bg-white dark:bg-gray-700 dark:text-white"
               />
 
               <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
