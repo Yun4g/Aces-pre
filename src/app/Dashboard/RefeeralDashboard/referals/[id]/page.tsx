@@ -74,7 +74,7 @@ const ReferralDetailsPage = ({ params }: PageProps) => {
           ☰ Menu
         </button>
         <div className="flex flex-col  gap-10 md:gap-0">
-          <header className=' mb-1 rounded-md overflow-hidden bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 '>
+          <header className='  rounded-md overflow-hidden bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300 '>
             <DashboardHeader />
           </header>
 

@@ -68,9 +68,7 @@ export default function ReferralsPage() {
     }
     try {
       const response = await axios.get("/api/referrals/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
     } catch (error) {
@@ -79,6 +77,28 @@ export default function ReferralsPage() {
     }
   };
 
+  const { data: referralsData = [] } = useQuery<Referral[]>({
+    queryKey: ["referrals"],
+    queryFn: fetchReferrals,
+    refetchInterval: 30000,
+  });
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalItems = referralsData.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const paginatedReferrals = referralsData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) setCurrentPage(page);
+  };
+
+  // CSV download
   const fetchCsvFile = async (): Promise<string | null> => {
     const token = sessionStorage.getItem("token");
     if (!token) {
@@ -87,24 +107,16 @@ export default function ReferralsPage() {
     }
     try {
       const response = await axios.get("/api/export-referrals-csv/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        responseType: "blob", 
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: "blob",
       });
       const csvBlob = new Blob([response.data], { type: "text/csv" });
-      const url = window.URL.createObjectURL(csvBlob);
-      return url;
+      return window.URL.createObjectURL(csvBlob);
     } catch (error) {
       console.error("Error fetching CSV:", error);
       return null;
     }
   };
-
-  const { data: referralsData } = useQuery<Referral[]>({
-    queryKey: ["referrals"],
-    queryFn: fetchReferrals,
-  });
 
   const handleDownloadCsv = async () => {
     const blobURL = await fetchCsvFile();
@@ -115,15 +127,13 @@ export default function ReferralsPage() {
       document.body.appendChild(link);
       link.click();
       link.remove();
-      setTimeout(() => {
-        window.URL.revokeObjectURL(blobURL);
-      }, 10000);
+      setTimeout(() => window.URL.revokeObjectURL(blobURL), 10000);
     } else {
       alert("Failed to download CSV file.");
     }
   };
 
-
+  // PDF download
   const handleDownloadPdf = async () => {
     if (!tableRef.current) return;
     try {
@@ -142,10 +152,7 @@ export default function ReferralsPage() {
   };
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    }
+    if (!sessionStorage.getItem("token")) router.push("/login");
   }, [router]);
 
   return (
@@ -161,7 +168,7 @@ export default function ReferralsPage() {
       </div>
 
       <section className="flex-1 ml-0 md:ml-[250px] overflow-y-auto w-full">
-     
+        {/* Mobile Menu Btn */}
         <button
           className="md:hidden mb-4 px-3 py-2 rounded-md shadow-sm text-sm"
           onClick={() => setSidebarOpen(true)}
@@ -170,21 +177,41 @@ export default function ReferralsPage() {
           ☰
         </button>
 
-        <div className="container dark:bg-gray-900 dark:text-white transition-colors duration-300 mx-auto ">
+        <div className="container mx-auto dark:bg-gray-900 dark:text-white transition-colors duration-300">
           {/* Header */}
           <header className="rounded-md overflow-hidden z-[1000] bg-white dark:bg-gray-800 mb-2">
             <DashboardHeader />
           </header>
 
-        
-          <div className="flex flex-wrap bg-white dark:bg-gray-900 px-3  items-center justify-between border-b pb-2  rounded-md gap-2">
-         
+          {/* Top Bar */}
+          <div className="flex flex-wrap bg-white dark:bg-gray-900 px-3 items-center justify-between border-2 p-2 mt-2 rounded-md gap-2">
             <div className="flex flex-wrap items-center gap-2 text-sm text-gray-700 dark:text-gray-300 flex-1 min-w-[200px]">
-              <input
-                type="text"
-                placeholder="Search by name or ticket"
-                className="border rounded px-3 py-1.5 text-sm focus:outline-none w-full max-w-xs bg-white dark:bg-gray-700 dark:text-white"
-              />
+              {/* Search */}
+              <div className="border flex gap-2 rounded px-3 py-1.5 text-sm w-full max-w-xs bg-white dark:bg-gray-700 dark:text-white">
+                <span>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path
+                      d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                      stroke="#898A8C"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M17.4998 17.4998L14.1665 14.1665"
+                      stroke="#898A8C"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  placeholder="Search by name or ticket"
+                  className="focus:outline-none bg-transparent"
+                />
+              </div>
 
               <button className="border rounded px-3 py-1.5 flex items-center gap-1 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                 Filter <ChevronDown size={14} />
@@ -199,8 +226,7 @@ export default function ReferralsPage() {
             <div className="flex items-center gap-2 mt-2 sm:mt-0">
               <button
                 onClick={handleDownloadCsv}
-                className="border-2 border-[#005A9C] text-[#005A9C] px-3 py-2 text-sm rounded flex items-center gap-1  hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-                aria-label="Export CSV"
+                className="border-2 border-[#005A9C] text-[#005A9C] px-3 py-2 text-sm rounded flex items-center gap-1 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                 type="button"
               >
                 <FileText size={14} /> Export CSV
@@ -209,7 +235,6 @@ export default function ReferralsPage() {
               <button
                 onClick={handleDownloadPdf}
                 className="border-2 border-[#005A9C] text-[#005A9C] px-3 py-2 text-sm rounded flex items-center gap-1 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-                aria-label="Export PDF"
                 type="button"
               >
                 <Download size={14} /> Export PDF
@@ -217,8 +242,7 @@ export default function ReferralsPage() {
 
               <Link
                 href="/Dashboard/RefeeralDashboard/referals/referralForm"
-                className="bg-[#005A9C] text-white px-4 py-2 text-sm rounded flex items-center gap-1 00 transition"
-                aria-label="Create new referral"
+                className="bg-[#005A9C] text-white px-4 py-2 text-sm rounded flex items-center gap-1 transition"
               >
                 <Plus size={14} /> New Referral
               </Link>
@@ -230,8 +254,6 @@ export default function ReferralsPage() {
             <table
               ref={tableRef}
               className="min-w-full text-sm text-center dark:bg-gray-800"
-              role="table"
-              aria-label="Referrals table"
             >
               <thead className="dark:bg-gray-900 border-b">
                 <tr>
@@ -247,20 +269,20 @@ export default function ReferralsPage() {
                 </tr>
               </thead>
               <tbody>
-                {referralsData && referralsData.length > 0 ? (
-                  referralsData.map((r) => (
+                {paginatedReferrals.length > 0 ? (
+                  paginatedReferrals.map((r) => (
                     <tr
                       key={r.id}
-                      onClick={() => router.push(`/Dashboard/RefeeralDashboard/referals/${r.id}`)}
+                      onClick={() =>
+                        router.push(`/Dashboard/RefeeralDashboard/referals/${r.id}`)
+                      }
                       className="cursor-pointer hover:bg-gray-50 border-b dark:hover:bg-gray-700 transition-colors"
-                      tabIndex={0}
-                      aria-label={`Referral ${r.id}, ${r.referral_type || r.subject || "Not specified"}`}
                     >
                       <td className="p-3">
                         <input type="checkbox" aria-label={`Select referral ${r.id}`} />
                       </td>
-                      <td className="p-3 font-medium text-gray-700 dark:text-gray-200">{`#RC-${r.id}`}</td>
-                      <td className="p-3 text-gray-600 dark:text-gray-300">{r.referral_type || r.subject || "N/A"}</td>
+                      <td className="p-3 font-medium">{`#RC-${r.id}`}</td>
+                      <td className="p-3">{r.subject || "N/A"}</td>
                       <td className="p-3 flex justify-center items-center">
                         <span
                           className={clsx(
@@ -272,7 +294,7 @@ export default function ReferralsPage() {
                           <span className="text-xs">●</span> {r.priority}
                         </span>
                       </td>
-                      <td className="p-3 text-gray-600 dark:text-gray-300">{r.referral_type || "N/A"}</td>
+                      <td className="p-3">{r.referral_type || "N/A"}</td>
                       <td className="p-3 flex justify-center items-center gap-2">
                         <Image
                           src={r.avatar || `https://i.pravatar.cc/150?img=${r.id}`}
@@ -282,14 +304,16 @@ export default function ReferralsPage() {
                           className="rounded-full"
                           unoptimized
                         />
-                        <span className="text-gray-700 dark:text-gray-300">{r.assignee || "Assignee name"}</span>
+                        <span>{r.assignee || "Assignee name"}</span>
                       </td>
-                      <td className="p-3 text-gray-500 whitespace-nowrap dark:text-gray-400">{new Date(r.created_at).toLocaleString()}</td>
+                      <td className="p-3 whitespace-nowrap">
+                        {new Date(r.created_at).toLocaleString()}
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7} className="p-3 text-center text-gray-500 dark:text-gray-400">
+                    <td colSpan={7} className="p-3 text-center">
                       No referrals found.
                     </td>
                   </tr>
@@ -299,14 +323,40 @@ export default function ReferralsPage() {
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-end items-center mt-4 text-sm px-3 text-gray-600 dark:text-gray-400">
-            <span className="mr-3">Previous</span>
-            <div className="flex gap-2">
-              <button className="px-3 py-1 bg-[#005A9C] text-white rounded">1</button>
-              <button className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded">2</button>
+          {totalPages > 1 && (
+            <div className="flex justify-end items-center mt-4 text-sm px-3">
+              <button
+                className="mr-3 disabled:text-gray-400"
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Previous
+              </button>
+              <div className="flex gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={clsx(
+                      "px-3 py-1 rounded",
+                      page === currentPage
+                        ? "bg-[#005A9C] text-white"
+                        : "bg-gray-200 dark:bg-gray-700"
+                    )}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+              <button
+                className="ml-3 disabled:text-gray-400"
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Next
+              </button>
             </div>
-            <span className="ml-3">Next</span>
-          </div>
+          )}
         </div>
       </section>
     </main>

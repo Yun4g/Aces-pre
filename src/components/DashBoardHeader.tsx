@@ -40,7 +40,7 @@ const userId = "15";
   const { data } = useQuery({
     queryKey: ['user'],
     queryFn: fetchUser,
-   // enabledtoken
+    
   });
 
   //  useEffect(() => {
@@ -65,16 +65,15 @@ const userId = "15";
   };
 
   return (
-    <header className="w-full bg-white p-3 dark:bg-gray-900 dark:text-white transition-colors  duration-300 border-b border-gray-200 shadow-sm   z-[1000]">
+    <header className="w-full bg-white p-3 dark:bg-gray-900 dark:text-white transition-colors  duration-300  shadow-sm   z-[1000]">
       <div className="flex items-center justify-between w-full">
 
         <h1 className="text-lg font-medium dark:text-white text-gray-800 flex-1 md:flex-none">
           {getPageTitle()}
         </h1>
 
-        {/* Right side elements */}
+    
         <div className="flex items-center gap-2 md:gap-4 mb-2">
-
           <div className="hidden sm:block relative">
             <input
               type="search"

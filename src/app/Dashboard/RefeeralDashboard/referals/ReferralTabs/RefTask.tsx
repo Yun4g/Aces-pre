@@ -8,7 +8,7 @@ const Tasks: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row bg-white rounded-lg border border-gray-200 overflow-hidden min-h-screen">
       <div className="w-full md:w-2/3 p-6 border-b md:border-b-0 md:border-r border-gray-200">
-        
+
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div>
@@ -21,38 +21,50 @@ const Tasks: React.FC = () => {
           <p className="text-sm text-gray-500 mt-2 md:mt-0">Last Updated: <span className="font-medium">2 hours ago</span></p>
         </div>
 
-      
 
-         <div className="flex items-center justify-between mt-6">
-          {  [
-            {
-              label: 'Submitted',
-              value: 'Medium'
-            },
-            {
-              label: 'Under Review',
-              value: 'Allie Garrison'
-            },
-            {
-              label: 'Processing', value:
-                'Allie Garrison'
-            },
-            {
-              label: 'Completed',
-              value: 'Allie Garrison'
-            },
-        ].map((step, idx) => (
-          <div key={idx} className="flex flex-col items-center w-1/4">
 
-              <div className={`w-8 h-8 flex items-center justify-center rounded-full border-2 ${idx <= 1 ? 'border-blue-500 bg-blue-500 text-white' : 'border-gray-300 text-gray-400'}`}>
-                {step.value}
+        <div className="flex items-center justify-between mt-6 relative w-full">
+          {/* Progress Line */}
+          <div className="absolute top-4 left-0 w-full h-1 bg-gray-200 z-0">
+            <div className="h-1 bg-blue-500" style={{ width: "50%" }}></div>
+          </div>
+
+          {[
+            { label: "Submitted", icon: "📄" },
+            { label: "Under Review", icon: "📄" },
+            { label: "Processing", icon: "⚙️" },
+            { label: "Completed", icon: "✔️" },
+          ].map((step, idx) => {
+            const isCompleted = idx < 1; // before current step
+            const isActive = idx === 1;  // current step
+            return (
+              <div key={idx} className="flex flex-col items-center w-1/4 relative z-10">
+                {/* Circle with Icon */}
+                <div
+                  className={`w-8 h-8 flex items-center justify-center rounded-full border-2 text-sm
+            ${isActive
+                      ? "border-blue-600 bg-blue-600 text-white"
+                      : isCompleted
+                        ? "border-blue-600 bg-white text-blue-600"
+                        : "border-gray-300 bg-white text-gray-400"}
+          `}
+                >
+                  {step.icon}
+                </div>
+                {/* Label */}
+                <span
+                  className={`mt-2 text-xs font-medium 
+            ${isActive ? "text-blue-700" : "text-gray-500"}`}
+                >
+                  {step.label}
+                </span>
               </div>
-              <span className="mt-2 text-xs font-medium text-gray-700">{step.label}</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-   
+
+
         <div className="mt-6 text-sm text-gray-700">
           <p>
             After the latest system update (v2.41), I'm experiencing issues accessing the cloud storage services.
@@ -67,7 +79,7 @@ const Tasks: React.FC = () => {
           </ol>
         </div>
 
-      
+
         <div className="mt-8">
           <h3 className="text-base font-semibold text-gray-800 mb-4">Student Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -78,11 +90,11 @@ const Tasks: React.FC = () => {
           </div>
         </div>
 
-       
+
         <div className="mt-8">
           <h3 className="text-base font-semibold text-gray-800">Program Assistants</h3>
           <p className="text-sm text-gray-600 mb-3">Manage program assignments for students referrals</p>
-          
+
           <div className="space-y-4">
             <div>
               <label className="block text-sm text-gray-500 mb-1">Current Assignments</label>
@@ -102,7 +114,7 @@ const Tasks: React.FC = () => {
 
       </div>
 
-      
+
       <div className="w-full md:w-1/3 p-6 space-y-6">
         {[
           { label: 'Priority', value: 'Medium' },
