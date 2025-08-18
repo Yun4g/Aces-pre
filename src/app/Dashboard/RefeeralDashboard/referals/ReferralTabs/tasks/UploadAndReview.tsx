@@ -14,7 +14,7 @@ type DocumentField = {
   file: File | null;
 };
 
-export default function  IStudentReferral({ updateFormData, formData }: UploadAndReviewProps) {
+export default function  IStudentReferral({ updateFormData }: UploadAndReviewProps) {
     
 
   const [documentFields, setDocumentFields] = useState<DocumentField[]>([
@@ -23,6 +23,8 @@ export default function  IStudentReferral({ updateFormData, formData }: UploadAn
     { id: 'cognitive', name: 'Cognitive Assessment', required: true, file: null },
   ]);
  
+
+  console.log('doc field',documentFields)
  
 
   
@@ -35,7 +37,7 @@ export default function  IStudentReferral({ updateFormData, formData }: UploadAn
     )
   );
 
-  updateFormData({ [id]: files[0] });
+  updateFormData(documentFields);
 };
     
 

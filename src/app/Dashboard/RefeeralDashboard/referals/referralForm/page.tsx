@@ -3,14 +3,52 @@ import { useState } from 'react';
 import ReferrerInfo from '../ReferralTabs/tasks/ReferrerInfo';
 import StudentDetails from '../ReferralTabs/tasks/StudentDetails';
 import ProgramSelection from '../ReferralTabs/tasks/ProgramSelection';
-import UploadAndReview from '../ReferralTabs/tasks/UploadAndReview';
+
 import IStudentReferral from '../ReferralTabs/tasks/UploadAndReview';
 import { useRouter } from 'next/navigation';
 
 
+
+
+interface ReferralFormData {
+  priority?: string;
+  referralType?: "new" | "update" | "transfer";  
+  districts?: string;
+  status?: string;
+  additional_notes?: string;
+  reasonForReferral?: string;
+  classification?: string;
+  studentName?: string;
+  emailAddress?: string;
+  parentName?: string;
+  parentEmail?: string;
+  parentPhone?: string;
+  phoneNumber?: string;
+  classroom?: string;
+  zipCode?: string;
+  city?: string;
+  address?: string;
+  urgentReferral?: boolean;
+  urgentReason?: string;
+  relationship?: string;
+  sameAddress?: boolean;
+  gradeLevel?: string;
+  dateOfBirth?: string;
+  selectedPrograms?: string[];
+
+  // File fields
+  0?: { file?: File };
+  1?: { file?: File };
+  2?: { file?: File };
+}
+
+
+
 const ReferralForm = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<ReferralFormData>({});
+    const token = sessionStorage.getItem('token');
+  console.log(token, 'token in header ttt')
   const router = useRouter();
   console.log('formData', formData)
  
@@ -26,72 +64,127 @@ const ReferralForm = () => {
     console.log('Saving draft:', formData);
 
   };
- const mapFormDataToPayload = (data : any) => ({
+
+const mapFormDataToPayload = (data: any) => {
+  const iep = data[0]?.file ? data[0].file.name : null;
+  const consent = data[1]?.file ? data[1].file.name : null;
+  const cognitive = data[2]?.file ? data[2].file.name : null;
+
+  return {
+    priority: data.priority || "Low",
+    referral_info: data.referralType || "",
+    referral_type: data.referralType || "",
+    district: data.districts || "",
+    status: data.status || "low",
+    additional_notes: data.additional_notes || data.additionalNotes || null,
+    reason: data.reasonForReferral || null,
+    special_education_label: data.classification || null,
+    draft: false,
+
+    iep_document: iep,
+    consent_form: consent,
+    cognitive_assesments: cognitive,
+
+    avatar: null,
+    subject: data.subject || 1,
+    ref_manager: data.referrerName || 1,
+    pro_staff: 1,
+    created_by: 1,
+    studentName: data.studentName,
+    emailAddress: data.emailAddress,
+    parentName: data.parentName,
+    parentEmail: data.parentEmail,
+    parentPhone: data.parentPhone,
+    phoneNumber: data.phoneNumber,
+    classroom: data.classroom,
+    zipCode: data.zipCode,
+    city: data.city,
+    address: data.address,
+    urgentReferral: data.urgentReferral,
+    urgentReason: data.urgentReason,
+    relationship: data.relationship,
+    selectedPrograms: data.selectedPrograms,
+    sameAddress: data.sameAddress,
+    gradeLevel: data.gradeLevel,
+    dateOfBirth: data.dateOfBirth,
+  };
+};
+
+
+
+  mapFormDataToPayload(formData)
   
-  priority: data.priority || "Low", 
-  referral_info: data.referralType || "",  
-  referral_type: data.referralType || "",
 
-  district: data.districts || "",
-  status: data.status || "pending",
-  additional_notes: data.additional_notes || data.additionalNotes || null,
-  reason: data.reasonForReferral || null,
-  special_education_label: data.classification || null,
-  draft: false, 
-  iep_document: null,
-  consent_form: null,
-  cognitive_assesments: null,
-  avatar: null,
+  const payload = mapFormDataToPayload(formData);
+  console.log( 'payload',payload)
 
-  subject: data.subject || 1,
-  ref_manager: data.referrerName || 1,
-  pro_staff: 1,    
-  created_by: 1,   
-  studentName: data.studentName,
-  emailAddress: data.emailAddress,
-  parentName: data.parentName,
-  parentEmail: data.parentEmail,
-  parentPhone: data.parentPhone,
-  phoneNumber: data.phoneNumber,
-  classroom: data.classroom,
-  zipCode: data.zipCode,
-  city: data.city,
-  address: data.address,
-  urgentReferral: data.urgentReferral,
-  urgentReason: data.urgentReason,
-  relationship: data.relationship,
-  selectedPrograms: data.selectedPrograms,
-  sameAddress: data.sameAddress,
-  gradeLevel: data.gradeLevel,
-  dateOfBirth: data.dateOfBirth,
-});
 
-mapFormDataToPayload(formData)
 const handleSubmitReferral = async () => {
   try {
-    const payload = mapFormDataToPayload(formData);
-    const response = await fetch('/api/referrals/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+    const formDataToSend = new FormData();
+
+ 
+    formDataToSend.append("priority", formData.priority || "low");
+    formDataToSend.append("referral_type", formData.referralType || "");
+    formDataToSend.append("district", formData.districts || "");
+    formDataToSend.append("status", formData.status || "pending");
+    formDataToSend.append("additional_notes", formData.additional_notes || "");
+    formDataToSend.append("reason", formData.reasonForReferral || "");
+    formDataToSend.append("special_education_label", formData.classification || "");
+    formDataToSend.append("studentName", formData.studentName || "");
+    formDataToSend.append("emailAddress", formData.emailAddress || "");
+    formDataToSend.append("parentName", formData.parentName || "");
+    formDataToSend.append("parentEmail", formData.parentEmail || "");
+    formDataToSend.append("parentPhone", formData.parentPhone || "");
+    formDataToSend.append("phoneNumber", formData.phoneNumber || "");
+    formDataToSend.append("classroom", formData.classroom || "");
+    formDataToSend.append("zipCode", formData.zipCode || "");
+    formDataToSend.append("city", formData.city || "");
+    formDataToSend.append("address", formData.address || "");
+    formDataToSend.append("urgentReferral", String(formData.urgentReferral || false));
+    formDataToSend.append("urgentReason", formData.urgentReason || "");
+    formDataToSend.append("relationship", formData.relationship || "");
+    formDataToSend.append("sameAddress", String(formData.sameAddress || false));
+    formDataToSend.append("gradeLevel", formData.gradeLevel || "");
+    formDataToSend.append("dateOfBirth", formData.dateOfBirth || "");
+
+ 
+    if (Array.isArray(formData.selectedPrograms)) {
+      formData.selectedPrograms.forEach((program: string) =>
+        formDataToSend.append("selectedPrograms[]", program)
+      );
+    }
+
+    if (formData[0]?.file) {
+      formDataToSend.append("iep_document", formData[0].file);
+    }
+    if (formData[1]?.file) {
+      formDataToSend.append("consent_form", formData[1].file);
+    }
+    if (formData[2]?.file) {
+      formDataToSend.append("cognitive_assessments", formData[2].file);
+    }
+
+    const response = await fetch("/api/referrals/", {
+      method: "POST",
+      body: formDataToSend,
+       headers: { Authorization: `Bearer ${token}` }
     });
 
     if (!response.ok) {
       const errorRes = await response.json();
-      console.error('Server error:', errorRes);
-      alert('Submission failed: ' + (errorRes.message || response.statusText));
+      console.error("Server error:", errorRes);
+      alert("Submission failed: " + (errorRes.message || response.statusText));
       return;
     }
 
     const data = await response.json();
-    console.log('Submission success:', data);
-    localStorage.setItem('formData', JSON.stringify(formData));  
+    console.log("Submission success:", data);
+    localStorage.setItem("formData", JSON.stringify(formData));
 
   } catch (error) {
-    console.error('Request error:', error);
-    alert('An error occurred during submission.');
+    console.error("Request error:", error);
+    alert("An error occurred during submission.");
   }
 };
 

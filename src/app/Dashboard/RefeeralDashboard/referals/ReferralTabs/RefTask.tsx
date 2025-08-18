@@ -35,11 +35,11 @@ const Tasks: React.FC = () => {
             { label: "Processing", icon: "⚙️" },
             { label: "Completed", icon: "✔️" },
           ].map((step, idx) => {
-            const isCompleted = idx < 1; // before current step
-            const isActive = idx === 1;  // current step
+            const isCompleted = idx < 1; 
+            const isActive = idx === 1;  
             return (
               <div key={idx} className="flex flex-col items-center w-1/4 relative z-10">
-                {/* Circle with Icon */}
+            
                 <div
                   className={`w-8 h-8 flex items-center justify-center rounded-full border-2 text-sm
             ${isActive
@@ -51,7 +51,7 @@ const Tasks: React.FC = () => {
                 >
                   {step.icon}
                 </div>
-                {/* Label */}
+             
                 <span
                   className={`mt-2 text-xs font-medium 
             ${isActive ? "text-blue-700" : "text-gray-500"}`}
