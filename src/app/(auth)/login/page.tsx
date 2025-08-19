@@ -14,6 +14,10 @@ import {
   FaEyeSlash,
 } from 'react-icons/fa';
 
+ interface TokenPayload {
+  username: string | null;
+  password: string | null;
+}
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   username: z.string().min(3, "Username is required"),
@@ -54,20 +58,19 @@ const Login: React.FC = () => {
   const [email, setEmail] = React.useState<string | null>(null);
   const [username, setUsername] = React.useState<string | null>(null);
   const [password, setPassword] = React.useState<string | null>(null);
-
+const [tokenPayload, setTokenPayload] = React.useState<TokenPayload>();
 
   const router = useRouter();
   const loginMutation = useLogin();
 
 
 
-   const name = sessionStorage.getItem("username");
-   const pass = sessionStorage.getItem("password")
-
-  const  tokenPayload = { 
-      username :  name ,
-      password : pass
-   } 
+React.useEffect(() => {
+  const name = sessionStorage.getItem("username");
+  const pass = sessionStorage.getItem("password");
+  setTokenPayload({ username: name, password: pass });
+  console.log({ username: name, password: pass });
+}, []);
 
    console.log(tokenPayload)
 
@@ -190,7 +193,6 @@ const Login: React.FC = () => {
             )}
 
 
-            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email
@@ -207,7 +209,7 @@ const Login: React.FC = () => {
               )}
             </div>
 
-            {/* Username Field */}
+        
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
                 Username
@@ -224,7 +226,6 @@ const Login: React.FC = () => {
               )}
             </div>
 
-            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                 Password
@@ -255,7 +256,7 @@ const Login: React.FC = () => {
               )}
             </div>
 
-            {/* Remember Me & Forgot Password */}
+      
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -273,10 +274,7 @@ const Login: React.FC = () => {
               </Link>
             </div>
 
-            {/* General Error */}
-            {generalError && (
-              <p className="text-center text-red-600 font-medium">{generalError}</p>
-            )}
+          
 
             <button
               type="button"
