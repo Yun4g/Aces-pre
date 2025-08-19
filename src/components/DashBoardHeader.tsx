@@ -19,10 +19,9 @@ const DashboardHeader = () => {
   const dispatch = useDispatch();
   const notificationOpen = useSelector((state: RootState) => state.notification.open);
   console.log(pathname, 'pathname in header');
-  const token = sessionStorage.getItem('token');
-  console.log(token, 'token in header ttt')
-  console.log('Token in DashboardHeader:', token);
-  const username = sessionStorage.getItem('username');
+
+const [token, setToken] = useState<string | null>(null);
+const [username, setUsername] = useState<string | null>(null);
 
 const userId = "15";
 
@@ -40,19 +39,20 @@ const userId = "15";
   const { data } = useQuery({
     queryKey: ['user'],
     queryFn: fetchUser,
-    
+    refetchInterval: 4000,
+    enabled: !! token
   });
 
-  //  useEffect(() => {
-  //       if(data) {
-  //           dispatch(fetchUsers(data));
-  //       }
-  //  }, [data, dispatch])
+  
 
   console.log(data, 'data in header');
 
 
 
+useEffect(() => {
+  setToken(sessionStorage.getItem('token'));
+  setUsername(sessionStorage.getItem('username'));
+}, []);
 
 
   const getPageTitle = () => {

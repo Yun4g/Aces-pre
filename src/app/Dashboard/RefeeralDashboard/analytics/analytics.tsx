@@ -159,7 +159,8 @@ function formatProcessingTime(timeString: string | null | undefined): string {
   const { data } = useQuery({
     queryKey: ['Analytics'],
     queryFn: fetchAnalytics,
-    refetchInterval : 4000
+    refetchInterval: 4000,
+      enabled: !!token, 
   })
   console.log('analytics', data)
 const metrics = [
