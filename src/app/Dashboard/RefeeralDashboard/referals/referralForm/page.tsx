@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import ReferrerInfo from '../ReferralTabs/tasks/ReferrerInfo';
 import StudentDetails from '../ReferralTabs/tasks/StudentDetails';
 import ProgramSelection from '../ReferralTabs/tasks/ProgramSelection';
@@ -47,7 +47,11 @@ interface ReferralFormData {
 const ReferralForm = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [formData, setFormData] = useState<ReferralFormData>({});
-    const token = sessionStorage.getItem('token');
+  const [token, setToken] = useState<string | null>(null);
+
+ 
+
+
   console.log(token, 'token in header ttt')
   const router = useRouter();
   console.log('formData', formData)
@@ -117,7 +121,9 @@ const mapFormDataToPayload = (data: any) => {
 
   const payload = mapFormDataToPayload(formData);
   console.log( 'payload',payload)
-
+ useEffect(() => {
+    setToken(sessionStorage.getItem('token'));
+  }, []);
 
 const handleSubmitReferral = async () => {
   try {
