@@ -57,7 +57,12 @@ const NotificationOverlay = () => {
         queryFn: fetchNotifications,
         refetchInterval: 3000,
     });
-    setMessage(error)
+
+    React.useEffect(() => {
+  if (error) {
+    setMessage(error);
+  }
+}, [error]);
     React.useEffect(() => {
         setNotifications(data || []);
     }, [data]);
@@ -71,14 +76,13 @@ const NotificationOverlay = () => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-start justify-end bg-black bg-opacity-10">
-            <div className="bg-white w-full max-w-lg mt-16 mr-8 rounded-lg shadow-2xl border p-0 overflow-hidden">
-                
+            <div className="bg-white w-full max-w-lg mt-16 mr-8 rounded-lg shadow-2xl border p-0 overflow-hidden">               
                 <div className="flex justify-between items-center border-b px-6 py-4">
                     <h2 className="font-semibold text-lg">Notifications</h2>
                     <button onClick={() => dispatch(closeNotification())} className="text-2xl text-gray-400 hover:text-gray-600">&times;</button>
                 </div>
 
-               ]
+            
                 <div className="flex border-b px-6 pt-2 pb-2 gap-6">
                     <button className="text-blue-600 border-b-2 border-blue-600 pb-2 font-medium">Inbox</button>
                     <button className="text-gray-600 pb-2">Following</button>

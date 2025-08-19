@@ -82,7 +82,9 @@ React.useEffect(() => {
         password: sessionStorage.getItem("password") || ""
       }, 
       {
-        headers: { "Content-Type": "application/json" }
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
     );
     const accessToken = response.data.access;

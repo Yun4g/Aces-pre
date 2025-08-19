@@ -12,26 +12,29 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
+
+
 const DashboardHeader = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
   const dispatch = useDispatch();
   const notificationOpen = useSelector((state: RootState) => state.notification.open);
   console.log(pathname, 'pathname in header');
-
-const [token, setToken] = useState<string | null>(null);
-const [username, setUsername] = useState<string | null>(null);
-
-const userId = "15";
-
+ 
+  
+  const [token, setToken] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
+  const userId = "15";
   const fetchUser = async () => {
     try {    
       const response = await axios.get(`/api/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      return response.data;
+
+      return response?.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      throw error; 
     }
   };
 
@@ -42,12 +45,8 @@ const userId = "15";
     enabled: !! token
   });
 
-  
-
   console.log(data, 'data in header');
-
-
-
+  
 useEffect(() => {
   setToken(sessionStorage.getItem('token'));
   setUsername(sessionStorage.getItem('username'));
@@ -60,7 +59,6 @@ useEffect(() => {
     if (route.includes('/RefeeralDashboard/referals')) return ' Referrals';
     if (route.includes('/RefeeralDashboard/analytics')) return 'Analytics';
     if (route.includes('/RefeeralDashboard/settings')) return ' Settings';
-
   };
 
   return (

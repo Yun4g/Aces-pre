@@ -10,17 +10,13 @@ import { useEffect, useState } from 'react';
 export function StatCards() {
    const [token, setToken] = useState<string | null>(null);
 
-
-
-  
-  
   const fetchUserReferal = async () => {
     try {
       const res = await axios.get('/api/by-user/15', {
             headers: { Authorization: `Bearer ${token}` }
       })
       
-      return res.data
+      return res?.data
     } catch (error) {
        console.log(error)
       }
@@ -41,8 +37,7 @@ export function StatCards() {
 
   return (
     <div className=" flex flex-wrap w-full  gap-2">
-      {/* Total Referrals */}
-      <Card className="overflow-hidden flex-1  bg-white dark:bg-gray-900">
+      <Card className="overflow-hidden   bg-white dark:bg-gray-900">
         <CardContent className="px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>

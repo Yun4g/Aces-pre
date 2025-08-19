@@ -83,7 +83,6 @@ export default function ReferralsPage() {
     refetchInterval: 30000,
   });
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const totalItems = referralsData.length;
@@ -98,7 +97,6 @@ export default function ReferralsPage() {
     if (page >= 1 && page <= totalPages) setCurrentPage(page);
   };
 
-  // CSV download
   const fetchCsvFile = async (): Promise<string | null> => {
     const token = sessionStorage.getItem("token");
     if (!token) {
