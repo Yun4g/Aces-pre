@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openNotification } from '@/Redux/notificationSlice';
 import { RootState } from '@/Redux';
 import NotificationOverlay from './overlayNotification';
-import fetchUsers from '@/Redux/usersSlice';
 import Link from 'next/link';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';

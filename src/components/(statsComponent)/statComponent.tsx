@@ -1,12 +1,18 @@
+'use client';
 import { TrendingUp } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+
 
 export function StatCards() {
+   const [token, setToken] = useState<string | null>(null);
 
-  const token = sessionStorage.getItem('token')
+
+
+  
   
   const fetchUserReferal = async () => {
     try {
@@ -25,8 +31,13 @@ export function StatCards() {
     const { data } = useQuery({
       queryKey:  ['recentReferrals'],
       queryFn:  fetchUserReferal,
-     // enabledtoken
+       enabled : !! token
     });
+  
+  useEffect(() => {
+  setToken(sessionStorage.getItem('token'));
+
+}, []);
 
   return (
     <div className=" flex flex-wrap w-full  gap-2">

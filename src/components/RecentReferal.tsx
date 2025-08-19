@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+
 
 
 
@@ -65,7 +67,10 @@ const getTypeColor = (type: string) => {
 };
 
 export function RecentReferrals() {
-  const token = typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
+  const [token, setToken] = useState<string | null>(null);
+
+
+
 
   const fetchUserReferral = async (): Promise<RecentReferral[]> => {
     try {
@@ -85,6 +90,11 @@ export function RecentReferrals() {
     enabled: !!token,
   });
 
+
+    useEffect(() => {
+    setToken(sessionStorage.getItem('token'));
+    }, []);
+  
   if (isLoading) {
     return (
       <Card className="border-none bg-white dark:bg-gray-800 mx-3">
@@ -93,13 +103,7 @@ export function RecentReferrals() {
     );
   }
 
-  if (isError) {
-    return (
-      <Card className="border-none bg-white dark:bg-gray-800 mx-3">
-        <CardContent className="p-4 text-center text-red-500">Failed to load recent referrals.</CardContent>
-      </Card>
-    );
-  }
+
 
   return (
     <Card className="border-none bg-white dark:bg-gray-800 mx-3">
