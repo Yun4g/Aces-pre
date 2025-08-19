@@ -2,13 +2,7 @@ import ReduxProvider from '@/components/ReduxProvider';
 import './globals.css';
 import type { Metadata } from 'next';
 import QueryProvider from './(providers)/QueryProvider';
-import { Inter } from 'next/font/google'
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'Aces App',
@@ -17,15 +11,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children,}: {children: React.ReactNode;}) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" >
       <body className="overflow-x-hidden bg-white text-black "> 
          <QueryProvider>
           <ReduxProvider>  
             {children}
           </ReduxProvider> 
-          </QueryProvider>
-
-         
+          </QueryProvider>         
       </body>
     </html>
   );

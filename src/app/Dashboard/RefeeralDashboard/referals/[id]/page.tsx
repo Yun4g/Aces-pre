@@ -13,27 +13,17 @@ import Link from 'next/link';
 
 type Tab = 'Conversation' | 'task' | 'ActivityLogs';
 
-interface MainDashBoardProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 
-interface PageProps {
-  params: {
-    id: string
-  }
-}
 
-
-const ReferralDetailsPage = ({ params }: PageProps) => {
+const ReferralDetailsPage = ({ params }: { params: { id: string } })  => {
   const [activeTab, setActiveTab] = useState<Tab>('Conversation');
   const { id } = params;
-  console.log(id)
+
 
 
   const tabs = [
-    { id: 'Conversation', label: 'Conversation', icon: <MessageSquareText size={18} /> },
+    { id: 'Conversation', label: 'Conversation', icon: <MessageSquareText size={18} /> } ,
     { id: 'task', label: 'Task', icon: <FileText size={18} /> },
     { id: 'ActivityLogs', label: 'Activity Logs', icon: <Layers size={18} /> },
   ];
@@ -49,13 +39,9 @@ const ReferralDetailsPage = ({ params }: PageProps) => {
         return null;
     }
   };
-
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-
     <main className="bg-[#F1F1F1] min-h-screen flex flex-col text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
-
       <div className={`
                  fixed top-0 left-0 h-full w-[250px] bg-white z-50 shadow-md border-r
                   transform transition-transform duration-300 ease-in-out
