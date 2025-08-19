@@ -21,12 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import AnalyticsDashboard from './page';
 import { RecentReferrals } from "@/components/RecentReferal";
 
-// const metrics = [
-//   { label: "Completion Rates", value: "92%", change: "10.2% vs Last month" },
-//   { label: "Average first time Replies", value: "248", change: "10.2% vs Last month" },
-//   { label: "Average Processing time", value: "7.2 days", change: "10.2% vs Last month" },
-//   { label: "Total Schools", value: "18", change: "10.2% vs Last month" },
-// ];
+
 
 const barData = [
   { name: "Jan", value: 35 },
@@ -158,7 +153,8 @@ function formatProcessingTime(timeString: string | null | undefined): string {
 }
   const { data } = useQuery({
     queryKey: ['Analytics'],
-    queryFn : fetchAnalytics
+    queryFn: fetchAnalytics,
+    refetchInterval : 4000
   })
   console.log('analytics', data)
 const metrics = [

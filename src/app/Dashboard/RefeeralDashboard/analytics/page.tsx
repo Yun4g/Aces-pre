@@ -10,16 +10,18 @@ import { useRouter } from 'next/navigation';
 
 export default function AnalyticsDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+
   const router = useRouter();
 
    
-    const token = sessionStorage.getItem('token');
-     useEffect(() => {
-  
-      if (!token) {
-        router.push('/login')
-      }
-    }, [token, router])
+    useEffect(() => {
+  const t = sessionStorage.getItem('token');
+  setToken(t);
+  if (!t) {
+    router.push('/login');
+  }
+}, [router]);
 
   return (
     <section className=" dark:bg-gray-900 dark:text-white transition-colors duration-300 min-h-screen flex">
