@@ -37,8 +37,8 @@ export function StatCards() {
 
   return (
     <div className=" flex flex-wrap w-full  gap-2">
-      <Card className="overflow-hidden   bg-white dark:bg-gray-900">
-        <CardContent className="px-[49px] py-[30px]">
+      <Card className="overflow-hidden  w-full md:flex-1  bg-white dark:bg-gray-900">
+        <CardContent className="md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl text-gray-400 font-bold">248</h2>
@@ -63,8 +63,8 @@ export function StatCards() {
       </Card>
 
       {/* Pending Referrals */}
-      <Card className="overflow-hidden flex-1 bg-white dark:bg-gray-900">
-        <CardContent className="px-[49px] py-[30px]">
+      <Card className="overflow-hidden w-full md:flex-1 bg-white dark:bg-gray-900">
+        <CardContent className="md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl text-gray-400 font-bold">248</h2>
@@ -88,9 +88,9 @@ export function StatCards() {
         </CardContent>
       </Card>
 
-      {/* Processed Referrals */}
-      <Card className="overflow-hidden flex-1 bg-white dark:bg-gray-900">
-        <CardContent className=" px-[49px] py-[30px]">
+      
+      <Card className="overflow-hidden w-full md:flex-1 bg-white dark:bg-gray-900">
+        <CardContent className=" md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl text-gray-400 font-bold">248</h2>
@@ -115,8 +115,8 @@ export function StatCards() {
       </Card>
 
 
-      <Card className="overflow-hidden flex-1 bg-white shadow-lg dark:bg-gray-900">
-        <CardContent className="px-[49px] py-[30px]">
+      <Card className="overflow-hidden w-full md:flex-1 bg-white shadow-lg dark:bg-gray-900">
+        <CardContent className="md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl text-gray-400 font-bold">248</h2>

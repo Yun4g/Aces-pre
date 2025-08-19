@@ -46,7 +46,7 @@ function MainDashBoard() {
             <section className="flex-1 ml-0 md:ml-[250px] p-0 overflow-y-auto w-full">
 
                 <div
-  className="md:hidden mb-4 px-3 py-3 rounded-md shadow-sm text-sm flex items-center gap-2 cursor-pointer"
+  className="md:hidden mb-4 px-3 py-3 rounded-md   shadow-sm text-sm flex items-center justify-between  gap-2 cursor-pointer"
   onClick={() => setSidebarOpen(true)}
   role="button"
   aria-label="Open sidebar menu"

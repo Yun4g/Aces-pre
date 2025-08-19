@@ -5,6 +5,7 @@ import NavbarReferal from '../navbarReferal';
 import DashboardHeader from '@/components/DashBoardHeader';
 import Analytics from './analytics';
 import { useRouter } from 'next/navigation';    
+import Image from 'next/image';
 
 
 
@@ -30,9 +31,26 @@ export default function AnalyticsDashboard() {
       </div>
 
       <div className="flex-1 p-0 ml-0 md:ml-[250px] bg-[#F1F1F1]  dark:bg-gray-900 dark:text-white transition-colors duration-300  overflow-y-auto w-full">
-        <button className="md:hidden mb-4  px-3 py-2 rounded-md shadow-sm  text-sm" onClick={() => setSidebarOpen(true)}>
-          ☰ 
-        </button>
+                       <div
+         className="md:hidden mb-4 px-3 py-3 rounded-md   shadow-sm text-sm flex items-center justify-between  gap-2 cursor-pointer"
+         onClick={() => setSidebarOpen(true)}
+         role="button"
+         aria-label="Open sidebar menu"
+         tabIndex={0}
+         onKeyDown={(e) => {
+           if (e.key === 'Enter' || e.key === ' ') setSidebarOpen(true);
+         }}
+       >
+         <Image
+           height={60}
+           width={50}
+           src="/assest/logo.png"
+           alt="Logo"
+         />
+         <span style={{ fontSize: '1.8rem', lineHeight: 1, userSelect: 'none' }}>
+           ☰
+         </span>
+       </div>
 
         <header className="mb-1 rounded-md overflow-hidden  z-[1000]  dark:bg-gray-900 dark:text-white transition-colors duration-300">
           <DashboardHeader />
