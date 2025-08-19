@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import {
   BarChart,
@@ -121,8 +122,7 @@ interface AnalyticsDashboard {
 }
 
 export default function Analytics() {
- 
-  const token = sessionStorage.getItem('token')
+  const [token, setToken] = React.useState('')
     
   const fetchAnalytics = async () : Promise<AnalyticsDashboard | null> => {
     try {
@@ -137,6 +137,11 @@ export default function Analytics() {
     }
   }
 
+    React.useEffect(() => {
+      const t = sessionStorage.getItem('token');
+       setToken(t || '' )
+      
+    },[])
 
 function formatProcessingTime(timeString: string | null | undefined): string {
   if (!timeString) return "—";
