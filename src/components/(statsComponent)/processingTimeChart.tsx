@@ -7,17 +7,15 @@ import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 const chartData = [
     { month: 'Jan', volume: 15, average: 20 },
     { month: 'Feb', volume: 22, average: 25 },
-    { month: 'Feb', volume: 25, average: 35 },
-    { month: 'Mar', volume: 35, average: 25 },
-    { month: 'Mar', volume: 40, average: 35 },
-    { month: 'Apr', volume: 45, average: 40 },
-    { month: 'Apr', volume: 40, average: 45 },
-    { month: 'May', volume: 40, average: 50 },
-    { month: 'May', volume: 35, average: 45 },
-    { month: 'Jun', volume: 50, average: 45 },
-    { month: 'Jun', volume: 45, average: 40 },
-    { month: 'Jul', volume: 60, average: 50 },
-    { month: 'Jul', volume: 50, average: 45 },
+    { month: 'Mar', volume: 25, average: 35 },
+    { month: 'Apr', volume: 35, average: 25 },
+    { month: 'Jun', volume: 40, average: 35 },
+    { month: 'Jul', volume: 45, average: 40 },
+    { month: 'Aug', volume: 40, average: 45 },
+    { month: 'Sep', volume: 40, average: 50 },
+    { month: 'Oct', volume: 35, average: 45 },
+    { month: 'Nov', volume: 50, average: 45 },
+    { month: 'Dec', volume: 45, average: 40 },
 ];
 
 const chartConfig = {
@@ -80,12 +78,12 @@ export function ProcessingTimeChart() {
             </CardHeader>
 
             <p className='font-bold my-3'>Hours</p>
-            <CardContent className="border dark:text-white border-gray-200 py-3 rounded-lg">
+            <CardContent className="md:border dark:text-white border-gray-200  px-0 py-3 rounded-lg">
                 <ChartContainer config={chartConfig} className="h-72 w-full max-w-full ">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" className="p-0 pe-9" height="100%">
                         <LineChart
                             data={chartData}
-                            margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+                            margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" vertical={false} />
                             <XAxis

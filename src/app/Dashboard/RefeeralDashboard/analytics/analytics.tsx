@@ -12,7 +12,9 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
+  CartesianGrid,
   Cell,
+  TooltipProps
 } from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,6 +23,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import AnalyticsDashboard from './page';
 import { RecentReferrals } from "@/components/RecentReferal";
+
 
 
 
@@ -47,68 +50,7 @@ const districtData = [
   { name: "District A", value: 25 },
 ];
 
-const enrollmentData = [
-  { name: "Jan", y2023: 20000, y2024: 30000 },
-  { name: "Feb", y2023: 22000, y2024: 32000 },
-  { name: "Mar", y2023: 25000, y2024: 38000 },
-  { name: "Apr", y2023: 28000, y2024: 42000 },
-  { name: "May", y2023: 30000, y2024: 45000 },
-  { name: "Jun", y2023: 32000, y2024: 43000 },
-  { name: "Jul", y2023: 33000, y2024: 47000 },
-  { name: "Aug", y2023: 35000, y2024: 46000 },
-  { name: "Sep", y2023: 36000, y2024: 48000 },
-  { name: "Oct", y2023: 38000, y2024: 50000 },
-  { name: "Nov", y2023: 40000, y2024: 52000 },
-  { name: "Dec", y2023: 42000, y2024: 55000 },
-];
 
-const referrals = [
-  {
-    id: 1,
-    student: "Sarah Johnson",
-    email: "sarah.j@email.com",
-    type: "Behavioural",
-    status: "Inprogress",
-    assignedBy: "Mr Adelaide",
-    date: "12-January-2025",
-  },
-  {
-    id: 2,
-    student: "Sarah Johnson",
-    email: "sarah.j@email.com",
-    type: "Behavioural",
-    status: "Inprogress",
-    assignedBy: "Mr Adelaide",
-    date: "12-January-2025",
-  },
-  {
-    id: 3,
-    student: "Sarah Johnson",
-    email: "sarah.j@email.com",
-    type: "Behavioural",
-    status: "Success",
-    assignedBy: "Mr Adelaide",
-    date: "12-January-2025",
-  },
-  {
-    id: 4,
-    student: "Sarah Johnson",
-    email: "sarah.j@email.com",
-    type: "Special feat.",
-    status: "Success",
-    assignedBy: "Mr Adelaide",
-    date: "12-January-2025",
-  },
-  {
-    id: 5,
-    student: "Sarah Johnson",
-    email: "sarah.j@email.com",
-    type: "Behavioural",
-    status: "Inprogress",
-    assignedBy: "Mr Adelaide",
-    date: "12-January-2025",
-  },
-];
 
 
 
@@ -120,6 +62,43 @@ interface AnalyticsDashboard {
     total_schools: number | null,
     average_replies_per_referral: number | null
 }
+
+const chartData = [
+  { month: 'Jan', volume: 15, average: 20 },
+  { month: 'Feb', volume: 22, average: 25 },
+  { month: 'Mar', volume: 25, average: 35 },
+  { month: 'Apr', volume: 35, average: 25 },
+  { month: 'Jun', volume: 40, average: 35 },
+  { month: 'Jul', volume: 45, average: 40 },
+  { month: 'Aug', volume: 40, average: 45 },
+  { month: 'Sep', volume: 40, average: 50 },
+  { month: 'Oct', volume: 35, average: 45 },
+  { month: 'Nov', volume: 50, average: 45 },
+  { month: 'Dec', volume: 45, average: 40 },
+];
+
+const formatYAxisTick = (value: number) => `${value}`;
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white dark:text-black p-4 shadow-lg rounded-md border border-gray-200">
+        <p className="font-bold text-center mb-2">{label}</p>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+            <span>Average Price</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-blue-700"></div>
+            <span>Sales Volume</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
 
 export default function Analytics() {
   const [token, setToken] = React.useState('')
@@ -172,7 +151,7 @@ const metrics = [
 
   return (
     <div className="w-full  space-y-1">
-
+      {/* Buttons */}
       <div className="flex flex-wrap gap-3 p-3 bg-white dark:bg-gray-800">
         <Button className="bg-blue-700 text-white hover:bg-blue-700 min-w-[100px] flex-1 sm:flex-none text-center">
           Month
@@ -230,8 +209,8 @@ const metrics = [
                   </select>
                 </div>
 
-                <ResponsiveContainer width="100%" className=" " height={200}>
-                  <BarChart className="w-full flex justify-center item-center" data={barData}>
+                <ResponsiveContainer width="100%" className="" height={200}>
+                  <BarChart className="w-full " data={barData}>
                     <XAxis dataKey="name" axisLine={false} tickLine={false} />
                     <YAxis axisLine={false} tickLine={false} />
                     <Tooltip />
@@ -332,25 +311,36 @@ const metrics = [
               <h2 className="text-sm sm:text-base text-gray-600 mb-1">Enrollment Trends</h2>
               <div className="text-xs sm:text-sm mb-2">Total Trends</div>
             </div>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={enrollmentData}>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip />
-                <Legend />
+              <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 13 }} />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={formatYAxisTick}
+                  domain={[0, 100]}
+                  ticks={[0, 20, 40, 60, 80, 100]}
+                />
+                <Tooltip content={<CustomTooltip />} />
                 <Line
                   type="monotone"
-                  dataKey="y2023"
-                  stroke="#3b82f6"
+                  dataKey="volume"
+                  name="Sales Volume"
+                  stroke="#0D5A8A"
                   strokeWidth={2}
                   dot={false}
+                  activeDot={{ r: 6, strokeWidth: 2 }}
                 />
                 <Line
                   type="monotone"
-                  dataKey="y2024"
-                  stroke="#f59e0b"
+                  dataKey="average"
+                  name="Average Price"
+                  stroke="#F59E0B"
                   strokeWidth={2}
                   dot={false}
+                  activeDot={{ r: 6, strokeWidth: 2 }}
                 />
               </LineChart>
             </ResponsiveContainer>

@@ -84,16 +84,14 @@ const mapFormDataToPayload = (data: any) => {
     reason: data.reasonForReferral || null,
     special_education_label: data.classification || null,
     draft: false,
-
     iep_document: iep,
     consent_form: consent,
     cognitive_assesments: cognitive,
-
     avatar: null,
     subject: data.subject || 1,
     ref_manager: data.referrerName || 1,
     pro_staff: 1,
-    created_by: 1,
+    created_by: 15,
     studentName: data.studentName,
     emailAddress: data.emailAddress,
     parentName: data.parentName,
@@ -111,6 +109,7 @@ const mapFormDataToPayload = (data: any) => {
     sameAddress: data.sameAddress,
     gradeLevel: data.gradeLevel,
     dateOfBirth: data.dateOfBirth,
+    
   };
 };
 

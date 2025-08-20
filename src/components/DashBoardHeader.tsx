@@ -24,7 +24,7 @@ const DashboardHeader = () => {
   
   const [token, setToken] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
-  const userId = "15";
+  const userId = 15;
   const fetchUser = async () => {
     try {    
       const response = await axios.get(`/api/user/${userId}`, {
@@ -104,7 +104,7 @@ useEffect(() => {
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               <Image
-                src="/assest/landGirl.png"
+                src={data?.avater || null }
                 alt="Profile"
                 width={32}
                 height={32}
@@ -127,7 +127,6 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* Mobile search bar */}
       <div className="mt-3 sm:hidden">
         <div className="relative">
           <input
