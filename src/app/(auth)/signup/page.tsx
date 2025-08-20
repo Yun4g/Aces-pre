@@ -147,19 +147,16 @@ const togglePassword2Visibility = () => {
   };
 
   return (
-    <div className="flex h-full">
-
-      <div className="w-1/2 hidden md:flex items-center justify-center relative">
+    <div className="flex  ">
+      <div className="w-1/2 h-full min-h-screen  hidden md:flex items-center justify-center relative">
         <Image
           src="/assest/signUpacers.png"
           alt="Signup Illustration"
           fill
-          className="object-cover"
+          className="object-cover h-full w-full"
           priority
         />
       </div>
-
-
       <div className="w-full md:w-1/2 h-full  flex items-center justify-center p-4">
         <div className="bg-white md:p-8 w-full md:max-w-xl lg:w-[510px]">
           {/* Logo */}
