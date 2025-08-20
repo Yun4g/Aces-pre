@@ -121,6 +121,11 @@ React.useEffect(() => {
     sessionStorage.setItem("email", data.email);
     sessionStorage.setItem("password", data.password);
     sessionStorage.setItem("rememberMe", String(data.rememberMe));
+
+
+    setUsername(data.username);
+    setPassword(data.password);
+   
       
    await fetchToken(); 
     router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
@@ -276,14 +281,6 @@ React.useEffect(() => {
               </Link>
             </div>
 
-          
-
-            <button
-              type="button"
-              className="w-full py-2.5 px-4 border border-[#FF6607] rounded-[6px]  font-semibold text-[#FF6607] transition-colors duration-300 hover:bg-red-800 hover:text-white"
-            >
-              Office 365
-            </button>
 
             <p className="my-7 text-center">or with</p>
 

@@ -369,16 +369,6 @@ const togglePassword2Visibility = () => {
               </Link>
             </div>
 
-            <div className="mb-4">
-              <button
-                type="button"
-                className="w-full py-2.5 px-4 border border-[#FF6607] rounded-[6px]  font-semibold text-[#FF6607] transition-colors duration-300 hover:bg-red-800 hover:text-white flex items-center justify-center"
-                onClick={() => alert('Office 365 auth not implemented')}
-              >
-                <FaMicrosoft size={18} className="mr-2" />
-                Office 365
-              </button>
-            </div>
 
             <div className="text-center mb-4">
               <div className="flex items-center justify-center">
