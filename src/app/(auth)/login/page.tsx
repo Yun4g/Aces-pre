@@ -122,7 +122,7 @@ React.useEffect(() => {
     sessionStorage.setItem("password", data.password);
     sessionStorage.setItem("rememberMe", String(data.rememberMe));
       
-    fetchToken(); 
+   await fetchToken(); 
     router.push("/Dashboard/RefeeralDashboard/mainDashBoard");
   } catch (error: any) {
     console.error(error);

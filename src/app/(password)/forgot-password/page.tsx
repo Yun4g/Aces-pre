@@ -85,7 +85,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
       {/* Right side with form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-8">
-        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px] p-6 sm:p-8">
+        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px] md:p-6 ">
           <div className="text-start mb-4">
             <Image
               src="/assest/logo.png"

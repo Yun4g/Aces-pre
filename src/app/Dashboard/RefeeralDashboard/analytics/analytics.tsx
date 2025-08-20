@@ -172,7 +172,7 @@ const metrics = [
 
   return (
     <div className="w-full  space-y-1">
-      {/* Buttons */}
+
       <div className="flex flex-wrap gap-3 p-3 bg-white dark:bg-gray-800">
         <Button className="bg-blue-700 text-white hover:bg-blue-700 min-w-[100px] flex-1 sm:flex-none text-center">
           Month
@@ -205,17 +205,16 @@ const metrics = [
       </div>
 
 
-      <div className=" flex px-3 gap-2 m-0">
-        <Card className="border-none w-[57%]  bg-white dark:bg-gray-800">
+      <div className=" flex flex-col md:flex-row px-3 gap-2 m-0">
+        <Card className="border-none md:w-[57%]  bg-white dark:bg-gray-800">
           <CardContent className="p-4 w-full">
-            <h2 className="text-sm sm:text-base text-gray-600">Average Referrals created</h2>
+            <h2 className="text-sm sm:text-base mb-3 text-gray-600">Average Referrals created</h2>
 
-            <div className="flex  justify-between items-center  w-full">
-              <div className="flex flex-col justify-between items-start w-[30%] sm:items-center mb-2 gap-3">
+            <div className="flex flex-col md:flex-row justify-between items-center  w-full">
+              <div className="flex flex-col justify-between items-start w-full md:w-[30%] sm:items-center mb-2 gap-3">
                 <div className=" font-semibold ">
                   <p className="text-[#989898] text-sm"> <span className="inline-block h-3 w-3 bg-[#005A9C]"></span>Average referrals Solved</p>
                   <h1 className="text-2xl"> 4,568</h1>
-
                 </div>
                 <div className=" font-semibold ">
                   <p className="text-[#989898] text-sm"> <span className="inline-block h-3 w-3 bg-[#005A9C]"></span>Average referrals Solved</p>
@@ -224,15 +223,15 @@ const metrics = [
                 </div>
               </div>
 
-              <div className="border-l md:w-[70%] ">
+              <div className="border-l w-full md:w-[70%] ">
                 <div className="flex justify-end dark:bg-gray-700">
                   <select className="border bg-white mb-6  dark:bg-gray-800 text-sm p-1 rounded max-w-[150px]">
                     <option>Dec 1-7</option>
                   </select>
                 </div>
 
-                <ResponsiveContainer width="100%" height={200}>
-                  <BarChart data={barData}>
+                <ResponsiveContainer width="100%" className=" " height={200}>
+                  <BarChart className="w-full flex justify-center item-center" data={barData}>
                     <XAxis dataKey="name" axisLine={false} tickLine={false} />
                     <YAxis axisLine={false} tickLine={false} />
                     <Tooltip />
@@ -247,7 +246,7 @@ const metrics = [
         </Card>
 
         {/* Pie Chart Card */}
-        <Card className="border-none shadow-sm w-[43%] bg-white dark:bg-gray-800">
+        <Card className="border-none shadow-sm md:w-[43%] bg-white dark:bg-gray-800">
           <CardContent className="p-4">
             <h2 className="text-sm sm:text-base text-gray-600 mb-2">
               Average Referrals created
@@ -292,11 +291,11 @@ const metrics = [
 
       </div>
 
-      {/* Another Charts Grid */}
-      <div className="flex w-full gap-3 px-3">
+  
+      <div className="flex flex-col md:flex-row w-full gap-3 px-3">
 
-        {/* Districts Distribution Pie */}
-        <Card className="border-none shadow-sm w-[40%] bg-white dark:bg-gray-800">
+        
+        <Card className="border-none shadow-sm md:w-[40%] bg-white dark:bg-gray-800">
           <CardContent className="p-4">
             <h2 className="text-sm sm:text-base text-gray-600 mb-2">Districts Distribution</h2>
             <div className="relative w-full" style={{ height: 200 }}>
@@ -327,7 +326,7 @@ const metrics = [
           </CardContent>
         </Card>
 
-        <Card className="border-none w-[60%] bg-white dark:bg-gray-800">
+        <Card className="border-none md:w-[60%] bg-white dark:bg-gray-800">
           <CardContent className="p-4">
             <div>
               <h2 className="text-sm sm:text-base text-gray-600 mb-1">Enrollment Trends</h2>

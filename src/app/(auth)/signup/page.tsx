@@ -161,7 +161,7 @@ const togglePassword2Visibility = () => {
 
 
       <div className="w-full md:w-1/2 h-full  flex items-center justify-center p-4">
-        <div className="bg-white p-8 w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[510px]">
+        <div className="bg-white md:p-8 w-full md:max-w-xl lg:w-[510px]">
           {/* Logo */}
           <div className="text-start mb-4">
             <Image
@@ -177,9 +177,6 @@ const togglePassword2Visibility = () => {
 
    
           <form onSubmit={handleSubmit} noValidate>
-
-
-
             {generalError && (
               <p className="text-red-600 text-center mt-4 font-semibold">
                 {generalError}

@@ -166,8 +166,8 @@ export default function ReferralsPage() {
       </div>
 
       <section className="flex-1 ml-0 md:ml-[250px] overflow-y-auto w-full">
-        {/* Mobile Menu Btn */}
-                        <div
+        
+        <div
           className="md:hidden mb-4 px-3 py-3 rounded-md   shadow-sm text-sm flex items-center justify-between  gap-2 cursor-pointer"
           onClick={() => setSidebarOpen(true)}
           role="button"
@@ -197,7 +197,7 @@ export default function ReferralsPage() {
           {/* Top Bar */}
           <div className="flex flex-wrap bg-white dark:bg-gray-900 px-3 items-center justify-between border-2 p-2 mt-2 rounded-md gap-2">
             <div className="flex flex-wrap items-center gap-2 text-sm text-gray-700 dark:text-gray-300 flex-1 min-w-[200px]">
-              {/* Search */}
+            
               <div className="border flex gap-2 rounded px-3 py-1.5 text-sm w-full max-w-xs bg-white dark:bg-gray-700 dark:text-white">
                 <span>
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -233,8 +233,8 @@ export default function ReferralsPage() {
               </button>
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center gap-2 mt-2 sm:mt-0">
+           
+            <div className="flex flex-col md:flex-row items-center gap-2 mt-2 sm:mt-0">
               <button
                 onClick={handleDownloadCsv}
                 className="border-2 border-[#005A9C] text-[#005A9C] px-3 py-2 text-sm rounded flex items-center gap-1 hover:bg-gray-50 dark:hover:bg-gray-700 transition"

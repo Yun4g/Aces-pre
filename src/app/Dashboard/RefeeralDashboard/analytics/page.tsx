@@ -30,7 +30,7 @@ export default function AnalyticsDashboard() {
         <NavbarReferal isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       </div>
 
-      <div className="flex-1 p-0 ml-0 md:ml-[250px] bg-[#F1F1F1]  dark:bg-gray-900 dark:text-white transition-colors duration-300  overflow-y-auto w-full">
+      <div className="flex-1 p-0 ml-0 md:ml-[250px] bg-white md:bg-[#F1F1F1]  dark:bg-gray-900 dark:text-white transition-colors duration-300  overflow-y-auto w-full">
                        <div
          className="md:hidden mb-4 px-3 py-3 rounded-md   shadow-sm text-sm flex items-center justify-between  gap-2 cursor-pointer"
          onClick={() => setSidebarOpen(true)}
