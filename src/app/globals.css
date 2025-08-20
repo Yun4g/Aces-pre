@@ -4,11 +4,16 @@
 
 
 
+:root {
+  --axis-color: #374151; 
+}
+
 
 
 .dark{
     background-color: rgb(23, 21, 21) !important;
     color: white !important;
+     --axis-color: #ffffff;
     
 }
 

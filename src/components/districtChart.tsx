@@ -35,7 +35,7 @@ const chartConfig = {
 
 export function DistrictStats() {
     return (
-        <Card className="col-span-1">
+        <Card className="col-span-1 border">
             <CardHeader>
                 <CardTitle className="text-md font-medium">Districts wide Statistics</CardTitle>
             </CardHeader>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import {ChartConfig, ChartContainer,} from '@/components/ui/chart';
-import { Line, LineChart, XAxis,YAxis,CartesianGrid, Tooltip,ResponsiveContainer, TooltipProps} from 'recharts';
+import { ChartConfig, ChartContainer, } from '@/components/ui/chart';
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps } from 'recharts';
 
 const chartData = [
     { month: 'Jan', volume: 15, average: 20 },
@@ -61,7 +61,7 @@ export function ProcessingTimeChart() {
     const [activeTimeframe, setActiveTimeframe] = useState('1W');
 
     return (
-        <Card className=" w-full p-3 ">
+        <Card className=" w-full p-3  border">
             <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-2">
                 <CardTitle className="text-md font-medium mb-2 sm:mb-0">Referral Processing time</CardTitle>
                 <div className="flex space-x-2">
@@ -70,7 +70,7 @@ export function ProcessingTimeChart() {
                             key={timeframe}
                             size="sm"
                             variant={activeTimeframe === timeframe ? "default" : "outline"}
-                            className={`h-7 px-3 ${activeTimeframe === timeframe ? 'bg-blue-800 text-white' : 'text-blue-800 border-blue-800'}`}
+                            className={`h-7 px-3 hover:bg-blue-700 hover:text-white ${activeTimeframe === timeframe ? 'bg-blue-800 text-white' : 'text-blue-800 border-blue-800'}`}
                             onClick={() => setActiveTimeframe(timeframe)}
                         >
                             {timeframe}
@@ -81,7 +81,7 @@ export function ProcessingTimeChart() {
 
             <p className='font-bold my-3'>Hours</p>
             <CardContent className="border dark:text-white border-gray-200 py-3 rounded-lg">
-                <ChartContainer config={chartConfig} className="h-72 w-full max-w-full lg:max-w-[700px]">
+                <ChartContainer config={chartConfig} className="h-72 w-full max-w-full ">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart
                             data={chartData}
@@ -92,12 +92,12 @@ export function ProcessingTimeChart() {
                                 dataKey="month"
                                 axisLine={false}
                                 tickLine={false}
-                                tick={{ fill: '#ffffff', fontSize: 13 }}
+                                tick={{  fontSize: 13 }}
                             />
                             <YAxis
                                 axisLine={false}
                                 tickLine={false}
-                                tick={{ fill: '#fff', fontSize: 12 }}
+                                tick={{  fontSize: 12 }}
                                 tickFormatter={formatYAxisTick}
                                 domain={[0, 100]}
                                 ticks={[0, 20, 40, 60, 80, 100]}

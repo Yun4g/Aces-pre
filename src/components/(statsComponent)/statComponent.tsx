@@ -24,7 +24,7 @@ export function StatCards() {
 
 
   
-    const { data } = useQuery({
+    const { data, error } = useQuery({
       queryKey:  ['recentReferrals'],
       queryFn:  fetchUserReferal,
        enabled : !! token
@@ -32,13 +32,14 @@ export function StatCards() {
   
   useEffect(() => {
   setToken(sessionStorage.getItem('token'));
-
-}, []);
+  }, []);
+  
+ 
 
   return (
     <div className=" flex flex-wrap w-full  gap-2">
-      <Card className="overflow-hidden  w-full md:flex-1  bg-white dark:bg-gray-900">
-        <CardContent className="md:px-[49px] py-[30px]">
+      <Card className="overflow-hidden  w-full md:flex-1 border  bg-white dark:bg-gray-900">
+        <CardContent className="md:px-[49px]  py-[30px]">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl text-gray-400 font-bold">248</h2>
@@ -63,7 +64,7 @@ export function StatCards() {
       </Card>
 
       {/* Pending Referrals */}
-      <Card className="overflow-hidden w-full md:flex-1 bg-white dark:bg-gray-900">
+      <Card className="overflow-hidden w-full md:flex-1 border bg-white dark:bg-gray-900">
         <CardContent className="md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
@@ -89,7 +90,7 @@ export function StatCards() {
       </Card>
 
       
-      <Card className="overflow-hidden w-full md:flex-1 bg-white dark:bg-gray-900">
+      <Card className="overflow-hidden w-full md:flex-1 border bg-white dark:bg-gray-900">
         <CardContent className=" md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
@@ -115,7 +116,7 @@ export function StatCards() {
       </Card>
 
 
-      <Card className="overflow-hidden w-full md:flex-1 bg-white shadow-lg dark:bg-gray-900">
+      <Card className="overflow-hidden w-full md:flex-1 bg-white border shadow-lg dark:bg-gray-900">
         <CardContent className="md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
