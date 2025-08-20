@@ -20,6 +20,11 @@ const DashboardHeader = () => {
   const dispatch = useDispatch();
   const notificationOpen = useSelector((state: RootState) => state.notification.open);
   console.log(pathname, 'pathname in header');
+  let notification = localStorage.getItem('notification');
+  if (notification) {
+    notification = JSON.parse(notification);
+  }
+
  
   
   const [token, setToken] = useState<string | null>(null);
@@ -50,6 +55,7 @@ const DashboardHeader = () => {
 useEffect(() => {
   setToken(sessionStorage.getItem('token'));
   setUsername(sessionStorage.getItem('username'));
+
 }, []);
 
 
@@ -85,14 +91,14 @@ useEffect(() => {
 
           <div className="relative  ">
             <button
-              className="p-1 rounded-full hover:bg-gray-100  w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="p-1 rounded-full hover:bg-gray-100  w-full focus:outline-none "
               onClick={() => dispatch(openNotification())}
             >
-              <div className="relative">
+              <div className="relative h-10 w-7 flex justify-center items-center  ">
                 <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                 </svg>
-                {/* <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">1</span> */}
+                <p className='absolute top-0 left-3 text-red-600 text-sm font-bold'>{ notification?.length}</p>
               </div>
             </button>
           </div>
@@ -104,7 +110,7 @@ useEffect(() => {
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               <Image
-                src={data?.avater || null }
+                src=""
                 alt="Profile"
                 width={32}
                 height={32}

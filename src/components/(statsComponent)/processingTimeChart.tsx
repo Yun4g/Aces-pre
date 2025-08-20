@@ -5,17 +5,18 @@ import { ChartConfig, ChartContainer, } from '@/components/ui/chart';
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps } from 'recharts';
 
 const chartData = [
-    { month: 'Jan', volume: 15, average: 20 },
-    { month: 'Feb', volume: 22, average: 25 },
-    { month: 'Mar', volume: 25, average: 35 },
-    { month: 'Apr', volume: 35, average: 25 },
-    { month: 'Jun', volume: 40, average: 35 },
-    { month: 'Jul', volume: 45, average: 40 },
-    { month: 'Aug', volume: 40, average: 45 },
-    { month: 'Sep', volume: 40, average: 50 },
-    { month: 'Oct', volume: 35, average: 45 },
-    { month: 'Nov', volume: 50, average: 45 },
-    { month: 'Dec', volume: 45, average: 40 },
+  { month: 'Jan', volume: 15, average: 20 },
+  { month: 'Feb', volume: 22, average: 25 },
+  { month: 'Mar', volume: 25, average: 35 },
+  { month: 'Apr', volume: 35, average: 25 },
+  { month: 'May', volume: 40, average: 35 },
+  { month: 'Jun', volume: 45, average: 40 },
+  { month: 'Jul', volume: 40, average: 45 },
+  { month: 'Aug', volume: 40, average: 45 },
+  { month: 'Sep', volume: 40, average: 50 },
+  { month: 'Oct', volume: 35, average: 45 },
+  { month: 'Nov', volume: 50, average: 45 },
+  { month: 'Dec', volume: 45, average: 40 },
 ];
 
 const chartConfig = {
