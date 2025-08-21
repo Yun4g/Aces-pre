@@ -7,7 +7,7 @@ const ReferrerInfoSchema = z.object({
   districts: z.string().min(1, "District is required"),
   emailAddress: z.string().email("Invalid email"),
   phoneNumber: z.string().min(1, "Phone number is required"),
-  referralType: z.enum(["new", "update", "transfer"]),
+  referralType: z.enum(["Academics", "Special Features", "Behavioural", "Socials"]),
 });
 
 type ReferrerInfoData = z.infer<typeof ReferrerInfoSchema>;
@@ -22,9 +22,8 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
   const [districts, setDistricts] = useState(formData.districts || "");
   const [emailAddress, setEmailAddress] = useState(formData.emailAddress || "");
   const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || "");
-  const [referralType, setReferralType] = useState<
-    ReferrerInfoData["referralType"]
-  >(formData.referralType || "new");
+  const [referralType, setReferralType] = useState< ReferrerInfoData["referralType"]>(formData.referralType || "Academics");
+
 
   useEffect(() => {
     const data: ReferrerInfoData = {
@@ -80,6 +79,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
               <option value="Districts 1">Districts 1</option>
               <option value="Districts 2">Districts 2</option>
               <option value="Districts 3">Districts 3</option>
+              <option value="Districts 4">Districts 4</option>
             </select>
           </div>
           <div className="mb-4">
@@ -121,7 +121,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
             <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
               Type
             </label>
-            {["new", "update", "transfer"].map((type) => (
+            {["Academics", "Special Features", "Behavioural", "Socials"].map((type) => (
               <div className="mt-2" key={type}>
                 <label className="inline-flex items-center ">
                   <input
@@ -135,11 +135,11 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) =>
                     }
                   />
                   <span className="ml-2 capitalize">
-                    {type === "new"
-                      ? "New Student Referral"
-                      : type === "update"
-                      ? "Update to Existing Referral"
-                      : "Transfer from Another Program"}
+                    {type === "Academics"  ? "Academics"  : type === "Special Features"
+                      ? "Special Features"
+                      : type === "Behavioural"
+                      ? "Behavioural"
+                      : "Socials"}
                   </span>
                 </label>
               </div>

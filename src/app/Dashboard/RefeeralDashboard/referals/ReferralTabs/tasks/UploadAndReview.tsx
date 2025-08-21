@@ -28,17 +28,17 @@ export default function  IStudentReferral({ updateFormData }: UploadAndReviewPro
  
 
   
-  const handleFileSelect = (id: string, files: FileList | null) => {
+const handleFileSelect = (id: string, files: FileList | null) => {
   if (!files || files.length === 0) return;
 
-  setDocumentFields(prev =>
-    prev.map(field =>
-      field.id === id ? { ...field, file: files[0] } : field
-    )
+  const newFields = documentFields.map(field =>
+    field.id === id ? { ...field, file: files[0] } : field
   );
 
-  updateFormData(documentFields);
+  setDocumentFields(newFields);
+  updateFormData(newFields);
 };
+
     
 
  

@@ -1,5 +1,5 @@
 'use client';
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import ReferrerInfo from '../ReferralTabs/tasks/ReferrerInfo';
 import StudentDetails from '../ReferralTabs/tasks/StudentDetails';
 import ProgramSelection from '../ReferralTabs/tasks/ProgramSelection';
@@ -11,8 +11,9 @@ import { useRouter } from 'next/navigation';
 
 
 interface ReferralFormData {
+  created_by?: number;
   priority?: string;
-  referralType?: "new" | "update" | "transfer";  
+  referralType?: "Academics" | "Special Features" | "Behavioural" | "Socials" ;
   districts?: string;
   status?: string;
   additional_notes?: string;
@@ -35,8 +36,6 @@ interface ReferralFormData {
   gradeLevel?: string;
   dateOfBirth?: string;
   selectedPrograms?: string[];
-
-  // File fields
   0?: { file?: File };
   1?: { file?: File };
   2?: { file?: File };
@@ -48,14 +47,16 @@ const ReferralForm = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [formData, setFormData] = useState<ReferralFormData>({});
   const [token, setToken] = useState<string | null>(null);
+  const created_by = 15;
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
- 
+
 
 
   console.log(token, 'token in header ttt')
   const router = useRouter();
   console.log('formData', formData)
- 
+
   const goToNextStep = () => {
     setCurrentStep(prevStep => Math.min(prevStep + 1, 4));
   };
@@ -69,152 +70,155 @@ const ReferralForm = () => {
 
   };
 
-const mapFormDataToPayload = (data: any) => {
-  const iep = data[0]?.file ? data[0].file.name : null;
-  const consent = data[1]?.file ? data[1].file.name : null;
-  const cognitive = data[2]?.file ? data[2].file.name : null;
+  const mapFormDataToPayload = (data: any) => {
+    const iep = data[0]?.file ? data[0].file.name : null;
+    const consent = data[1]?.file ? data[1].file.name : null;
+    const cognitive = data[2]?.file ? data[2].file.name : null;
 
-  return {
-    priority: data.priority || "Low",
-    referral_info: data.referralType || "",
-    referral_type: data.referralType || "",
-    district: data.districts || "",
-    status: data.status || "low",
-    additional_notes: data.additional_notes || data.additionalNotes || null,
-    reason: data.reasonForReferral || null,
-    special_education_label: data.classification || null,
-    draft: false,
-    iep_document: iep,
-    consent_form: consent,
-    cognitive_assesments: cognitive,
-    avatar: null,
-    subject: data.subject || 1,
-    ref_manager: data.referrerName || 1,
-    pro_staff: 1,
-    created_by: 15,
-    studentName: data.studentName,
-    emailAddress: data.emailAddress,
-    parentName: data.parentName,
-    parentEmail: data.parentEmail,
-    parentPhone: data.parentPhone,
-    phoneNumber: data.phoneNumber,
-    classroom: data.classroom,
-    zipCode: data.zipCode,
-    city: data.city,
-    address: data.address,
-    urgentReferral: data.urgentReferral,
-    urgentReason: data.urgentReason,
-    relationship: data.relationship,
-    selectedPrograms: data.selectedPrograms,
-    sameAddress: data.sameAddress,
-    gradeLevel: data.gradeLevel,
-    dateOfBirth: data.dateOfBirth,
-    
+    return {
+      priority: data.priority || "Low",
+      referral_info: data.referralType || "",
+      referral_type: data.referralType || "",
+      district: data.districts || "",
+      status: data.status || "low",
+      additional_notes: data.additional_notes || data.additionalNotes || null,
+      reason: data.reasonForReferral || null,
+      special_education_label: data.classification || null,
+      draft: false,
+      iep_document: iep,
+      consent_form: consent,
+      cognitive_assesments: cognitive,
+      avatar: null,
+      subject: data.subject || 1,
+      ref_manager: data.referrerName || 1,
+      pro_staff: 1,
+      created_by: 15,
+      studentName: data.studentName,
+      emailAddress: data.emailAddress,
+      parentName: data.parentName,
+      parentEmail: data.parentEmail,
+      parentPhone: data.parentPhone,
+      phoneNumber: data.phoneNumber,
+      classroom: data.classroom,
+      zipCode: data.zipCode,
+      city: data.city,
+      address: data.address,
+      urgentReferral: data.urgentReferral,
+      urgentReason: data.urgentReason,
+      relationship: data.relationship,
+      selectedPrograms: data.selectedPrograms,
+      sameAddress: data.sameAddress,
+      gradeLevel: data.gradeLevel,
+      dateOfBirth: data.dateOfBirth,
+
+    };
   };
-};
 
 
-        // "priority": "Low",
-        // "referral_info": "Completed",
-        // "referral_type": "Academic Intervention",
-        // "district": "Physics Laboratory",
-        // "status": "In progress",
-        // "additional_notes": null,
-        // "reason": null,
-        // "special_education_label": null,
-        // "created_at": "2025-08-15T10:17:45.641083Z",
-        // "updated_at": "2025-08-15T10:17:45.641097Z",
-        // "draft": false,
-        // "iep_document": null,
-        // "consent_form": null,
-        // "cognitive_assesments": null,
-        // "avatar": null,
-        // "subject": 1,
-        // "ref_manager": 1,
-        // "pro_staff": 1,
-        // "created_by": 1
+  // "priority": "Low",
+  // "referral_info": "Completed",
+  // "referral_type": "Academic Intervention",
+  // "district": "Physics Laboratory",
+  // "status": "In progress",
+  // "additional_notes": null,
+  // "reason": null,
+  // "special_education_label": null,
+  // "created_at": "2025-08-15T10:17:45.641083Z",
+  // "updated_at": "2025-08-15T10:17:45.641097Z",
+  // "draft": false,
+  // "iep_document": null,
+  // "consent_form": null,
+  // "cognitive_assesments": null,
+  // "avatar": null,
+  // "subject": 1,
+  // "ref_manager": 1,
+  // "pro_staff": 1,
+  // "created_by": 1
 
 
 
   mapFormDataToPayload(formData)
-  
+
 
   const payload = mapFormDataToPayload(formData);
-  console.log( 'payload',payload)
- useEffect(() => {
+  console.log('payload', payload)
+  useEffect(() => {
     setToken(sessionStorage.getItem('token'));
   }, []);
 
-const handleSubmitReferral = async () => {
-  try {
-    const formDataToSend = new FormData();
+  const handleSubmitReferral = async () => {
+    try {
+      setIsLoading(true)
+      const formDataToSend = new FormData();
+      formDataToSend.append("priority", formData.priority || "low");
+      formDataToSend.append("created_by", String(created_by));
+      formDataToSend.append("referral_type", formData.referralType || "");
+      formDataToSend.append("district", formData.districts || "");
+      formDataToSend.append("status", formData.status || "pending");
+      formDataToSend.append("additional_notes", formData.additional_notes || "");
+      formDataToSend.append("reason", formData.reasonForReferral || "");
+      formDataToSend.append("special_education_label", formData.classification || "");
+      formDataToSend.append("studentName", formData.studentName || "");
+      formDataToSend.append("emailAddress", formData.emailAddress || "");
+      formDataToSend.append("parentName", formData.parentName || "");
+      formDataToSend.append("parentEmail", formData.parentEmail || "");
+      formDataToSend.append("parentPhone", formData.parentPhone || "");
+      formDataToSend.append("phoneNumber", formData.phoneNumber || "");
+      formDataToSend.append("classroom", formData.classroom || "");
+      formDataToSend.append("zipCode", formData.zipCode || "");
+      formDataToSend.append("city", formData.city || "");
+      formDataToSend.append("address", formData.address || "");
+      formDataToSend.append("urgentReferral", String(formData.urgentReferral || false));
+      formDataToSend.append("urgentReason", formData.urgentReason || "");
+      formDataToSend.append("relationship", formData.relationship || "");
+      formDataToSend.append("sameAddress", String(formData.sameAddress || false));
+      formDataToSend.append("gradeLevel", formData.gradeLevel || "");
+      formDataToSend.append("dateOfBirth", formData.dateOfBirth || "");
 
- 
-    formDataToSend.append("priority", formData.priority || "low");
-    formDataToSend.append("referral_type", formData.referralType || "");
-    formDataToSend.append("district", formData.districts || "");
-    formDataToSend.append("status", formData.status || "pending");
-    formDataToSend.append("additional_notes", formData.additional_notes || "");
-    formDataToSend.append("reason", formData.reasonForReferral || "");
-    formDataToSend.append("special_education_label", formData.classification || "");
-    formDataToSend.append("studentName", formData.studentName || "");
-    formDataToSend.append("emailAddress", formData.emailAddress || "");
-    formDataToSend.append("parentName", formData.parentName || "");
-    formDataToSend.append("parentEmail", formData.parentEmail || "");
-    formDataToSend.append("parentPhone", formData.parentPhone || "");
-    formDataToSend.append("phoneNumber", formData.phoneNumber || "");
-    formDataToSend.append("classroom", formData.classroom || "");
-    formDataToSend.append("zipCode", formData.zipCode || "");
-    formDataToSend.append("city", formData.city || "");
-    formDataToSend.append("address", formData.address || "");
-    formDataToSend.append("urgentReferral", String(formData.urgentReferral || false));
-    formDataToSend.append("urgentReason", formData.urgentReason || "");
-    formDataToSend.append("relationship", formData.relationship || "");
-    formDataToSend.append("sameAddress", String(formData.sameAddress || false));
-    formDataToSend.append("gradeLevel", formData.gradeLevel || "");
-    formDataToSend.append("dateOfBirth", formData.dateOfBirth || "");
 
- 
-    if (Array.isArray(formData.selectedPrograms)) {
-      formData.selectedPrograms.forEach((program: string) =>
-        formDataToSend.append("selectedPrograms[]", program)
-      );
+      if (Array.isArray(formData.selectedPrograms)) {
+        formData.selectedPrograms.forEach((program: string) =>
+          formDataToSend.append("selectedPrograms[]", program)
+        );
+      }
+
+      if (formData[0]?.file) {
+        formDataToSend.append("iep_document", formData[0].file);
+      }
+      if (formData[1]?.file) {
+        formDataToSend.append("consent_form", formData[1].file);
+      }
+      if (formData[2]?.file) {
+        formDataToSend.append("cognitive_assessments", formData[2].file);
+      }
+
+      const response = await fetch("/api/referrals/", {
+        method: "POST",
+        body: formDataToSend,
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (!response.ok) {
+        const errorRes = await response.json();
+        console.error("Server error:", errorRes);
+        alert("Submission failed: " + (errorRes.message || response.statusText));
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Submission success:", data);
+      localStorage.setItem("formData", JSON.stringify(formData));
+
+    } catch (error) {
+      console.error("Request error:", error);
+      setIsLoading(false)
+      alert("An error occurred during submission.");
+    } finally {
+      setIsLoading(false)
     }
+  };
 
-    if (formData[0]?.file) {
-      formDataToSend.append("iep_document", formData[0].file);
-    }
-    if (formData[1]?.file) {
-      formDataToSend.append("consent_form", formData[1].file);
-    }
-    if (formData[2]?.file) {
-      formDataToSend.append("cognitive_assessments", formData[2].file);
-    }
 
-    const response = await fetch("/api/referrals/", {
-      method: "POST",
-      body: formDataToSend,
-       headers: { Authorization: `Bearer ${token}` }
-    });
-
-    if (!response.ok) {
-      const errorRes = await response.json();
-      console.error("Server error:", errorRes);
-      alert("Submission failed: " + (errorRes.message || response.statusText));
-      return;
-    }
-
-    const data = await response.json();
-    console.log("Submission success:", data);
-    localStorage.setItem("formData", JSON.stringify(formData));
-
-  } catch (error) {
-    console.error("Request error:", error);
-    alert("An error occurred during submission.");
-  }
-};
-
- 
 
   const updateFormData = (newData: object) => {
     setFormData(prevData => ({ ...prevData, ...newData }));
@@ -227,7 +231,7 @@ const handleSubmitReferral = async () => {
         <div className="flex justify-between  w-full items-center mb-4">
           <h1 className="text-xl font-bold"> New ACES Student Referral </h1>
           <div className="flex space-x-1">
-            <button className="p-1" onClick={()=> router.back()}>
+            <button className="p-1" onClick={() => router.back()}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
@@ -345,8 +349,19 @@ const handleSubmitReferral = async () => {
                   </span>
                 </button>
               ) : (
-                <button onClick={handleSubmitReferral} className="px-4 py-2 bg-[#005A9C] text-white rounded-md hover:bg-blue-600">
-                  Submit referral
+                <button
+                  onClick={handleSubmitReferral}
+                  className="px-2 py-2 md:px-4 md:py-2 bg-[#005A9C] text-white rounded-md hover:bg-blue-600 flex items-center justify-center"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  ) : (
+                    "Submit Referral"
+                  )}
                 </button>
               )}
             </div>

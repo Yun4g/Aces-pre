@@ -30,6 +30,7 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
     urgentReferral: formData.urgentReferral,
     urgentReason: formData.urgentReason,
     additional_notes: formData.additional_notes ?? "",
+    
 
   });
   const [additionalNotes, setAdditionalNotes] = useState<string>(
@@ -240,9 +241,7 @@ useEffect(() => {
                 <option value="504">504 Plan</option>
                 <option value="iep">IEP</option>
               </select>
-            </div>
-
-            {/* Reason for Referral */}
+            </div> 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Reason for Referral
@@ -257,9 +256,9 @@ useEffect(() => {
             </div>
           </div>
 
-          {/* Right Column */}
+        
           <div className="space-y-6">
-            {/* Additional Notes */}
+            
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Additional Notes

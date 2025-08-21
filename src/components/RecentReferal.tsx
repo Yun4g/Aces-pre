@@ -84,7 +84,7 @@ export function RecentReferrals() {
     }
   };
 
-  const { data, isLoading, isError } = useQuery<RecentReferral[]>({
+  const { data, isLoading, } = useQuery<RecentReferral[]>({
     queryKey: ['recentReferrals'],
     queryFn: fetchUserReferral,
     enabled: !!token,
@@ -104,13 +104,7 @@ export function RecentReferrals() {
   }
 
 
-  if (isError) {
-  return (
-    <Card className="border-none bg-white dark:bg-gray-800 mx-3">
-      <CardContent className="p-4 text-center text-red-600">Error loading recent referrals.</CardContent>
-    </Card>
-  );
-}
+
 
 
 
