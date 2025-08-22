@@ -83,11 +83,11 @@ export function RecentReferrals() {
       console.error('Error fetching recent referrals:', error);
       return [];
     }
-  };   
+  };
 
 
 
- 
+
 
   const { data, isLoading, } = useQuery<RecentReferral[]>({
     queryKey: ['recentReferrals'],
@@ -95,30 +95,45 @@ export function RecentReferrals() {
     enabled: !!token,
   });
 
+  console.log('recent referral', data)
 
 
-    const  fetchUserData = async () => {
-      try {    
-        const response = await axios.get(`/api/user/${data}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-  
-        return response?.data;
-      } catch (error) {
-        console.log(error);
-        throw error; 
-      }
-    };
-  
+  const fetchUserData = async () => {
+    try {
+      if (!data) return;
+
+      const results = await Promise.all(
+        data.map(r =>
+          axios.get(`/api/user/${r.created_by}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+        )
+      );
+
+      return results.map(res => res.data);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+
+  const {data: userData} = useQuery({
+    queryKey: ['userData'],
+    queryFn: fetchUserData,
+    enabled: !!token,
+  })
+
+
+
+ console.log(userData)
+
+
 
   useEffect(() => {
-      fetchUserData()
-   },[data])
-
-    useEffect(() => {
     setToken(sessionStorage.getItem('token'));
-    }, []);
-  
+  }, []);
+
   if (isLoading) {
     return (
       <Card className="border-none bg-white dark:bg-gray-800 mx-3">

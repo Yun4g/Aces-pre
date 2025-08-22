@@ -14,16 +14,29 @@ import { useQuery } from '@tanstack/react-query';
 
 
 
+
+
+
+interface Notification { 
+    id: number;
+    title: string;
+    message: string;
+    type: 'success' | 'error' | 'info' | 'warning';
+    createdAt: string;
+    length : number
+
+ }
+
+
 const DashboardHeader = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
   const dispatch = useDispatch();
   const notificationOpen = useSelector((state: RootState) => state.notification.open);
   console.log(pathname, 'pathname in header');
-  let notification = localStorage.getItem('notification');
-  if (notification) {
-    notification = JSON.parse(notification);
-  }
+  const [notification, setNotification] = useState<Notification[]>();
+
+ 
 
  
   
@@ -52,11 +65,24 @@ const DashboardHeader = () => {
 
   console.log(data, 'data in header');
   
+
+
+
 useEffect(() => {
   setToken(sessionStorage.getItem('token'));
   setUsername(sessionStorage.getItem('username'));
 
 }, []);
+  
+
+
+  useEffect(() => {
+      const notification = localStorage.getItem('notification');
+      if (notification) {
+        setNotification(JSON.parse(notification));
+      }
+  }, [])
+  
 
 
   const getPageTitle = () => {
