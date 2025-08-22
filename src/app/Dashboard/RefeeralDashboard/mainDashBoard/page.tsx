@@ -83,8 +83,7 @@ function MainDashBoard() {
                         </div>
                      <div className='w-full bg-white dark:bg-gray-800 flex-1'>
                          <RecentReferrals />
-                     </div>
-               
+                     </div>  
           </div>
         </div>
       </section>

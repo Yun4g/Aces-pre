@@ -55,12 +55,12 @@ const districtData = [
 
 
 interface AnalyticsDashboard {
-    completion_percent: number | null ,
-    recent_completion_percent: number | null,
-    average_processing_time: string | null,
-    recent_average_processing_time: string | null,
-    total_schools: number | null,
-    average_replies_per_referral: number | null
+  completion_percent: number | null,
+  recent_completion_percent: number | null,
+  average_processing_time: string | null,
+  recent_average_processing_time: string | null,
+  total_schools: number | null,
+  average_replies_per_referral: number | null
 }
 
 const chartData = [
@@ -103,52 +103,54 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
 
 export default function Analytics() {
   const [token, setToken] = React.useState('')
-    
-  const fetchAnalytics = async () : Promise<AnalyticsDashboard | null> => {
+
+  const fetchAnalytics = async (): Promise<AnalyticsDashboard | null> => {
     try {
       const res = await axios.get('/api/referral_dashboard/', {
         headers: { Authorization: `Bearer ${token}` }
-      }) 
-       
+      })
+
       return res.data
     } catch (error) {
-        console.log(error)
-        return null
+      console.log(error)
+      return null
     }
   }
 
-    React.useEffect(() => {
-      const t = sessionStorage.getItem('token');
-       setToken(t || '' )
-      
-    },[])
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const t = sessionStorage.getItem("token");
+      setToken(t || "");
+    }
+  }, []);
 
-function formatProcessingTime(timeString: string | null | undefined): string {
-  if (!timeString) return "—";
 
-  const parts = timeString.split(':');
-  if (parts.length < 3) return timeString; 
+  function formatProcessingTime(timeString: string | null | undefined): string {
+    if (!timeString) return "—";
 
-  const hours = parseInt(parts[0], 10);
-  const minutes = parseInt(parts[1], 10);
-  const seconds = parseFloat(parts[2]);
-  const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-  const totalDays = totalSeconds / 86400;
-  return `${ Math.round(totalDays)} days`;
-}
+    const parts = timeString.split(':');
+    if (parts.length < 3) return timeString;
+
+    const hours = parseInt(parts[0], 10);
+    const minutes = parseInt(parts[1], 10);
+    const seconds = parseFloat(parts[2]);
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    const totalDays = totalSeconds / 86400;
+    return `${Math.round(totalDays)} days`;
+  }
   const { data } = useQuery({
     queryKey: ['Analytics'],
     queryFn: fetchAnalytics,
     refetchInterval: 4000,
-      enabled: !!token, 
+    enabled: !!token,
   })
   console.log('analytics', data)
-const metrics = [
-  { label: "Completion Rates", value: data?.completion_percent ?? "—",  change: "10.2% vs Last month" },
-  { label: "Average first time Replies", value: data?.average_replies_per_referral ?? "—", change: "10.2% vs Last month" },
-  { label: "Average Processing time", value: formatProcessingTime(data?.average_processing_time)  , change: "10.2% vs Last month" },
-  { label: "Total Schools", value: data?.total_schools,  change: "10.2% vs Last month" },
-];
+  const metrics = [
+    { label: "Completion Rates", value: data?.completion_percent ?? "—", change: "10.2% vs Last month" },
+    { label: "Average first time Replies", value: data?.average_replies_per_referral ?? "—", change: "10.2% vs Last month" },
+    { label: "Average Processing time", value: formatProcessingTime(data?.average_processing_time), change: "10.2% vs Last month" },
+    { label: "Total Schools", value: data?.total_schools, change: "10.2% vs Last month" },
+  ];
 
   return (
     <div className="w-full  space-y-1">
@@ -271,10 +273,10 @@ const metrics = [
 
       </div>
 
-  
+
       <div className="flex flex-col md:flex-row w-full gap-3 px-3">
 
-        
+
         <Card className="border-none shadow-sm md:w-[40%] bg-white dark:bg-gray-800">
           <CardContent className="p-4">
             <h2 className="text-sm sm:text-base text-gray-600 mb-2">Districts Distribution</h2>
@@ -312,7 +314,7 @@ const metrics = [
               <h2 className="text-sm sm:text-base text-gray-600 mb-1">Enrollment Trends</h2>
               <div className="text-xs sm:text-sm mb-2">Total Trends</div>
             </div>
-              <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={250}>
               <LineChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 13 }} />
@@ -349,7 +351,7 @@ const metrics = [
         </Card>
       </div>
 
-      <RecentReferrals/>
+      <RecentReferrals />
     </div >
 
   );

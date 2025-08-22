@@ -21,6 +21,7 @@ interface RecentReferral {
   reason: string | null;
   special_education_label: string | null;
   created_at: string | null;
+  created_by: string | null
   updated_at: string | null;
   draft: boolean;
   iep_document: string | null;
@@ -30,7 +31,6 @@ interface RecentReferral {
   subject: number;
   ref_manager: number;
   pro_staff: number;
-  created_by: string | null;
   email: string;
   name: string;
   type: string;
@@ -66,12 +66,13 @@ const getTypeColor = (type: string) => {
   }
 };
 
+
+
+
+
+
 export function RecentReferrals() {
   const [token, setToken] = useState<string | null>(null);
-
-
-
-
   const fetchUserReferral = async (): Promise<RecentReferral[]> => {
     try {
       const res = await axios.get('/api/recent_referrals/', {
@@ -82,7 +83,11 @@ export function RecentReferrals() {
       console.error('Error fetching recent referrals:', error);
       return [];
     }
-  };
+  };   
+
+
+
+ 
 
   const { data, isLoading, } = useQuery<RecentReferral[]>({
     queryKey: ['recentReferrals'],
@@ -90,6 +95,25 @@ export function RecentReferrals() {
     enabled: !!token,
   });
 
+
+
+    const  fetchUserData = async () => {
+      try {    
+        const response = await axios.get(`/api/user/${data}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+  
+        return response?.data;
+      } catch (error) {
+        console.log(error);
+        throw error; 
+      }
+    };
+  
+
+  useEffect(() => {
+      fetchUserData()
+   },[data])
 
     useEffect(() => {
     setToken(sessionStorage.getItem('token'));

@@ -17,12 +17,15 @@ export default function AnalyticsDashboard() {
 
    
     useEffect(() => {
-  const t = sessionStorage.getItem('token');
-  setToken(t);
-  if (!t) {
-    router.push('/login');
+  if (typeof window !== "undefined") {
+    const t = sessionStorage.getItem("token");
+    setToken(t);
+    if (!t) {
+      router.push("/login");
+    }
   }
 }, [router]);
+
 
   return (
     <section className=" dark:bg-gray-900 dark:text-white transition-colors duration-300 min-h-screen flex">
