@@ -9,26 +9,28 @@ import { useEffect, useState } from 'react';
 
 export function StatCards() {
    const [token, setToken] = useState<string | null>(null);
-
+    const userId: number = 1
+  
   const fetchUserReferal = async () => {
     try {
-      const res = await axios.get('/api/by-user/15', {
+      const res = await axios.get(`https://api.aces-tdx.com/api/referrals/by-user/${userId}/`, {
             headers: { Authorization: `Bearer ${token}` }
-      })
-      
+      })     
       return res?.data
     } catch (error) {
        console.log(error)
       }
   }
-
-
   
-    const { data, error } = useQuery({
+    const { data } = useQuery({
       queryKey:  ['recentReferrals'],
       queryFn:  fetchUserReferal,
-       enabled : !! token
+      enabled : !! token,
+      refetchInterval : 3000
     });
+
+  console.log('users referral', data)
+
   
   useEffect(() => {
   setToken(sessionStorage.getItem('token'));

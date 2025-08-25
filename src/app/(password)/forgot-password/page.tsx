@@ -22,7 +22,7 @@ const ForgotPassword: React.FC = () => {
   const useResetPassword = () => {
     return useMutation({
       mutationFn: async (data: SignupFormData) => {
-        const response = await axios.post('/api/auth/password/reset/', {
+        const response = await axios.post('https://api.aces-tdx.com/api/auth/password/reset/', {
           email: data.email,
         });
         return response.data;

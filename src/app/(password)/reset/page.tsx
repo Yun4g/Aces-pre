@@ -37,7 +37,7 @@ const CreateNewPassword = () => {
 
   const passwordChangeMutation = useMutation({
     mutationFn: async (data: { new_password1: string; new_password2: string }) => {
-      const response = await axios.post('/api/auth/password/change/', data);
+      const response = await axios.post('https://api.aces-tdx.com/api/auth/password/change/', data);
       return response.data;
     },
   });

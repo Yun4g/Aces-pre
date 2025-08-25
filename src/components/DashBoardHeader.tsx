@@ -35,17 +35,15 @@ const DashboardHeader = () => {
   const notificationOpen = useSelector((state: RootState) => state.notification.open);
   console.log(pathname, 'pathname in header');
   const [notification, setNotification] = useState<Notification[]>();
-
- 
-
- 
-  
   const [token, setToken] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
-  const userId = 15;
-  const fetchUser = async () => {
+ 
+
+
+
+  const fetchUser = async ()=> {
     try {    
-      const response = await axios.get(`/api/user/${userId}`, {
+      const response = await axios.get(`https://api.aces-tdx.com/api/user/${1}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

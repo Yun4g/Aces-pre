@@ -46,7 +46,7 @@ const Signup = () => {
         is_reviewer: data.role === 'System Administrator',
       };
 
-      const response = await axios.post('/api/auth/registration/', {
+      const response = await axios.post('https://api.aces-tdx.com/api/auth/registration/', {
         email: data.email,
         username: data.username,
         password1: data.password1,

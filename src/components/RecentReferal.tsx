@@ -21,8 +21,8 @@ interface RecentReferral {
   reason: string | null;
   special_education_label: string | null;
   created_at: string | null;
-  created_by: string | null
-  updated_at: string | null;
+  created_by: string | null;
+  updated_at: string | number | Date;
   draft: boolean;
   iep_document: string | null;
   consent_form: string | null;
@@ -55,9 +55,10 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getTypeColor = (type: string) => {
+const getTypeColor = (type: string | null) => {
+
   switch (type) {
-    case 'Behavioural':
+    case 'Academic Intervention':
       return 'bg-blue-100 text-blue-600';
     case 'Special feat.':
       return 'bg-green-100 text-green-600';
@@ -73,11 +74,32 @@ const getTypeColor = (type: string) => {
 
 export function RecentReferrals() {
   const [token, setToken] = useState<string | null>(null);
+
+    const fetchUserData = async (created_by: string) => {
+
+    try {
+      if (!data) return;
+
+      const results = await  axios.get(`https://api.aces-tdx.com/api/user/${created_by}`, {
+            headers: { Authorization: `Bearer ${token}` },
+      })
+       console.log(results, 'headre')
+      return results
+       
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+
+
   const fetchUserReferral = async (): Promise<RecentReferral[]> => {
     try {
-      const res = await axios.get('/api/recent_referrals/', {
+      const res = await axios.get('https://api.aces-tdx.com/api/recent_referrals/', {
         headers: { Authorization: `Bearer ${token}` },
       });
+      await fetchUserData(res.data.created_by);
       return res.data;
     } catch (error) {
       console.error('Error fetching recent referrals:', error);
@@ -93,41 +115,10 @@ export function RecentReferrals() {
     queryKey: ['recentReferrals'],
     queryFn: fetchUserReferral,
     enabled: !!token,
+    refetchInterval: 4000,
   });
 
   console.log('recent referral', data)
-
-
-  const fetchUserData = async () => {
-    try {
-      if (!data) return;
-
-      const results = await Promise.all(
-        data.map(r =>
-          axios.get(`/api/user/${r.created_by}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-        )
-      );
-
-      return results.map(res => res.data);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-
-  const {data: userData} = useQuery({
-    queryKey: ['userData'],
-    queryFn: fetchUserData,
-    enabled: !!token,
-  })
-
-
-
- console.log(userData)
-
 
 
   useEffect(() => {
@@ -141,11 +132,6 @@ export function RecentReferrals() {
       </Card>
     );
   }
-
-
-
-
-
 
   return (
     <Card className="border-none bg-white dark:bg-gray-800 mx-3">
@@ -187,8 +173,8 @@ export function RecentReferrals() {
                       </div>
                     </td>
                     <td className="py-3 px-2">
-                      <span className={`px-2 py-1 rounded text-xs whitespace-nowrap ${getTypeColor(r.type)}`}>
-                        {r.type}
+                      <span className={`px-2 py-1 rounded text-xs whitespace-nowrap ${getTypeColor(r.referral_type)}`}>
+                        {r.referral_type}
                       </span>
                     </td>
                     <td className="py-3 px-2">
@@ -197,7 +183,12 @@ export function RecentReferrals() {
                       </span>
                     </td>
                     <td className="py-3 px-2">{r.assignedBy}</td>
-                    <td className="py-3 px-2">{r.date}</td>
+                    <td className="py-3 px-2"> {new Date(r.updated_at).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric"
+                    })}</td>
+
                     <td className="py-3 px-2 whitespace-nowrap">
                       <a href="#" className="text-blue-600 mr-2 hover:underline">
                         View

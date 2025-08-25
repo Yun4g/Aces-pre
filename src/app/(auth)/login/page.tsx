@@ -30,7 +30,7 @@ type FormValues = z.infer<typeof loginSchema>;
 const useLogin = () => {
   return useMutation({
     mutationFn: async (data: FormValues) => {
-      const response = await axios.post('/api/auth/login/', {
+      const response = await axios.post('https://api.aces-tdx.com/api/auth/login/', {
         email: data.email,
         username: data.username,
         password: data.password,
@@ -76,7 +76,7 @@ React.useEffect(() => {
 
  const fetchToken = async () => {
   try {
-    const response = await axios.post('/api/token/', 
+    const response = await axios.post('https://api.aces-tdx.com/api/token/', 
       {
         username: sessionStorage.getItem("username") || "",
         password: sessionStorage.getItem("password") || ""

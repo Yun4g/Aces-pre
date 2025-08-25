@@ -10,18 +10,11 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'i.pravatar.cc',
-        pathname: '/**', 
+        pathname: '/**',
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://api.aces-tdx.com/api/:path*/',
-      },
-    ];
-  },
+
 };
 
 module.exports = nextConfig;

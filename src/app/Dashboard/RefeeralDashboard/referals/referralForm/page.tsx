@@ -192,7 +192,7 @@ const ReferralForm = () => {
         formDataToSend.append("cognitive_assessments", formData[2].file);
       }
 
-      const response = await fetch("/api/referrals/", {
+      const response = await fetch("https://api.aces-tdx.com/api/referrals/", {
         method: "POST",
         body: formDataToSend,
         headers: { Authorization: `Bearer ${token}` }

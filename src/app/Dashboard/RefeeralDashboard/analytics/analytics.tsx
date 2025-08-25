@@ -106,7 +106,7 @@ export default function Analytics() {
 
   const fetchAnalytics = async (): Promise<AnalyticsDashboard | null> => {
     try {
-      const res = await axios.get('/api/referral_dashboard/', {
+      const res = await axios.get('https://api.aces-tdx.com/api/referral_dashboard/', {
         headers: { Authorization: `Bearer ${token}` }
       })
 
