@@ -6,12 +6,12 @@ import QueryProvider from './(providers)/QueryProvider';
 
 export const metadata: Metadata = {
   title: 'Aces App',
-  description: ' Aces App - Your Gateway to Educational Excellence',
+
 };
 
 export default function RootLayout({ children,}: {children: React.ReactNode;}) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <body className="overflow-x-hidden bg-white text-black "> 
          <QueryProvider>
           <ReduxProvider>  

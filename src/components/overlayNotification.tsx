@@ -92,8 +92,7 @@ const NotificationOverlay = () => {
 
                 <div className="flex border-b px-6 pt-2 pb-2 gap-6">
                     <button className="text-blue-600 border-b-2 border-blue-600 pb-2 font-medium">Inbox</button>
-                    {/* <button className="text-gray-600 pb-2">Following</button>
-                    <button className="text-gray-600 pb-2">All</button> */}
+                    
                 </div>
 
 

@@ -10,15 +10,20 @@ import { useRouter } from 'next/navigation';
 
 
 
-interface ReferralFormData {
+export interface ReferralFormData {
   created_by?: number;
-  priority?: string;
-  referralType?: "Academics" | "Special Features" | "Behavioural" | "Socials" ;
   districts?: string;
-  status?: string;
   additional_notes?: string;
   reasonForReferral?: string;
+  subject: number;
+  priority?: "LOW" | "MEDIUM" | "HIGH";
+  referralType?: "ACADEMIC" | "BEHAVIORAL" | "SOCIAL";
+  specialEducationLabel?: "Special Needs" | "IEP";
+  status?: "IN_PROGRESS" | "COMPLETED" | "WAITLIST";
+  ref_manager?: number;
+  pro_staff?: number;
   classification?: string;
+  referrerName: string;
   studentName?: string;
   emailAddress?: string;
   parentName?: string;
@@ -36,6 +41,7 @@ interface ReferralFormData {
   gradeLevel?: string;
   dateOfBirth?: string;
   selectedPrograms?: string[];
+
   0?: { file?: File };
   1?: { file?: File };
   2?: { file?: File };
@@ -45,7 +51,7 @@ interface ReferralFormData {
 
 const ReferralForm = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [formData, setFormData] = useState<ReferralFormData>({});
+  const [formData, setFormData] = useState<ReferralFormData>({} as ReferralFormData);
   const [token, setToken] = useState<string | null>(null);
   const created_by = 15;
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -76,22 +82,24 @@ const ReferralForm = () => {
     const cognitive = data[2]?.file ? data[2].file.name : null;
 
     return {
-      priority: data.priority || "Low",
       referral_info: data.referralType || "",
-      referral_type: data.referralType || "",
       district: data.districts || "",
-      status: data.status || "low",
       additional_notes: data.additional_notes || data.additionalNotes || null,
       reason: data.reasonForReferral || null,
-      special_education_label: data.classification || null,
       draft: false,
       iep_document: iep,
       consent_form: consent,
       cognitive_assesments: cognitive,
       avatar: null,
-      subject: data.subject || 1,
-      ref_manager: data.referrerName || 1,
-      pro_staff: 1,
+      priority: data.priority || "LOW",
+      referral_type: data.referralType || "ACADEMIC",
+      status: data.status || "IN_PROGRESS",
+      special_education_label: data.specialEducationLabel || "IEP",
+
+
+      ref_manager: data.ref_manager,
+      pro_staff: data.pro_staff,
+
       created_by: 15,
       studentName: data.studentName,
       emailAddress: data.emailAddress,
@@ -150,11 +158,14 @@ const ReferralForm = () => {
     try {
       setIsLoading(true)
       const formDataToSend = new FormData();
-      formDataToSend.append("priority", formData.priority || "low");
+      formDataToSend.append("priority", formData.priority || "Low");
       formDataToSend.append("created_by", String(created_by));
       formDataToSend.append("referral_type", formData.referralType || "");
       formDataToSend.append("district", formData.districts || "");
-      formDataToSend.append("status", formData.status || "pending");
+      formDataToSend.append("status", formData.status || "in progress");
+      formDataToSend.append("subject", String(formData.subject || ""));
+      formDataToSend.append("pro_staff", String(formData.pro_staff || ""));
+      formDataToSend.append("ref_manager", String(formData.ref_manager || ""));
       formDataToSend.append("additional_notes", formData.additional_notes || "");
       formDataToSend.append("reason", formData.reasonForReferral || "");
       formDataToSend.append("special_education_label", formData.classification || "");

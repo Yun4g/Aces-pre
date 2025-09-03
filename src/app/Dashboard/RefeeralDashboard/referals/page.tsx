@@ -67,7 +67,7 @@ export default function ReferralsPage() {
       return [];
     }
     try {
-      const response = await axios.get("/api/referrals/", {
+      const response = await axios.get("https://api.aces-tdx.com/api/referrals/", {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
@@ -77,10 +77,10 @@ export default function ReferralsPage() {
     }
   };
 
-  const { data: referralsData = [] } = useQuery<Referral[]>({
+  const { data: referralsData = [], isLoading } = useQuery<Referral[]>({
     queryKey: ["referrals"],
     queryFn: fetchReferrals,
-    refetchInterval: 30000,
+    refetchInterval: 5000,
   });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -104,7 +104,7 @@ export default function ReferralsPage() {
       return null;
     }
     try {
-      const response = await axios.get("/api/export-referrals-csv/", {
+      const response = await axios.get("https://api.aces-tdx.com/api/export-referrals-csv/", {
         headers: { Authorization: `Bearer ${token}` },
         responseType: "blob",
       });
@@ -131,7 +131,7 @@ export default function ReferralsPage() {
     }
   };
 
-  // PDF download
+
   const handleDownloadPdf = async () => {
     if (!tableRef.current) return;
     try {
@@ -166,7 +166,7 @@ export default function ReferralsPage() {
       </div>
 
       <section className="flex-1 ml-0 md:ml-[250px] overflow-y-auto w-full">
-        
+
         <div
           className="md:hidden mb-4 px-3 py-3 rounded-md   shadow-sm text-sm flex items-center justify-between  gap-2 cursor-pointer"
           onClick={() => setSidebarOpen(true)}
@@ -197,7 +197,7 @@ export default function ReferralsPage() {
           {/* Top Bar */}
           <div className="flex flex-wrap bg-white dark:bg-gray-900 px-3 items-center justify-between border-2 p-2 mt-2 rounded-md gap-2">
             <div className="flex flex-wrap items-center gap-2 text-sm text-gray-700 dark:text-gray-300 flex-1 min-w-[200px]">
-            
+
               <div className="border flex gap-2 rounded px-3 py-1.5 text-sm w-full max-w-xs bg-white dark:bg-gray-700 dark:text-white">
                 <span>
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -233,7 +233,7 @@ export default function ReferralsPage() {
               </button>
             </div>
 
-           
+
             <div className="flex flex-col md:flex-row items-center gap-2 mt-2 sm:mt-0">
               <button
                 onClick={handleDownloadCsv}
@@ -260,80 +260,113 @@ export default function ReferralsPage() {
             </div>
           </div>
 
-          {/* Table */}
+
           <div className="overflow-auto rounded border mt-4">
-            <table
-              ref={tableRef}
-              className="min-w-full text-sm text-center dark:bg-gray-800"
-            >
-              <thead className="dark:bg-gray-900 border-b">
-                <tr>
-                  <th className="p-3">
-                    <input type="checkbox" aria-label="Select all referrals" />
-                  </th>
-                  <th className="p-3">Refer ID</th>
-                  <th className="p-3">Subjects</th>
-                  <th className="p-3">Priority</th>
-                  <th className="p-3">Type</th>
-                  <th className="p-3">Assignee</th>
-                  <th className="p-3">Date Created</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedReferrals.length > 0 ? (
-                  paginatedReferrals.map((r) => (
-                    <tr
-                      key={r.id}
-                      onClick={() =>
-                        router.push(`/Dashboard/RefeeralDashboard/referals/${r.id}`)
-                      }
-                      className="cursor-pointer hover:bg-gray-50 border-b dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <td className="p-3">
-                        <input type="checkbox" aria-label={`Select referral ${r.id}`} />
-                      </td>
-                      <td className="p-3 font-medium">{`#RC-${r.id}`}</td>
-                      <td className="p-3">{r.subject || "N/A"}</td>
-                      <td className="p-3 flex justify-center items-center">
-                        <span
-                          className={clsx(
-                            "flex items-center gap-2 px-2 py-1 rounded-full",
-                            priorityBgColor[r.priority],
-                            priorityColor[r.priority]
-                          )}
-                        >
-                          <span className="text-xs">●</span> {r.priority}
-                        </span>
-                      </td>
-                      <td className="p-3">{r.referral_type || "N/A"}</td>
-                      <td className="p-3 flex justify-center items-center gap-2">
-                        <Image
-                          src={r.avatar || `https://i.pravatar.cc/150?img=${r.id}`}
-                          alt={r.assignee || "Assignee"}
-                          width={24}
-                          height={24}
-                          className="rounded-full"
-                          unoptimized
-                        />
-                        <span>{r.assignee || "Assignee name"}</span>
-                      </td>
-                      <td className="p-3 whitespace-nowrap">
-                        {new Date(r.created_at).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={7} className="p-3 text-center">
-                      No referrals found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+            {
+
+              isLoading ? (
+
+                <div className="flex justify-center items-center">
+                  <svg
+                    className="animate-spin h-6 w-6 text-blue-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                </div>
+
+              ) : (
+                  <table
+                    ref={tableRef}
+                    className="min-w-full text-sm text-center dark:bg-gray-800"
+                  >
+                    <thead className="dark:bg-gray-900 border-b">
+                      <tr>
+                        <th className="p-3">
+                          <input type="checkbox" aria-label="Select all referrals" />
+                        </th>
+                        <th className="p-3">Refer ID</th>
+                        <th className="p-3">Subjects</th>
+                        <th className="p-3">Priority</th>
+                        <th className="p-3">Type</th>
+                        <th className="p-3">Assignee</th>
+                        <th className="p-3">Date Created</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {paginatedReferrals.length > 0 ? (
+                        paginatedReferrals.map((r) => (
+                          <tr
+                            key={r.id}
+                            onClick={() =>
+                              router.push(`/Dashboard/RefeeralDashboard/referals/${r.id}`)
+                            }
+                            className="cursor-pointer hover:bg-gray-50 border-b dark:hover:bg-gray-700 transition-colors"
+                          >
+                            <td className="p-3">
+                              <input type="checkbox" aria-label={`Select referral ${r.id}`} />
+                            </td>
+                            <td className="p-3 font-medium">{`#RC-${r.id}`}</td>
+                            <td className="p-3">{r.subject || "N/A"}</td>
+                            <td className="p-3 flex justify-center items-center">
+                              <span
+                                className={clsx(
+                                  "flex items-center gap-2 px-2 py-1 rounded-full",
+                                  priorityBgColor[r.priority],
+                                  priorityColor[r.priority]
+                                )}
+                              >
+                                <span className="text-xs">●</span> {r.priority}
+                              </span>
+                            </td>
+                            <td className="p-3">{r.referral_type || "N/A"}</td>
+                            <td className="p-3 flex justify-center items-center gap-2">
+                              <Image
+                                src={r.avatar || `https://i.pravatar.cc/150?img=${r.id}`}
+                                alt={r.assignee || "Assignee"}
+                                width={24}
+                                height={24}
+                                className="rounded-full"
+                                unoptimized
+                              />
+                              <span>{r.assignee || "Assignee name"}</span>
+                            </td>
+                            <td className="p-3 whitespace-nowrap">
+                              {new Date(r.created_at).toLocaleString()}
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={7} className="p-3 text-center">
+                            No referrals found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+
+                )
+
+            }
+
           </div>
 
-          {/* Pagination */}
+      
           {totalPages > 1 && (
             <div className="flex justify-end items-center mt-4 text-sm px-3">
               <button

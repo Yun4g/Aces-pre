@@ -9,6 +9,7 @@ const programFormSchema = z.object({
   urgentReferral: z.boolean().optional(),
   urgentReason: z.string().optional(),
   additional_notes: z.string().optional(),
+ priority: z.enum(["LOW", "MEDIUM", "HIGH"]), 
 });
 
 type ProgramFormData = z.infer<typeof programFormSchema>;
@@ -30,12 +31,17 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
     urgentReferral: formData.urgentReferral,
     urgentReason: formData.urgentReason,
     additional_notes: formData.additional_notes ?? "",
+     priority: formData.priority ?? "LOW",
     
 
   });
   const [additionalNotes, setAdditionalNotes] = useState<string>(
    (formData.additional_notes as string) ?? ""
- );
+  );
+  const [priority, setPriority] = useState<"LOW" | "MEDIUM" | "HIGH">(
+    parsedFormData.priority as "LOW" | "MEDIUM" | "HIGH"
+  );
+
   const [selectedPrograms, setSelectedPrograms] = useState<string[]>(
     parsedFormData.selectedPrograms
   );
@@ -59,6 +65,10 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
         : [...prev, program]
     );
   };
+  
+    const priorityOptions = ["LOW", "MEDIUM", "HIGH"];
+  
+    const specialEducationLabels = ["SPECIAL_NEEDS", "IEP"];
 
 useEffect(() => {
   updateFormData({
@@ -68,8 +78,9 @@ useEffect(() => {
     urgentReferral,
     urgentReason,
     additional_notes: additionalNotes, 
+    priority,
   });
-}, [selectedPrograms, classification, reasonForReferral, urgentReferral, urgentReason, additionalNotes, updateFormData]);
+}, [selectedPrograms, classification, reasonForReferral, urgentReferral, urgentReason, additionalNotes, priority, updateFormData]);
 
 
   return (
@@ -224,8 +235,7 @@ useEffect(() => {
         <h3 className="text-lg font-semibold mb-4">Classification & Details</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left Column */}
-          <div className="space-y-6">
+              <div className="space-y-6">
           
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -237,9 +247,11 @@ useEffect(() => {
                 className="w-full  p-[10px] border-2 border-[#D0D0D0] rounded-[12px]  text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Select Classification</option>
-                <option value="general">General Education</option>
-                <option value="504">504 Plan</option>
-                <option value="iep">IEP</option>
+                {specialEducationLabels.map((label) => (
+                  <option key={label} value={label}>
+                    {label}
+                  </option>
+                ))}
               </select>
             </div> 
             <div>
@@ -270,6 +282,24 @@ useEffect(() => {
                 placeholder="Any Additional information that may be helpful"
                 className="w-full  p-[10px] border-2 border-[#D0D0D0] rounded-[12px] text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Priority
+              </label>
+              <select
+                value={priority}
+                onChange={(e) => setPriority(e.target.value as "LOW" | "MEDIUM" | "HIGH")}
+                className="w-full  p-[10px] border-2 border-[#D0D0D0] rounded-[12px] text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Select Priority</option>
+                {priorityOptions.map((label) => (
+                  <option key={label} value={label}>
+                    {label}
+                  </option>
+                ))}
+              </select>
             </div>
 
         

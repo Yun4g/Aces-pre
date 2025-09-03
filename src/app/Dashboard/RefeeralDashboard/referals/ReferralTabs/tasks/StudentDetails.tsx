@@ -16,12 +16,14 @@ interface FormData {
   sameAddress?: boolean;
 }
 
+
+
 interface StudentDetailsProps {
   updateFormData: (data: FormData) => void;
   formData: FormData;
 }
 
-const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData,}) => {
+const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formData, }) => {
   const [studentName, setStudentName] = useState(formData.studentName || "");
   const [dateOfBirth, setDateOfBirth] = useState(formData.dateOfBirth || "");
   const [gradeLevel, setGradeLevel] = useState(formData.gradeLevel || "");
@@ -35,6 +37,10 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
   const [parentPhone, setParentPhone] = useState(formData.parentPhone || "");
   const [parentEmail, setParentEmail] = useState(formData.parentEmail || "");
   const [sameAddress, setSameAddress] = useState(formData.sameAddress || false);
+
+
+  const statusOptions = ["IN_PROGRESS", "COMPLETED", "WAITLIST"];
+
 
   useEffect(() => {
     updateFormData({
@@ -152,10 +158,12 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({updateFormData, formData
               onChange={(e) => setStatus(e.target.value)}
               className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
             >
-              <option value="">Select status</option>
-              <option value="active">Active</option>
-              <option value="pending">Pending</option>
-              <option value="waitlist">Waitlist</option>
+              {statusOptions.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+
             </select>
           </div>
           <div>

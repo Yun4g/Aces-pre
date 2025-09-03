@@ -28,6 +28,28 @@ interface Notification {
  }
 
 
+interface User {
+  id: number;
+  password: string | null;
+  last_login: string | null; 
+  is_superuser: boolean;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_staff: boolean;
+  is_active: boolean;
+  date_joined: string; 
+  avatar: string | null; 
+  is_district: boolean;
+  is_ref_manager: boolean;
+  is_pro_staff: boolean;
+  is_reviewer: boolean;
+  // groups: any[]; 
+  // user_permissions: any[]; 
+}
+
+
 const DashboardHeader = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
@@ -46,7 +68,6 @@ const DashboardHeader = () => {
       const response = await axios.get(`https://api.aces-tdx.com/api/user/${1}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-
       return response?.data;
     } catch (error) {
       console.log(error);
@@ -63,9 +84,6 @@ const DashboardHeader = () => {
 
   console.log(data, 'data in header');
   
-
-
-
 useEffect(() => {
   setToken(sessionStorage.getItem('token'));
   setUsername(sessionStorage.getItem('username'));
@@ -82,7 +100,6 @@ useEffect(() => {
   }, [])
   
 
-
   const getPageTitle = () => {
     const route = pathname;
     if (route.includes('/RefeeralDashboard/mainDashBoard')) return 'Dashboard Overview';
@@ -94,12 +111,9 @@ useEffect(() => {
   return (
     <header className="w-full bg-white p-3 dark:bg-gray-900 dark:text-white transition-colors  duration-300  shadow-sm   z-[1000]">
       <div className="flex items-center justify-between w-full">
-
         <h1 className="text-lg font-medium dark:text-white text-gray-800 flex-1 md:flex-none">
           {getPageTitle()}
         </h1>
-
-    
         <div className="flex items-center gap-2 md:gap-4 mb-2">
           <div className="hidden sm:block relative">
             <input

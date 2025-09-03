@@ -1,89 +1,94 @@
- 'use client';
- 
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import NavbarReferal from '../navbarReferal';
 import { StatCards } from '@/components/(statsComponent)/statComponent';
 import { ProcessingTimeChart } from '@/components/(statsComponent)/processingTimeChart';
 import { DistrictStats } from '@/components/districtChart';
 import { RecentReferrals } from '@/components/RecentReferal';
-import DashboardHeader from '@/components/DashBoardHeader' 
+import DashboardHeader from '@/components/DashBoardHeader'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 
 
- interface MainDashBoardProps {
-    isOpen: boolean;
-    onClose: () => void;
+interface MainDashBoardProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
+
+
+
+
+
 
 
 function MainDashBoard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
 
-  
-   useEffect(() => { 
-  const token = sessionStorage.getItem('token');
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
 
     if (!token) {
       router.push('/login')
     }
   }, [router]);
 
-    return (
-        <main className=" min-h-screen flex  text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
+  return (
+    <main className=" min-h-screen flex  text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
 
-            <div className={`
+      <div className={`
                          fixed top-0 left-0 h-full w-[250px] bg-white z-50 shadow-md border-r
                           transform transition-transform duration-300 ease-in-out
                           md:translate-x-0
                         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
                              `}
-              >
-                <NavbarReferal isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      >
+        <NavbarReferal isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
+      <section className="flex-1 ml-0 md:ml-[250px] p-0 overflow-y-auto w-full">
+
+        <div
+          className="md:hidden mb-4 px-3 py-3 rounded-md   shadow-sm text-sm flex items-center justify-between  gap-2 cursor-pointer"
+          onClick={() => setSidebarOpen(true)}
+          role="button"
+          aria-label="Open sidebar menu"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') setSidebarOpen(true);
+          }}
+        >
+          <Image
+            height={60}
+            width={50}
+            src="/assest/logo.png"
+            alt="Logo"
+          />
+          <span style={{ fontSize: '1.8rem', lineHeight: 1, userSelect: 'none' }}>
+            ☰
+          </span>
+        </div>
+
+
+        <div className="container bg-white dark:bg-gray-800 dark:text-white transition-colors duration-300  ">
+          <header className=' mb-2 rounded-md overflow-hidden  z-[1000] bg-white '>
+            <DashboardHeader />
+          </header>
+          <div className="grid grid-cols-1  z-[999] gap-2 md:gap-6 p-3 bg-[#F1F1F1] dark:bg-gray-800 px-2 py-3 xl:gap-8">
+            <StatCards />
+            <div className="w-full flex flex-col lg:flex-row gap-4">
+              <div className='w-full md:basis-[55%] bg-white dark:bg-gray-800 flex-1'>
+                <ProcessingTimeChart />
+              </div>
+              <div className='w-full md:basis-[45%] bg-white dark:bg-gray-800 flex-1'>
+                <DistrictStats />
+              </div>
             </div>
-            <section className="flex-1 ml-0 md:ml-[250px] p-0 overflow-y-auto w-full">
-
-                <div
-               className="md:hidden mb-4 px-3 py-3 rounded-md   shadow-sm text-sm flex items-center justify-between  gap-2 cursor-pointer"                       
-                onClick={() => setSidebarOpen(true)}
-                role="button"
-                aria-label="Open sidebar menu"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') setSidebarOpen(true);
-                }}
-                     >
-                 <Image
-                  height={60}
-                  width={50}
-                  src="/assest/logo.png"
-                          alt="Logo"
-                />
-                <span style={{ fontSize: '1.8rem', lineHeight: 1, userSelect: 'none' }}>
-                     ☰
-                </span>
-               </div>
-
-
-                <div className="container bg-white dark:bg-gray-800 dark:text-white transition-colors duration-300  ">
-                    <header className=' mb-2 rounded-md overflow-hidden  z-[1000] bg-white '>
-                        <DashboardHeader />
-                    </header>
-                    <div className="grid grid-cols-1  z-[999] gap-2 md:gap-6 p-3 bg-[#F1F1F1] dark:bg-gray-800 px-2 py-3 xl:gap-8">
-                        <StatCards />
-                        <div className="w-full flex flex-col lg:flex-row gap-4">
-                            <div className='w-full md:basis-[55%] bg-white dark:bg-gray-800 flex-1'>
-                                <ProcessingTimeChart />
-                            </div>
-                            <div className='w-full md:basis-[45%] bg-white dark:bg-gray-800 flex-1'>
-                                <DistrictStats />
-                            </div>
-                        </div>
-                     <div className='w-full bg-white dark:bg-gray-800 flex-1'>
-                         <RecentReferrals />
-                     </div>  
+            <div className='w-full bg-white dark:bg-gray-800 flex-1'>
+              <RecentReferrals />
+            </div>
           </div>
         </div>
       </section>

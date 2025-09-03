@@ -1,151 +1,222 @@
+"use client";
 import { useState, useEffect } from "react";
 import { z } from "zod";
-
+import { ReferralFormData } from "../../referralForm/page";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const ReferrerInfoSchema = z.object({
   referrerName: z.string().min(1, "Name is required"),
   districts: z.string().min(1, "District is required"),
   emailAddress: z.string().email("Invalid email"),
   phoneNumber: z.string().min(1, "Phone number is required"),
-  referralType: z.enum(["Academics", "Special Features", "Behavioural", "Socials"]),
+  referralType: z.enum(["ACADEMIC", "BEHAVIORAL", "SOCIAL"]),
+  subject: z.number({ invalid_type_error: "Subject is required" }),
+  pro_staff: z.number({ invalid_type_error: "Pro Staff is required" }),
+  ref_manager: z.number({ invalid_type_error: "Referral Manager is required" }),
+  specialEducationLabel: z.enum(["SPECIAL_NEEDS", "IEP"]),
+  priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
+  status: z.enum(["IN_PROGRESS", "COMPLETED", "WAITLIST"]),
 });
+
 
 type ReferrerInfoData = z.infer<typeof ReferrerInfoSchema>;
 
 interface ReferrerInfoProps {
-  updateFormData: (data: ReferrerInfoData) => void;
-  formData: Partial<ReferrerInfoData>;
+  updateFormData: (data: Partial<ReferralFormData>) => void;
+  formData: ReferralFormData;
 }
 
-const ReferrerInfo: React.FC<ReferrerInfoProps> = ({updateFormData,formData}) => {
-  const [referrerName, setReferrerName] = useState(formData.referrerName || "");
-  const [districts, setDistricts] = useState(formData.districts || "");
-  const [emailAddress, setEmailAddress] = useState(formData.emailAddress || "");
-  const [phoneNumber, setPhoneNumber] = useState(formData.phoneNumber || "");
-  const [referralType, setReferralType] = useState< ReferrerInfoData["referralType"]>(formData.referralType || "Academics");
-
+const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData }) => {
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof ReferrerInfoData, string>>
+  >({});
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const data: ReferrerInfoData = {
-      referrerName,
-      districts,
-      emailAddress,
-      phoneNumber,
-      referralType,
-    };
+    setToken(sessionStorage.getItem("token"));
+  }, []);
 
-    const result = ReferrerInfoSchema.safeParse(data);
-    console.log(result);
-    if (result.success) {
-      updateFormData(result.data);
-    } else {
-      console.error("Validation error", result.error);
+  const fetchSubjects = async () => {
+    const res = await axios.get("https://api.aces-tdx.com/api/subjects/", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  };
+
+  const fetchUsers = async () => {
+    const res = await axios.get("https://api.aces-tdx.com/api/users/", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  };
+
+  const { data: subjects = [] } = useQuery({
+    queryKey: ["subjects"],
+    queryFn: fetchSubjects,
+    enabled: !!token,
+  });
+
+  const { data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+    enabled: !!token,
+  });
+
+
+
+  const specialEducationLabels = ["SPECIAL_NEEDS", "IEP"];
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    updateFormData({
+      [name]:
+        name === "subject" ||
+          name === "pro_staff" ||
+          name === "ref_manager"
+          ? Number(value)
+          : value,
+    });
+  };
+
+  const validate = () => {
+    const result = ReferrerInfoSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: any = {};
+      result.error.errors.forEach((err) => {
+        fieldErrors[err.path[0] as string] = err.message;
+      });
+      setErrors(fieldErrors);
+      return false;
     }
-  }, [
-    referrerName,
-    districts,
-    emailAddress,
-    phoneNumber,
-    referralType,
-    updateFormData,
-  ]);
+    setErrors({});
+    return true;
+  };
 
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <h2 className="text-lg font-semibold mb-4">Referrer Information</h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
-              Student Name
-            </label>
-            <input
-              type="text"
-              value={referrerName}
-              onChange={(e) => setReferrerName(e.target.value)}
-              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
-              Districts
-            </label>
-            <select
-              value={districts}
-              onChange={(e) => setDistricts(e.target.value)}
-              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
-            >
-              <option value="">Select Districts</option>
-              <option value="Districts 1">Districts 1</option>
-              <option value="Districts 2">Districts 2</option>
-              <option value="Districts 3">Districts 3</option>
-              <option value="Districts 4">Districts 4</option>
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              value={emailAddress}
-              onChange={(e) => setEmailAddress(e.target.value)}
-              className="w-full p-[10px] border-2 border-[#D0D0D0] bg-white outline-none dark:bg-black dark:text-white rounded-[9px]"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full p-[10px] border-2 border-[#D0D0D0] outline-none bg-white dark:bg-black dark:text-white rounded-[9px]"
-            />
-          </div>
-        </div>
+    <div className="space-y-4">
 
-        <div>
-          <h2 className="text-lg font-semibold mb-4">Referral Details</h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
-              Date
-            </label>
-            <input
-              type="date"
-              className="w-full p-[10px] outline-none border-2 border-[#D0D0D0] bg-white dark:bg-black dark:text-white rounded-[10px]"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
-              Type
-            </label>
-            {["Academics", "Special Features", "Behavioural", "Socials"].map((type) => (
-              <div className="mt-2" key={type}>
-                <label className="inline-flex items-center ">
-                  <input
-                    type="radio"
-                    className="form-radio"
-                    name="referralType"
-                    value={type}
-                    checked={referralType === type}
-                    onChange={() =>
-                      setReferralType(type as ReferrerInfoData["referralType"])
-                    }
-                  />
-                  <span className="ml-2 capitalize">
-                    {type === "Academics"  ? "Academics"  : type === "Special Features"
-                      ? "Special Features"
-                      : type === "Behavioural"
-                      ? "Behavioural"
-                      : "Socials"}
-                  </span>
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div>
+        <label className="block text-sm font-medium">Referrer Name</label>
+        <input
+          type="text"
+          name="referrerName"
+          value={formData.referrerName || ""}
+          onChange={handleChange}
+          onBlur={validate}
+          className="w-full border rounded px-3 py-2"
+        />
+        {errors.referrerName && (
+          <p className="text-red-500 text-sm">{errors.referrerName}</p>
+        )}
+      </div>
+
+
+      <div>
+        <label className="block text-sm font-medium">Subject</label>
+        <select
+          name="subject"
+          value={formData.subject || ""}
+          onChange={handleChange}
+          onBlur={validate}
+          className="w-full border rounded px-3 py-2"
+        >
+          <option value="">Select subject</option>
+          {subjects.map((s: any) => (
+            <option key={s.id} value={s.id}>
+              {s.title}
+            </option>
+          ))}
+        </select>
+        {errors.subject && (
+          <p className="text-red-500 text-sm">{errors.subject}</p>
+        )}
+      </div>
+
+
+      <div>
+        <label className="block text-sm font-medium">Pro Staff</label>
+        <select
+          name="pro_staff"
+          value={formData.pro_staff || ""}
+          onChange={handleChange}
+          onBlur={validate}
+          className="w-full border rounded px-3 py-2"
+        >
+          <option value="">Select staff</option>
+          {users.map((u: any) => (
+            <option key={u.id} value={u.id}>
+              {u.username || u.email}
+            </option>
+          ))}
+        </select>
+        {errors.pro_staff && (
+          <p className="text-red-500 text-sm">{errors.pro_staff}</p>
+        )}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium">Referral Type</label>
+        <select
+          name="referralType"
+          value={formData.referralType || ""}
+          onChange={handleChange}
+          onBlur={validate}
+          className="w-full border rounded px-3 py-2"
+        >
+          <option value="">Select referral type</option>
+          <option value="ACADEMIC">Academic</option>
+          <option value="BEHAVIORAL">Behavioral</option>
+          <option value="SOCIAL">Social</option>
+        </select>
+        {errors.referralType && (
+          <p className="text-red-500 text-sm">{errors.referralType}</p>
+        )}
+      </div>
+
+
+      <div>
+        <label className="block text-sm font-medium">Referral Manager</label>
+        <select
+          name="ref_manager"
+          value={formData.ref_manager || ""}
+          onChange={handleChange}
+          onBlur={validate}
+          className="w-full border rounded px-3 py-2"
+        >
+          <option value="">Select manager</option>
+          {users.map((u: any) => (
+            <option key={u.id} value={u.id}>
+              {u.username || u.email}
+            </option>
+          ))}
+        </select>
+        {errors.ref_manager && (
+          <p className="text-red-500 text-sm">{errors.ref_manager}</p>
+        )}
+      </div>
+
+
+      <div>
+        <label className="block text-sm font-medium">
+          Special Education Label
+        </label>
+        <select
+          name="specialEducationLabel"
+          value={formData.specialEducationLabel || ""}
+          onChange={handleChange}
+          onBlur={validate}
+          className="w-full border rounded px-3 py-2"
+        >
+          <option value="">Select label</option>
+          {specialEducationLabels.map((label) => (
+            <option key={label} value={label}>
+              {label}
+            </option>
+          ))}
+        </select>
+        {errors.specialEducationLabel && (
+          <p className="text-red-500 text-sm">{errors.specialEducationLabel}</p>
+        )}
       </div>
     </div>
   );

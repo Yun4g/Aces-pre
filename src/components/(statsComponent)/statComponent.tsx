@@ -7,8 +7,43 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 
+
+interface UserReferral {
+  id: number;
+  total_referrals: string | null;
+  processing : string | null;
+  completed: string | null;
+  under_review : string | null;
+  priority: string | null;
+  referral_info: string | null;
+  referral_type: string | null;
+  district: string | null;
+  status: string;
+  additional_notes: string | null;
+  reason: string | null;
+  special_education_label: string | null;
+  created_at: string | null;
+  created_by: string | null;
+  updated_at: string | number | Date;
+  draft: boolean;
+  iep_document: string | null;
+  consent_form: string | null;
+  cognitive_assesments: string | null;
+  avatar: string | null;
+  subject: number;
+  ref_manager: number;
+  pro_staff: number;
+  email: string;
+  name: string;
+  type: string;
+  assignedBy: string;
+  date: string;
+}
+
 export function StatCards() {
-   const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [userReferral, setUserReferral] = useState<UserReferral[]>([]);
+
     const userId: number = 1
   
   const fetchUserReferal = async () => {
@@ -28,10 +63,12 @@ export function StatCards() {
       enabled : !! token,
       refetchInterval : 3000
     });
+  
+  
 
   console.log('users referral', data)
 
-  
+ 
   useEffect(() => {
   setToken(sessionStorage.getItem('token'));
   }, []);
@@ -44,7 +81,7 @@ export function StatCards() {
         <CardContent className="md:px-[49px]  py-[30px]">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl text-gray-400 font-bold">248</h2>
+              <h2 className="text-2xl text-gray-400 font-bold">{data?.total_referrals}</h2>
               <p className="text-sm text-gray-400 font-bold">Total referrals</p>
             </div>
             <div className="flex items-center justify-center">
@@ -65,12 +102,12 @@ export function StatCards() {
         </CardContent>
       </Card>
 
-      {/* Pending Referrals */}
+
       <Card className="overflow-hidden w-full md:flex-1 border bg-white dark:bg-gray-800">
         <CardContent className="md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl text-gray-400 font-bold">248</h2>
+              <h2 className="text-2xl text-gray-400 font-bold">{ data?.processing}</h2>
               <p className="text-sm text-gray-400 font-bold">Pending Referrals</p>
             </div>
             <div className=" flex items-center justify-center">
@@ -96,7 +133,7 @@ export function StatCards() {
         <CardContent className=" md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl text-gray-400 font-bold">248</h2>
+              <h2 className="text-2xl text-gray-400 font-bold">{data?.completed}</h2>
               <p className="text-sm text-gray-400 font-bold">Processed Referrals</p>
             </div>
             <div className=" flex items-center justify-center">
@@ -122,7 +159,7 @@ export function StatCards() {
         <CardContent className="md:px-[49px] py-[30px]">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl text-gray-400 font-bold">248</h2>
+              <h2 className="text-2xl text-gray-400 font-bold">{data?.under_review}</h2>
               <p className="text-sm text-gray-400 font-bold">Flagged Referrals</p>
             </div>
             <div className=" flex items-center justify-center">
