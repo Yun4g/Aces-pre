@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="px-6 md:px-[94px] py-4 bg-white flex justify-between items-center z-[1000] fixed top-0 w-full shadow-md">
-      {/* Logo */}
+
       <div>
         <Image src="/assest/logo.png" alt="Logo" width={120} height={40} />
       </div>
@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
         ☰
       </button>
 
-      {/* Mobile Menu */}
+  
       <div
         className={`absolute top-[70px] left-0 w-full bg-white shadow-md flex flex-col items-center gap-4 py-4 md:hidden transform transition-all duration-300 ease-in-out ${
           isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
@@ -66,8 +66,6 @@ const Navbar: React.FC = () => {
           Get Started
         </button>
       </div>
-
-      {/* Desktop Sign In / Get Started */}
       <div className="hidden md:flex justify-center items-center gap-8">
         <button onClick={() => handleNavigate('login')} className="font-normal text-[#333333] text-sm">
           Sign In
