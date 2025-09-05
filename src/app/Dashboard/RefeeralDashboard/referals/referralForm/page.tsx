@@ -210,17 +210,10 @@ const ReferralForm = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-       if (response) {
+       if (response.ok) {
          alert('referral created succefully')
          router.push('/Dashboard/RefeeralDashboard/referals')
        }
-
-      if (!response.ok) {
-        const errorRes = await response.json();
-        console.error("Server error:", errorRes);
-        alert("Submission failed: " + (errorRes.message || response.statusText));
-        return;
-      }  
 
       const data = await response.json();
       console.log("Submission success:", data);
