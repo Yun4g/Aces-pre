@@ -65,7 +65,7 @@ export default function ReferralClient({ id }: { id: string }) {
             <DashboardHeader />
           </header>
 
-          <div className="flex flex-wrap gap-3 bg-white py-3 md:py-0 dark:bg-gray-900 dark:text-white justify-center relative items-center mb-1 md:p-3 w-full">
+          <div className="flex flex-wrap gap-3 bg-white py-2 md:py-0 dark:bg-gray-900 dark:text-white justify-center relative items-center mb-1 md:p-1 w-full">
             <div className="flex flex-wrap w-full px-2 md:px-80 md:justify-center">
               {tabs.map((tab) => (
                 <button
@@ -81,7 +81,7 @@ export default function ReferralClient({ id }: { id: string }) {
             <div className="md:absolute right-4">
               <Link
                 href="/Dashboard/RefeeralDashboard/referals/referralForm"
-                className="bg-[#005A9C] text-white px-6 py-4 text-sm rounded flex items-center gap-1 transition"
+                className="bg-[#005A9C] text-white px-6 py-3 text-sm rounded flex items-center gap-1 transition"
               >
                 New Referral
               </Link>

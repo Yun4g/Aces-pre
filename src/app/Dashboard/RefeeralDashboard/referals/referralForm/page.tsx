@@ -16,7 +16,7 @@ export interface ReferralFormData {
   additional_notes?: string;
   reasonForReferral?: string;
   subject: number;
-  priority?: "Low" | "Meduim" | "High";
+  priority?: "Low" | "Medium" | "High";
   referralType?: "Academic Intervention" | "Behavioural Support" | "Social  Skills Development" | "Executive Function Coaching" | "Therapeuntic Services" | "Assistive Coaching" ;
   specialEducationLabel?: "Label 1" | "Label 2"  ;
   status?: "In progress" | "Success" ;
