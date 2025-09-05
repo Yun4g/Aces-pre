@@ -163,7 +163,7 @@ const ReferralForm = () => {
       formDataToSend.append("created_by", String(created_by));
       formDataToSend.append("referral_type", formData.referralType || "");
       formDataToSend.append("district", formData.districts || "");
-      formDataToSend.append("status", formData.status || "in progress");
+      formDataToSend.append("status", formData.status || "In progress");
       formDataToSend.append("subject", String(formData.subject || 1));
       formDataToSend.append("pro_staff", String(formData.pro_staff || ""));
       formDataToSend.append("ref_manager", String(formData.ref_manager || ""));
