@@ -6,6 +6,7 @@ import ProgramSelection from '../ReferralTabs/tasks/ProgramSelection';
 
 import IStudentReferral from '../ReferralTabs/tasks/UploadAndReview';
 import { useRouter } from 'next/navigation';
+import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 
 
 
@@ -54,6 +55,7 @@ const ReferralForm = () => {
   const [token, setToken] = useState<string | null>(null);
   const created_by = 15;
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
 
 
 
@@ -208,12 +210,17 @@ const ReferralForm = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
 
+       if (response) {
+         alert('referral created succefully')
+         router.push('/Dashboard/RefeeralDashboard/referals')
+       }
+
       if (!response.ok) {
         const errorRes = await response.json();
         console.error("Server error:", errorRes);
         alert("Submission failed: " + (errorRes.message || response.statusText));
         return;
-      }
+      }  
 
       const data = await response.json();
       console.log("Submission success:", data);
