@@ -164,7 +164,7 @@ const ReferralForm = () => {
       formDataToSend.append("referral_type", formData.referralType || "");
       formDataToSend.append("district", formData.districts || "");
       formDataToSend.append("status", formData.status || "in progress");
-      formDataToSend.append("subject", String(formData.subject || ""));
+      formDataToSend.append("subject", String(formData.subject || 1));
       formDataToSend.append("pro_staff", String(formData.pro_staff || ""));
       formDataToSend.append("ref_manager", String(formData.ref_manager || ""));
       formDataToSend.append("additional_notes", formData.additional_notes || "");
@@ -213,6 +213,8 @@ const ReferralForm = () => {
        if (response.ok) {
          alert('referral created succefully')
          router.push('/Dashboard/RefeeralDashboard/referals')
+       } else {
+         alert('creating referral failed')
        }
 
       const data = await response.json();
