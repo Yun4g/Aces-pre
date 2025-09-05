@@ -41,7 +41,6 @@ export interface ReferralFormData {
   gradeLevel?: string;
   dateOfBirth?: string;
   selectedPrograms?: string[];
-
   0?: { file?: File };
   1?: { file?: File };
   2?: { file?: File };
