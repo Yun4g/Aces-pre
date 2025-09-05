@@ -16,10 +16,10 @@ export interface ReferralFormData {
   additional_notes?: string;
   reasonForReferral?: string;
   subject: number;
-  priority?: "LOW" | "MEDIUM" | "HIGH";
-  referralType?: "ACADEMIC" | "BEHAVIORAL" | "SOCIAL";
-  specialEducationLabel?: "Special Needs" | "IEP";
-  status?: "IN_PROGRESS" | "COMPLETED" | "WAITLIST";
+  priority?: "Low" | "Meduim" | "High";
+  referralType?: "Academic Intervention" | "Behavioural Support" | "Social  Skills Development" | "Executive Function Coaching" | "Therapeuntic Services" | "Assistive Coaching" ;
+  specialEducationLabel?: "Label 1" | "Label 2"  ;
+  status?: "In progress" | "Success" ;
   ref_manager?: number;
   pro_staff?: number;
   classification?: string;
@@ -91,12 +91,12 @@ const ReferralForm = () => {
       consent_form: consent,
       cognitive_assesments: cognitive,
       avatar: null,
-      priority: data.priority || "LOW",
-      referral_type: data.referralType || "ACADEMIC",
-      status: data.status || "IN_PROGRESS",
-      special_education_label: data.specialEducationLabel || "IEP",
+      priority: data.priority || "Low",
+      referral_type: data.referralType || "Academic Intervention",
+      status: data.status || "In progress",
+      special_education_label: data.specialEducationLabel || "Label 1",
 
-
+   
       ref_manager: data.ref_manager,
       pro_staff: data.pro_staff,
 

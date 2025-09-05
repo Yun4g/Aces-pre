@@ -9,7 +9,7 @@ const programFormSchema = z.object({
   urgentReferral: z.boolean().optional(),
   urgentReason: z.string().optional(),
   additional_notes: z.string().optional(),
- priority: z.enum(["LOW", "MEDIUM", "HIGH"]), 
+ priority: z.enum(["Low", "Medium", "High"]), 
 });
 
 type ProgramFormData = z.infer<typeof programFormSchema>;
@@ -31,15 +31,15 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
     urgentReferral: formData.urgentReferral,
     urgentReason: formData.urgentReason,
     additional_notes: formData.additional_notes ?? "",
-     priority: formData.priority ?? "LOW",
+     priority: formData.priority ?? "Low",
     
 
   });
   const [additionalNotes, setAdditionalNotes] = useState<string>(
    (formData.additional_notes as string) ?? ""
   );
-  const [priority, setPriority] = useState<"LOW" | "MEDIUM" | "HIGH">(
-    parsedFormData.priority as "LOW" | "MEDIUM" | "HIGH"
+  const [priority, setPriority] = useState<"Low" | "Medium" | "High">(
+    parsedFormData.priority as "Low" | "Medium" | "High"
   );
 
   const [selectedPrograms, setSelectedPrograms] = useState<string[]>(
@@ -66,9 +66,9 @@ const ProgramSelection: React.FC<ProgramSelectionProps> = ({
     );
   };
   
-    const priorityOptions = ["LOW", "MEDIUM", "HIGH"];
+    const priorityOptions = ["Low", "Medium", "High"];
   
-    const specialEducationLabels = ["SPECIAL_NEEDS", "IEP"];
+    const specialEducationLabels = ["Label 1", "Label 2"];
 
 useEffect(() => {
   updateFormData({
@@ -85,8 +85,6 @@ useEffect(() => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
-
-
       <h2 className="text-xl font-bold mb-6 ">Program Selection</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
@@ -290,7 +288,7 @@ useEffect(() => {
               </label>
               <select
                 value={priority}
-                onChange={(e) => setPriority(e.target.value as "LOW" | "MEDIUM" | "HIGH")}
+                onChange={(e) => setPriority(e.target.value as "Low" | "Medium" | "High")}
                 className="w-full  p-[10px] border-2 border-[#D0D0D0] rounded-[12px] text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Select Priority</option>

@@ -39,7 +39,7 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ updateFormData, formDat
   const [sameAddress, setSameAddress] = useState(formData.sameAddress || false);
 
 
-  const statusOptions = ["IN_PROGRESS", "COMPLETED", "WAITLIST"];
+  const statusOptions = ["In progress", "Success"];
 
 
   useEffect(() => {

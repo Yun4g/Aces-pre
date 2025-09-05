@@ -10,13 +10,13 @@ const ReferrerInfoSchema = z.object({
   districts: z.string().min(1, "District is required"),
   emailAddress: z.string().email("Invalid email"),
   phoneNumber: z.string().min(1, "Phone number is required"),
-  referralType: z.enum(["ACADEMIC", "BEHAVIORAL", "SOCIAL"]),
+  referralType: z.enum(["Academic Intervention", "Behavioural Support", "Social  Skills Development", "Executive Function Coaching", "Therapeuntic Services", "Assistive Coaching"]),
   subject: z.number({ invalid_type_error: "Subject is required" }),
   pro_staff: z.number({ invalid_type_error: "Pro Staff is required" }),
   ref_manager: z.number({ invalid_type_error: "Referral Manager is required" }),
-  specialEducationLabel: z.enum(["SPECIAL_NEEDS", "IEP"]),
-  priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
-  status: z.enum(["IN_PROGRESS", "COMPLETED", "WAITLIST"]),
+  specialEducationLabel: z.enum(["Label 1", "Label 2"]),
+  priority: z.enum(["Low", "Medium", "High"]),
+  status: z.enum(["In progress", "Success",]),
 });
 
 
@@ -65,7 +65,7 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData })
 
 
 
-  const specialEducationLabels = ["SPECIAL_NEEDS", "IEP"];
+  const specialEducationLabels = ["Label 1", "Label 2"];
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     updateFormData({
@@ -164,9 +164,13 @@ const ReferrerInfo: React.FC<ReferrerInfoProps> = ({ updateFormData, formData })
           className="w-full border rounded px-3 py-2"
         >
           <option value="">Select referral type</option>
-          <option value="ACADEMIC">Academic</option>
-          <option value="BEHAVIORAL">Behavioral</option>
-          <option value="SOCIAL">Social</option>
+          <option value="Academic Intervention">Academic Intervention</option>
+          <option value="Behavioural Support">Behavioural Support</option>
+          <option value="Social  Skills Development">Social  Skills Development</option>
+          <option value="Executive Function Coaching">Executive Function Coaching</option>
+          <option value="Therapeuntic Services">Therapeuntic Services</option>
+          <option value="Assistive Coaching">Assistive Coaching</option>
+          <option value="Therapeuntic Services">Therapeuntic Services</option>
         </select>
         {errors.referralType && (
           <p className="text-red-500 text-sm">{errors.referralType}</p>
