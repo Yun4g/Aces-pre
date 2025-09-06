@@ -9,6 +9,8 @@ import { RecentReferrals } from '@/components/RecentReferal';
 import DashboardHeader from '@/components/DashBoardHeader'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 
 
@@ -28,8 +30,30 @@ function MainDashBoard() {
   const router = useRouter();
 
 
+    const [token, setToken] = useState<string | null>(null);
+  
+    const fetchChartData = async () => {
+      const res = await axios.get(
+        "https://api.aces-tdx.com/api/referral_dashboard/",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      return res.data;
+    };
+  
+    const { data } = useQuery({
+      queryKey: ["dataVisualization", token],
+      queryFn: fetchChartData,
+      enabled: !!token,
+      refetchInterval: 4000,
+    });
+  
+   
+
   useEffect(() => {
     const token = sessionStorage.getItem('token');
+     setToken(token);
 
     if (!token) {
       router.push('/login')
@@ -80,7 +104,7 @@ function MainDashBoard() {
             <StatCards />
             <div className="w-full flex flex-col lg:flex-row gap-4">
               <div className='w-full md:basis-[55%] bg-white dark:bg-gray-800 flex-1'>
-                <ProcessingTimeChart />
+                <ProcessingTimeChart data={data} />
               </div>
               <div className='w-full md:basis-[45%] bg-white dark:bg-gray-800 flex-1'>
                 <DistrictStats />

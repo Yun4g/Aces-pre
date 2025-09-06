@@ -78,8 +78,8 @@ const DashboardHeader = () => {
   const { data } = useQuery({
     queryKey: ['user'],
     queryFn: fetchUser,
-    refetchInterval: 4000,
-    enabled: !! token
+    enabled: !!token,
+    staleTime: 1000 * 60 * 5,
   });
 
   console.log(data, 'data in header');
